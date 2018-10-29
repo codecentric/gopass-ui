@@ -23,7 +23,8 @@
         "jsx-no-string-ref": true,
         "jsx-self-close": true,
         "jsx-wrap-multiline": true,
-        "import-name": false
+        "import-name": false,
+        "jsx-boolean-value": false
     },
     "rulesDirectory": []
 }

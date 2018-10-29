@@ -2,7 +2,7 @@
 
 ### UI for gopass
 
-[Gopass](https://electronjs.org/) is a password manager for the command line written in Golang. This repository, `gopass-ui`, is the UI wrapper for this awesome password manager.
+[Gopass](https://github.com/gopasspw/gopass) is a password manager for the command line written in Golang. This repository, `gopass-ui`, is the UI wrapper for this awesome password manager.
 
 ## Install
 Clone the repository with Git:
