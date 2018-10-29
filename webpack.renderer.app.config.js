@@ -1,9 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const baseConfig = require('./webpack.base.config');
+const baseConfig = require('./webpack.base.config')
 
 module.exports = merge.smart(baseConfig, {
     target: 'electron-renderer',
@@ -15,10 +15,7 @@ module.exports = merge.smart(baseConfig, {
             {
                 test: /\.tsx?$/,
                 include: [
-                    path.resolve(__dirname, 'src')
-                ],
-                exclude: [
-                    path.resolve(__dirname, 'src', 'main.ts')
+                    path.resolve(__dirname, 'src', 'renderer')
                 ],
                 loader: 'awesome-typescript-loader'
             },
@@ -66,4 +63,4 @@ module.exports = merge.smart(baseConfig, {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         })
     ]
-});
+})

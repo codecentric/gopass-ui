@@ -3,6 +3,7 @@ import * as path from 'path'
 import * as url from 'url'
 
 let mainWindow: BrowserWindow | null
+let searchWindow: BrowserWindow | null
 let tray: Tray
 
 const contextMenu = Menu.buildFromTemplate([
@@ -17,7 +18,9 @@ const contextMenu = Menu.buildFromTemplate([
     {
         label: 'Search',
         click: () => {
-            // OPEN SEARCH WINDOW
+            if (searchWindow) {
+                searchWindow.show()
+            }
         }
     },
     {
@@ -38,7 +41,7 @@ const installExtensions = async () => {
     ).catch(console.log)
 }
 
-const hideWindow = () => {
+const hideMainWindow = () => {
     if (mainWindow) {
         if (app.hide) {
             // Linux and MacOS
@@ -53,11 +56,11 @@ const hideWindow = () => {
 
 const setGlobalShortcut = () => {
     globalShortcut.register('CmdOrCtrl+Shift+p', () => {
-        if (mainWindow) {
-            if (mainWindow.isVisible()) {
-                hideWindow()
+        if (searchWindow) {
+            if (searchWindow.isVisible()) {
+                searchWindow.hide()
             } else {
-                mainWindow.show()
+                searchWindow.show()
             }
         }
     })
@@ -76,11 +79,37 @@ const setTray = () => {
     tray.setContextMenu(contextMenu)
 }
 
-const createWindow = async () => {
+const createSearchWindow = () => {
+    searchWindow = new BrowserWindow({
+        width: 600,
+        height: 800,
+        show: false,
+        resizable: false,
+        alwaysOnTop: true
+    })
+
+    searchWindow.setMenu(null)
+
     if (process.env.NODE_ENV !== 'production') {
-        await installExtensions()
+        searchWindow.loadURL('http://localhost:2004')
+
+        searchWindow.webContents.openDevTools()
+    } else {
+        searchWindow.loadURL(
+            url.format({
+                pathname: path.join(__dirname, 'search.html'),
+                protocol: 'file:',
+                slashes: true
+            })
+        )
     }
 
+    searchWindow.on('closed', () => {
+        searchWindow = null
+    })
+}
+
+const createMainWindow = () => {
     mainWindow = new BrowserWindow({
         width: 800,
         height: 600,
@@ -88,11 +117,10 @@ const createWindow = async () => {
         icon: path.join(__dirname, 'assets', 'icon.png')
     })
 
-    setGlobalShortcut()
-    setTray()
-
     if (process.env.NODE_ENV !== 'production') {
         mainWindow.loadURL('http://localhost:2003')
+
+        mainWindow.webContents.openDevTools()
     } else {
         mainWindow.loadURL(
             url.format({
@@ -103,17 +131,24 @@ const createWindow = async () => {
         )
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-        // Open DevTools
-        mainWindow.webContents.openDevTools()
-    }
-
     mainWindow.on('closed', () => {
         mainWindow = null
     })
 }
 
-app.on('ready', createWindow)
+const setup = async () => {
+    if (process.env.NODE_ENV !== 'production') {
+        await installExtensions()
+    }
+
+    createMainWindow()
+    createSearchWindow()
+
+    setGlobalShortcut()
+    setTray()
+}
+
+app.on('ready', setup)
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -123,6 +158,9 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
     if (mainWindow === null) {
-        createWindow()
+        createMainWindow()
+    }
+    if (searchWindow === null) {
+        createSearchWindow()
     }
 })

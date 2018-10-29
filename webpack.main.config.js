@@ -1,6 +1,6 @@
-const path = require('path');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
+const path = require('path')
+const webpack = require('webpack')
+const merge = require('webpack-merge')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const baseConfig = require('./webpack.base.config')
@@ -32,4 +32,4 @@ module.exports = merge.smart(baseConfig, {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         })
     ]
-});
+})
