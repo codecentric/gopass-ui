@@ -1,7 +1,7 @@
 {
-  "name": "electron-react-typescript",
+  "name": "gopass-ui",
   "version": "0.0.4",
-  "description": "",
+  "description": "Awesome UI for the gopass CLI – a password manager for your daily business",
   "main": "./dist/main.js",
   "scripts": {
     "build-main": "cross-env NODE_ENV=production webpack --config webpack.main.prod.config.js",
@@ -49,10 +49,10 @@
     }
   },
   "build": {
-    "productName": "ProductName",
-    "appId": "org.your.productname",
+    "productName": "Gopass UI",
+    "appId": "de.codecentric.gopassui",
     "mac": {
-      "category": "your.app.category.type"
+      "category": "public.app-category.productivity"
     },
     "directories": {
       "output": "release"
@@ -71,17 +71,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:Robinfr/electron-react-typescript.git"
+    "url": "git+ssh://git@github.com:codecentric/gopass-ui.git"
   },
   "author": {
-    "name": "Your name",
-    "email": "Your email"
+    "name": "Matthias Rütten & Jonas Verhoelen",
+    "email": ""
   },
   "license": "SEE LICENSE",
   "bugs": {
-    "url": "https://github.com/Robinfr/electron-react-typescript/issues"
+    "url": "https://github.com/codecentric/gopass-ui/issues"
   },
-  "homepage": "https://github.com/Robinfr/electron-react-typescript",
+  "homepage": "https://github.com/codecentric/gopass-ui",
   "devDependencies": {
     "@types/electron-devtools-installer": "^2.0.2",
     "@types/jest": "^21.1.9",
