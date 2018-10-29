@@ -6,7 +6,7 @@ const spawn = require('child_process').spawn;
 const baseConfig = require('./webpack.renderer.config');
 
 module.exports = merge.smart(baseConfig, {
-    entry: ['react-hot-loader/patch', './src/app.tsx'],
+    entry: ['react-hot-loader/patch', './src/renderer/app.tsx'],
     module: {
         rules: [
             {
