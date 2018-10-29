@@ -30,8 +30,8 @@ render(Application)
 // Hot Module Replacement API
 if (typeof module.hot !== 'undefined') {
     module.hot.accept('./components/Application', () => {
-        import('./components/Application').then(World => {
-            render(World.default)
+        import('./components/Application').then(app => {
+            render(app.default)
         })
     })
 }
