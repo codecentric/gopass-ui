@@ -18,6 +18,7 @@
     "test": "jest '(\\/test\\/(?!e2e/)).*'",
     "pretest:e2e": "npm run build",
     "test:e2e": "jest '(\\/test\\/e2e/).*'",
+    "test:integration": "jest '(\\/test\\/integration/).*'",
     "pack": "npm run build && electron-builder --dir",
     "dist": "npm run build && electron-builder",
     "postinstall": "electron-builder install-app-deps"

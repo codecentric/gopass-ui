@@ -24,7 +24,8 @@
         "jsx-self-close": true,
         "jsx-wrap-multiline": true,
         "import-name": false,
-        "jsx-boolean-value": false
+        "jsx-boolean-value": false,
+        "strict-boolean-expressions": false
     },
     "rulesDirectory": []
 }
