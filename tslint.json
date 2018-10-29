@@ -18,10 +18,12 @@
         ],
         "variable-name": false,
         "jsx-alignment": true,
+        "semicolon": [true, "never"],
         "jsx-equals-spacing": [true, "never"],
         "jsx-no-string-ref": true,
         "jsx-self-close": true,
-        "jsx-wrap-multiline": true
+        "jsx-wrap-multiline": true,
+        "import-name": false
     },
     "rulesDirectory": []
 }

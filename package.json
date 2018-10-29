@@ -13,6 +13,7 @@
     "prestart": "npm run build",
     "start": "electron .",
     "lint": "tslint '{src,test,mocks}/**/*.{ts,tsx}' --project ./tsconfig.json",
+    "lint:fix": "tslint '{src,test,mocks}/**/*.{ts,tsx}' --fix ./tsconfig.json",
     "precommit": "lint-staged",
     "test": "jest '(\\/test\\/(?!e2e/)).*'",
     "pretest:e2e": "npm run build",
