@@ -1,0 +1,13 @@
+.secret-explorer {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 450px;
+    overflow: auto;
+}
+
+.main-content {
+    padding-left: 450px;
+}

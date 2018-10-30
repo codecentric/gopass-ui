@@ -1,5 +1,7 @@
 import * as React from 'react'
 import * as t from 'react-treebeard'
+import * as m from 'react-materialize'
+import { customStyle, globalStyle } from './TreebeardStyle'
 
 export interface Child {
     name: string
@@ -17,6 +19,27 @@ export interface Tree {
 export interface TreeComponentProps {
     tree: Tree
     onLeafClick: (leafId: string) => void
+}
+
+const decorators = {
+    ...t.decorators
+}
+
+decorators.Header = ({ style, node }: any) => {
+    const iconType = node.children ? 'folder' : 'insert_drive_file'
+    const iconStyle = { marginRight: '5px' }
+
+    return (
+        <div style={style.base}>
+            <div style={style.title}>
+                <m.Icon small style={iconStyle}>
+                    {iconType}
+                </m.Icon>
+
+                {node.name}
+            </div>
+        </div>
+    )
 }
 
 export default class TreeComponent extends React.Component<TreeComponentProps, any> {
@@ -47,8 +70,9 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
             <div>
                 <t.Treebeard
                     data={this.props.tree}
-                    decorators={t.decorators}
+                    decorators={decorators}
                     onToggle={this.onToggle}
+                    style={globalStyle}
                 />
             </div>
         )

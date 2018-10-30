@@ -3,12 +3,18 @@ import * as React from 'react'
 import Gopass from '../../service/Gopass'
 import SecretsDirectoryService from '../../service/SecretsDirectoryService'
 
-const testLeafClick = async (secretName: string) => console.log(await Gopass.show(secretName))
+export interface SecretExplorerProps {
+    onSecretClick: (name: string, value: string) => void
+}
+
 interface SecretExplorerState {
     tree: Tree
 }
 
-export default class SecretExplorer extends React.Component<any, SecretExplorerState> {
+export default class SecretExplorer extends React.Component<
+    SecretExplorerProps,
+    SecretExplorerState
+> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -24,10 +30,13 @@ export default class SecretExplorer extends React.Component<any, SecretExplorerS
         const secretNames = await Gopass.getAllSecretNames()
         const tree: Tree = SecretsDirectoryService.secretPathsToTree(secretNames)
         this.setState({ tree })
-        console.log(this.state)
     }
 
     render() {
-        return <TreeComponent tree={this.state.tree} onLeafClick={testLeafClick} />
+        return <TreeComponent tree={this.state.tree} onLeafClick={this.onSecretClick} />
+    }
+
+    onSecretClick = async (secretName: string) => {
+        this.props.onSecretClick(secretName, await Gopass.show(secretName))
     }
 }

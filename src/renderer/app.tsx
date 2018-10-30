@@ -13,25 +13,11 @@ import 'material-design-icons/iconfont/material-icons.css'
 const mainElement = document.createElement('div')
 document.body.appendChild(mainElement)
 
-// Render components
-const render = (Component: () => JSX.Element) => {
-    ReactDOM.render(
-        <AppContainer>
-            <Provider store={store}>
-                <Component />
-            </Provider>
-        </AppContainer>,
-        mainElement
-    )
-}
-
-render(Application)
-
-// Hot Module Replacement API
-if (typeof module.hot !== 'undefined') {
-    module.hot.accept('./components/Application', () => {
-        import('./components/Application').then(app => {
-            render(app.default)
-        })
-    })
-}
+ReactDOM.render(
+    <AppContainer>
+        <Provider store={store}>
+            <Application />
+        </Provider>
+    </AppContainer>,
+    mainElement
+)
