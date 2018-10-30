@@ -16,7 +16,7 @@ const contextMenu = Menu.buildFromTemplate([
         }
     },
     {
-        label: 'Search',
+        label: 'SearchApplication',
         click: () => {
             if (searchWindow) {
                 searchWindow.show()
@@ -57,7 +57,7 @@ const hideMainWindow = () => {
 const setGlobalShortcut = () => {
     globalShortcut.register('CmdOrCtrl+Shift+p', () => {
         if (searchWindow) {
-            if (searchWindow.isVisible()) {
+            if (searchWindow.isFocused()) {
                 searchWindow.hide()
             } else {
                 searchWindow.show()
@@ -81,11 +81,12 @@ const setTray = () => {
 
 const createSearchWindow = () => {
     searchWindow = new BrowserWindow({
-        width: 600,
+        width: 1200,
         height: 800,
+        center: true,
+        skipTaskbar: true,
         show: false,
-        resizable: false,
-        alwaysOnTop: true
+        resizable: false
     })
 
     searchWindow.setMenu(null)
