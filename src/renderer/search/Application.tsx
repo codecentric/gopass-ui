@@ -2,6 +2,8 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 import SearchResults from './SearchResults'
 
+import './application.css'
+
 export default class Application extends React.Component<any, { searchValue: string }> {
     constructor(props: any) {
         super(props)

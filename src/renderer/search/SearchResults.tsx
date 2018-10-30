@@ -33,7 +33,10 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
     public componentWillReceiveProps(props: SearchResultsProps) {
         if (props.search) {
             this.setState({
-                searchValues: props.search.split(' ')
+                searchValues: props.search
+                    .split(' ')
+                    .map(searchValue => searchValue.trim())
+                    .filter(searchValue => searchValue !== '')
             })
         }
     }
@@ -42,12 +45,16 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
         const filteredSecretNames = this.state.secretNames
             .filter(this.filterMatchingSecrets)
             .slice(0, 30)
-        const highlightRegExp = new RegExp(this.state.searchValues.join('|'))
+        const highlightRegExp =
+            this.state.searchValues.length > 0
+                ? new RegExp(`(${this.state.searchValues.join('|')})`, 'g')
+                : undefined
 
         return (
             <m.Collection>
                 {filteredSecretNames.map((secretName, i) => {
                     const splittedSecretName = secretName.split('/')
+
                     return (
                         <m.CollectionItem key={`secret-${i}`}>
                             {splittedSecretName.reduce(
@@ -71,10 +78,15 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
         )
     }
 
-    private getHighlightedSegment = (segment: string, highlightRegExp: RegExp) =>
-        replace(segment, highlightRegExp, (match: string, offset: number) => {
-            return <strong key={`highlight-${offset}`}>{match}</strong>
+    private getHighlightedSegment = (segment: string, highlightRegExp?: RegExp) => {
+        if (!highlightRegExp) {
+            return segment
+        }
+
+        return replace(segment, highlightRegExp, (_: any, match: string, offset: number) => {
+            return <mark key={`highlight-${segment}-${offset}`}>{match}</mark>
         })
+    }
 
     private filterMatchingSecrets = (secretName: string) => {
         if (this.state.searchValues.length > 0) {
