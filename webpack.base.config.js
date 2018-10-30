@@ -1,6 +1,6 @@
-'use strict';
+'use strict'
 
-const path = require('path');
+const path = require('path')
 
 module.exports = {
     output: {
@@ -15,6 +15,5 @@ module.exports = {
         extensions: ['.tsx', '.ts', '.js', '.json']
     },
     devtool: 'source-map',
-    plugins: [
-    ]
-};
+    plugins: [ ]
+}
