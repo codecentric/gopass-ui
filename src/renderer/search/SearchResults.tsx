@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
+import * as replace from 'string-replace-to-array'
 import Gopass from '../service/Gopass'
 
 interface SearchResultsState {
@@ -40,20 +41,40 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
     public render() {
         const filteredSecretNames = this.state.secretNames
             .filter(this.filterMatchingSecrets)
-            .slice(0, 20)
+            .slice(0, 30)
+        const highlightRegExp = new RegExp(this.state.searchValues.join('|'))
 
         return (
             <m.Collection>
-                {filteredSecretNames.map((secretName, i) => (
-                    <m.CollectionItem key={`secret-${i}`}>
-                        {secretName.split('/').join(' > ')}
-                    </m.CollectionItem>
-                ))}
+                {filteredSecretNames.map((secretName, i) => {
+                    const splittedSecretName = secretName.split('/')
+                    return (
+                        <m.CollectionItem key={`secret-${i}`}>
+                            {splittedSecretName.reduce(
+                                (result: string[], segment, currentIndex) => {
+                                    const extendedResult = result.concat(
+                                        this.getHighlightedSegment(segment, highlightRegExp)
+                                    )
+
+                                    if (currentIndex < splittedSecretName.length - 1) {
+                                        extendedResult.push(' > ')
+                                    }
+
+                                    return extendedResult
+                                },
+                                []
+                            )}
+                        </m.CollectionItem>
+                    )
+                })}
             </m.Collection>
         )
     }
 
-    private getHighlighted = () => {}
+    private getHighlightedSegment = (segment: string, highlightRegExp: RegExp) =>
+        replace(segment, highlightRegExp, (match: string, offset: number) => {
+            return <strong key={`highlight-${offset}`}>{match}</strong>
+        })
 
     private filterMatchingSecrets = (secretName: string) => {
         if (this.state.searchValues.length > 0) {
