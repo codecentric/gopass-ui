@@ -42,14 +42,18 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
             .filter(this.filterMatchingSecrets)
             .slice(0, 20)
 
-        return filteredSecretNames.map((secretName, i) => (
-            <m.Breadcrumb key={`segment-${i}`}>
-                {secretName
-                    .split('/')
-                    .map((segment, j) => <m.MenuItem key={`segment-${j}`}>{segment}</m.MenuItem>)}
-            </m.Breadcrumb>
-        ))
+        return (
+            <m.Collection>
+                {filteredSecretNames.map((secretName, i) => (
+                    <m.CollectionItem key={`secret-${i}`}>
+                        {secretName.split('/').join(' > ')}
+                    </m.CollectionItem>
+                ))}
+            </m.Collection>
+        )
     }
+
+    private getHighlighted = () => {}
 
     private filterMatchingSecrets = (secretName: string) => {
         if (this.state.searchValues.length > 0) {

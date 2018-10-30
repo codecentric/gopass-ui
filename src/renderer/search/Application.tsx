@@ -13,8 +13,16 @@ export default class Application extends React.Component<any, { searchValue: str
     public render() {
         return (
             <div>
-                <m.Input placeholder="filter..." onChange={this.onChangeSearch} />
-                <SearchResults search={this.state.searchValue} />
+                <m.Row>
+                    <m.Col s={12}>
+                        <m.Input placeholder="filter..." onChange={this.onChangeSearch} />
+                    </m.Col>
+                </m.Row>
+                <m.Row>
+                    <m.Col s={12}>
+                        <SearchResults search={this.state.searchValue} />
+                    </m.Col>
+                </m.Row>
             </div>
         )
     }
