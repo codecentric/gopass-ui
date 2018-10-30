@@ -1,4 +1,4 @@
-import Gopass from '../../src/Gopass'
+import Gopass from '../../src/renderer/service/Gopass'
 
 describe('Gopass', () => {
     it('should successfully return a password', () => {
@@ -7,5 +7,9 @@ describe('Gopass', () => {
 
     it('should fail on missing key', () => {
         return expect(Gopass.show('some/unknown/key')).rejects.toThrow()
+    })
+
+    it('should list some secret names', () => {
+        return expect(Gopass.getAllSecretNames()).resolves.toBeInstanceOf(Array)
     })
 })
