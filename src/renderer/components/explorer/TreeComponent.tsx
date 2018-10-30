@@ -5,6 +5,7 @@ export interface Child {
     name: string
     children?: Child[]
     loading?: boolean
+    entryId?: any
 }
 
 export interface Tree {
@@ -15,6 +16,7 @@ export interface Tree {
 
 export interface TreeComponentProps {
     tree: Tree
+    onLeafClick: (leafId: string) => void
 }
 
 export default class TreeComponent extends React.Component<TreeComponentProps, any> {
@@ -25,6 +27,10 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
     }
 
     onToggle(node: any, toggled: boolean) {
+        if ((!node.children || node.children.length === 0) && !!node.entryId) {
+            this.props.onLeafClick(node.entryId)
+        }
+
         if (this.state.cursor) {
             this.state.cursor.active = false
         }

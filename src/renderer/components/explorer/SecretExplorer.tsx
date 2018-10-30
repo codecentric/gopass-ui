@@ -8,6 +8,8 @@ interface SecretExplorerState {
     tree?: Tree
 }
 
+const testLeafClick = async (secretName: string) => console.log(await Gopass.show(secretName))
+
 export default class SecretExplorer extends React.Component<any, SecretExplorerState> {
     constructor(props: any) {
         super(props)
@@ -22,6 +24,11 @@ export default class SecretExplorer extends React.Component<any, SecretExplorerS
     }
 
     render() {
-        return <TreeComponent tree={this.state.tree ? this.state.tree : ExampleTreeData} />
+        return (
+            <TreeComponent
+                tree={this.state.tree ? this.state.tree : ExampleTreeData}
+                onLeafClick={testLeafClick}
+            />
+        )
     }
 }

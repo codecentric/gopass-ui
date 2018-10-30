@@ -19,12 +19,17 @@ export default class SecretsDirectoryService {
             const segments = secretPath.split('/')
 
             let tempDir = directory
-            for (const segment of segments) {
+            segments.forEach((segment: string, index: number) => {
                 if (!tempDir[segment]) {
-                    tempDir[segment] = {}
+                    if (index + 1 === segments.length) {
+                        tempDir[segment] = secretPath
+                    } else {
+                        tempDir[segment] = {}
+                    }
                 }
+
                 tempDir = tempDir[segment]
-            }
+            })
         }
 
         return directory
@@ -46,16 +51,24 @@ export default class SecretsDirectoryService {
         return tree
     }
 
-    private static getChildren(directory: any): Child[] | undefined {
+    private static getChildren(directory: any | string): Child[] | undefined {
+        if (!(directory instanceof Object)) {
+            return undefined
+        }
+
         const keys = Object.keys(directory)
 
         if (keys.length === 0) {
             return undefined
         }
 
-        return keys.map(name => ({
-            name,
-            children: SecretsDirectoryService.getChildren(directory[name])
-        }))
+        return keys.map(name => {
+            const children = SecretsDirectoryService.getChildren(directory[name])
+            return {
+                name,
+                children,
+                entryId: children && children.length > 0 ? undefined : directory[name]
+            }
+        })
     }
 }

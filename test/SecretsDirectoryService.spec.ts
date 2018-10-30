@@ -21,28 +21,59 @@ describe('SecretsDirectoryService', () => {
                             children: [
                                 {
                                     children: [
-                                        { children: undefined, name: 'password' },
-                                        { children: undefined, name: 'username' }
+                                        {
+                                            children: undefined,
+                                            entryId: 'codecentric/common/github/password',
+                                            name: 'password'
+                                        },
+                                        {
+                                            children: undefined,
+                                            entryId: 'codecentric/common/github/username',
+                                            name: 'username'
+                                        }
                                     ],
+                                    entryId: undefined,
                                     name: 'github'
                                 },
                                 {
                                     children: [
-                                        { children: undefined, name: 'password' },
-                                        { children: undefined, name: 'username' }
+                                        {
+                                            children: undefined,
+                                            entryId: 'codecentric/common/gitlab/password',
+                                            name: 'password'
+                                        },
+                                        {
+                                            children: undefined,
+                                            entryId: 'codecentric/common/gitlab/username',
+                                            name: 'username'
+                                        }
                                     ],
+                                    entryId: undefined,
                                     name: 'gitlab'
                                 }
                             ],
+                            entryId: undefined,
                             name: 'common'
                         },
                         {
                             children: [
-                                { children: [{ children: undefined, name: 'notes' }], name: 'some' }
+                                {
+                                    children: [
+                                        {
+                                            children: undefined,
+                                            entryId: 'codecentric/customers/some/notes',
+                                            name: 'notes'
+                                        }
+                                    ],
+                                    entryId: undefined,
+                                    name: 'some'
+                                }
                             ],
+                            entryId: undefined,
                             name: 'customers'
                         }
                     ],
+                    entryId: undefined,
                     name: 'codecentric'
                 }
             ],
