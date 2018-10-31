@@ -108,7 +108,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                 break
             case 'down':
             case 'tab':
-                if (this.state.selectedItemIndex < this.state.filteredSecretNames.length) {
+                if (this.state.selectedItemIndex < this.state.filteredSecretNames.length - 1) {
                     this.setState({
                         selectedItemIndex: this.state.selectedItemIndex + 1
                     })

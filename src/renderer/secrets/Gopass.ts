@@ -1,6 +1,10 @@
 import { exec } from 'child_process'
 
 export default class Gopass {
+    public static async copy(key: string): Promise<string> {
+        return Gopass.execute(`show ${key} -c`)
+    }
+
     public static async show(key: string): Promise<string> {
         return Gopass.execute(`show ${key}`)
     }
