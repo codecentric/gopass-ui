@@ -3,7 +3,7 @@ import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
 
-import Application from './main-app/Application'
+import MainApplication from './main-app/MainApplication'
 import store from './state/store'
 
 import 'materialize-css/dist/css/materialize.css'
@@ -16,7 +16,7 @@ document.body.appendChild(mainElement)
 ReactDOM.render(
     <AppContainer>
         <Provider store={store}>
-            <Application />
+            <MainApplication />
         </Provider>
     </AppContainer>,
     mainElement

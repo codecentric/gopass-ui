@@ -3,7 +3,7 @@ import { Tree } from '../main-app/explorer/TreeComponent'
 export default class SecretsDirectoryService {
     public static secretPathsToTree(secretPaths: string[]): Tree {
         const directory = SecretsDirectoryService.secretPathsToDirectory(secretPaths)
-        return SecretsDirectoryService.directoryToTree(directory)
+        return SecretsDirectoryService.directoryToTree(directory, secretPaths.length)
     }
 
     /**
@@ -39,18 +39,18 @@ export default class SecretsDirectoryService {
      *  from: "{ metro: { service: { ncr: { cassandra: { password: {} } } } }  }"
      *  to Tree interface
      */
-    private static directoryToTree(directory: any): Tree {
-        const children: Tree[] = []
+    private static directoryToTree(directory: any, totalEntries: number): Tree {
+        const openAllEntries = totalEntries <= 15
         const tree: Tree = {
             name: 'Stores',
             toggled: true,
-            children: SecretsDirectoryService.getChildren(directory, true)
+            children: SecretsDirectoryService.getChildren(directory, true, openAllEntries)
         }
 
         return tree
     }
 
-    private static getChildren(directory: any | string, toggled: boolean = false): Tree[] | undefined {
+    private static getChildren(directory: any | string, toggled: boolean = false, toggleAll: boolean = false): Tree[] | undefined {
         if (!(directory instanceof Object)) {
             return undefined
         }
@@ -60,8 +60,12 @@ export default class SecretsDirectoryService {
             return undefined
         }
 
+        if (toggleAll) {
+            toggled = true
+        }
+
         return keys.map(name => {
-            const children = SecretsDirectoryService.getChildren(directory[name])
+            const children = SecretsDirectoryService.getChildren(directory[name], false, toggleAll)
             return {
                 name,
                 children,
