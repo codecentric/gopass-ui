@@ -17,15 +17,12 @@ export interface TreeComponentProps {
     onLeafClick: (leafId: string) => void
 }
 
-const decorators = {
-    ...t.decorators
-}
-
-decorators.Header = ({ style, node }: any) => {
-    const iconStyle = { marginRight: '5px' }
+t.decorators.Header = ({ style, node }: any) => {
     let iconType = node.toggled ? 'chevron_right' : 'folder'
 
     if (!node.children && node.entryId) {
+        iconType = 'comment'
+
         credentialIconMappings.forEach((mapping: CredentialIconMapping) => {
             const includesAnyCharacteristica = mapping.mustIncludeOnOf.find(needle =>
                 node.name.includes(needle)
@@ -35,15 +32,11 @@ decorators.Header = ({ style, node }: any) => {
                 iconType = mapping.icon
             }
         })
-
-        if (iconType === 'folder') {
-            iconType = 'comment'
-        }
     }
 
     return (
         <div style={style.base}>
-            <m.Icon small style={iconStyle}>
+            <m.Icon small>
                 {iconType}
             </m.Icon>
 
@@ -73,6 +66,10 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
             node.toggled = toggled
         }
         this.setState({ cursor: node })
+
+        if (node.children && node.children.length === 1) {
+            this.onToggle(node.children[0], true)
+        }
     }
 
     render() {
@@ -80,7 +77,7 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
             <div>
                 <t.Treebeard
                     data={this.props.tree}
-                    decorators={decorators}
+                    decorators={t.decorators}
                     onToggle={this.onToggle}
                     style={globalStyle}
                 />
