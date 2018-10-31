@@ -16,6 +16,7 @@ export default class Application extends React.Component<any, { searchValue: str
 
     public componentDidMount() {
         const element = document.getElementById('serach')
+
         if (element) {
             element.focus()
             element.click()
@@ -27,12 +28,12 @@ export default class Application extends React.Component<any, { searchValue: str
             <div>
                 <m.Row>
                     <m.Col s={12}>
-                        <m.Input id='serach' placeholder='filter...' onChange={this.onChangeSearch} onKeyDown={ this.preventNavigationKeys } s={12} />
+                        <m.Input id='serach' placeholder='Search...' onChange={ this.onChangeSearch } onKeyDown={ this.preventNavigationKeys } s={12} />
                     </m.Col>
                 </m.Row>
                 <m.Row>
                     <m.Col s={12}>
-                        <SearchResults search={this.state.searchValue} />
+                        <SearchResults search={ this.state.searchValue } />
                     </m.Col>
                 </m.Row>
             </div>
