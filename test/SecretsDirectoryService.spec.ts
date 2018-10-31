@@ -1,4 +1,4 @@
-import SecretsDirectoryService from '../src/renderer/service/SecretsDirectoryService'
+import SecretsDirectoryService from '../src/renderer/secrets/SecretsDirectoryService'
 import { Tree } from '../src/renderer/components/explorer/TreeComponent'
 
 describe('SecretsDirectoryService', () => {
@@ -12,7 +12,6 @@ describe('SecretsDirectoryService', () => {
         ]
         const tree: Tree = SecretsDirectoryService.secretPathsToTree(secretPaths)
 
-        // tslint:disable-next-line
         expect(tree).toEqual({
             children: [
                 {

@@ -43,13 +43,11 @@ decorators.Header = ({ style, node }: any) => {
 
     return (
         <div style={style.base}>
-            <div style={style.title}>
-                <m.Icon small style={iconStyle}>
-                    {iconType}
-                </m.Icon>
+            <m.Icon small style={iconStyle}>
+                {iconType}
+            </m.Icon>
 
-                {node.name}
-            </div>
+            {node.name}
         </div>
     )
 }

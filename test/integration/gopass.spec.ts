@@ -1,4 +1,4 @@
-import Gopass from '../../src/renderer/service/Gopass'
+import Gopass from '../../src/renderer/secrets/Gopass'
 
 describe('Gopass', () => {
     it('should successfully return a password', () => {

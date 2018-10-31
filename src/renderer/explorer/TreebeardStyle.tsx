@@ -13,13 +13,13 @@ export const globalStyle = {
         node: {
             base: {
                 position: 'relative',
-                marginLeft: '15px',
-                marginTop: '5px'
+                marginLeft: '27px',
+                marginTop: '3px'
             },
             link: {
                 cursor: 'pointer',
                 position: 'relative',
-                padding: '0px 5px',
+                padding: '0px 500px',
                 display: 'block'
             },
             activeLink: {
@@ -27,12 +27,7 @@ export const globalStyle = {
             },
             toggle: {
                 base: {
-                    position: 'relative',
-                    display: 'inline-block',
-                    verticalAlign: 'top',
-                    marginLeft: '-5px',
-                    height: '24px',
-                    width: '24px'
+                    display: 'none',
                 },
                 wrapper: {
                     position: 'absolute',
@@ -41,8 +36,8 @@ export const globalStyle = {
                     margin: '-7px 0 0 -7px',
                     height: '14px'
                 },
-                height: 12,
-                width: 12,
+                height: 0,
+                width: 0,
                 arrow: {
                     fill: '#FFFFFF',
                     strokeWidth: 0
@@ -52,25 +47,12 @@ export const globalStyle = {
                 base: {
                     display: 'inline-block',
                     verticalAlign: 'top',
-                    color: '#9DA5AB'
-                },
-                connector: {
-                    width: '2px',
-                    height: '12px',
-                    borderLeft: 'solid 2px black',
-                    borderBottom: 'solid 2px black',
-                    position: 'absolute',
-                    top: '0px',
-                    left: '-21px'
-                },
-                title: {
-                    lineHeight: '24px',
-                    verticalAlign: 'middle'
+                    color: '#555'
                 }
             },
             subtree: {
                 listStyle: 'none',
-                paddingLeft: '19px'
+                paddingLeft: '60px'
             },
             loading: {
                 color: '#E2C089'

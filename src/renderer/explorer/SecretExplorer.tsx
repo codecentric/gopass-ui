@@ -1,7 +1,7 @@
 import TreeComponent, { Tree } from './TreeComponent'
 import * as React from 'react'
-import Gopass from '../../service/Gopass'
-import SecretsDirectoryService from '../../service/SecretsDirectoryService'
+import Gopass from '../secrets/Gopass'
+import SecretsDirectoryService from '../secrets/SecretsDirectoryService'
 
 export interface SecretExplorerProps {
     onSecretClick: (name: string, value: string) => void

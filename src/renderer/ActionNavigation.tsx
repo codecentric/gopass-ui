@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import Gopass from '../service/Gopass'
+import Gopass from './secrets/Gopass'
 
 interface ActionButtonProps {
     icon: string

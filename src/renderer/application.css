@@ -6,9 +6,18 @@
     bottom: 0;
     width: 450px;
     overflow: auto;
+    min-width: 300px;
+    /*resize: horizontal;*/
     border-right: 1px solid rgba(0, 0, 0, 0.14);
 }
 
+.secret-explorer i.material-icons {
+    position: relative;
+    top: 7px;
+    margin-right: 3px;
+}
+
 .main-content {
+    resize: both;
     padding-left: 450px;
 }

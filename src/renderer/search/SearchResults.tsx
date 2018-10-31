@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import * as replace from 'string-replace-to-array'
-import Gopass from '../service/Gopass'
+import Gopass from '../secrets/Gopass'
 
 interface SearchResultsState {
     results: string[]
