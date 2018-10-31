@@ -23,7 +23,7 @@ const decorators = {
 
 decorators.Header = ({ style, node }: any) => {
     const iconStyle = { marginRight: '5px' }
-    let iconType = node.toggled ? 'folder_open' : 'folder'
+    let iconType = node.toggled ? 'chevron_right' : 'folder'
 
     if (!node.children && node.entryId) {
         credentialIconMappings.forEach((mapping: CredentialIconMapping) => {
