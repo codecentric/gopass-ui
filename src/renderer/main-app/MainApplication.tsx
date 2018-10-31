@@ -38,7 +38,7 @@ export default class MainApplication extends React.Component<any, MainApplicatio
                 <div className='main-content'>
                     <m.Row>
                         <m.Col s={12}>
-                            <ActionNavigation />
+                            <ActionNavigation secretName={secretName} secretValue={secretValue} />
                             <SecretDetails secretName={secretName} secretValue={secretValue} />
                         </m.Col>
                     </m.Row>

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import Gopass from '../../secrets/Gopass'
+import { SecretState } from '../MainApplication'
 
 interface ActionButtonProps {
     icon: string
@@ -21,8 +22,12 @@ const ActionButton = ({ icon, onClick, style }: ActionButtonProps) => (
 )
 
 const noop = () => undefined
-export default class ActionNavigation extends React.Component<any, any> {
+type ActionNavigationProps = SecretState
+export default class ActionNavigation extends React.Component<ActionNavigationProps, any> {
     render() {
+        const { secretName, secretValue } = this.props
+        const secretIsSet = secretName || secretValue
+
         return (
             <div style={{ padding: '10px 0px' }}>
                 <ActionButton icon='add' onClick={noop} />
@@ -31,6 +36,14 @@ export default class ActionNavigation extends React.Component<any, any> {
                     onClick={this.refreshGopassStores}
                     style={{ marginLeft: '20px' }}
                 />
+                {
+                    secretIsSet ?
+                        <ActionButton
+                            icon='edit'
+                            onClick={noop}
+                            style={{ marginLeft: '20px' }}
+                        /> : null
+                }
             </div>
         )
     }

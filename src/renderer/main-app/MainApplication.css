@@ -12,7 +12,8 @@
 }
 
 .secret-explorer .search-bar {
-    padding: 0 38px !important;
+    width: 84% !important;
+    padding: 0 8% !important;
 }
 
 .secret-explorer i.material-icons {
