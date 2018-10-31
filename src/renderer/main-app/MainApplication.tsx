@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
+import * as KeyboardEventHandler from 'react-keyboard-event-handler'
 import SecretExplorer from './explorer/SecretExplorer'
 import ActionNavigation from './content/ActionNavigation'
 import SecretDetails from './content/SecretDetails'
@@ -29,7 +30,8 @@ export default class MainApplication extends React.Component<any, MainApplicatio
         return (
             <div className='wrapper'>
                 <div className='secret-explorer'>
-                    <m.Input className='search-bar' placeholder='Search...' onChange={this.onSearchChange} />
+                    <KeyboardEventHandler handleKeys={ [ 'esc' ] } handleFocusableElements onKeyEvent={ this.onCancelSearch } />
+                    <m.Input className='search-bar' value={searchValue} placeholder='Search...' onChange={this.onSearchChange} />
                     <SecretExplorer searchValue={searchValue} onSecretClick={this.onSecretClick} />
                 </div>
 
@@ -47,6 +49,10 @@ export default class MainApplication extends React.Component<any, MainApplicatio
 
     private onSearchChange = (event: any, searchValue: string) => {
         this.setState({ ...this.state, searchValue })
+    }
+
+    private onCancelSearch = (event: any, searchValue: string) => {
+        this.onSearchChange(event, '')
     }
 
     private onSecretClick = (secretName: string, secretValue: string) => {
