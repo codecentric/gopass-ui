@@ -14,12 +14,20 @@ export default class Application extends React.Component<any, { searchValue: str
         }
     }
 
+    public componentDidMount() {
+        const element = document.getElementById('serach')
+        if (element) {
+            element.focus()
+            element.click()
+        }
+    }
+
     public render() {
         return (
             <div>
                 <m.Row>
                     <m.Col s={12}>
-                        <m.Input placeholder='filter...' onChange={this.onChangeSearch} onKeyDown={ this.preventNavigationKeys }/>
+                        <m.Input id='serach' placeholder='filter...' onChange={this.onChangeSearch} onKeyDown={ this.preventNavigationKeys } s={12} />
                     </m.Col>
                 </m.Row>
                 <m.Row>
