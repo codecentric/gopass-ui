@@ -17,7 +17,7 @@ export default class Application extends React.Component<any, { searchValue: str
             <div>
                 <m.Row>
                     <m.Col s={12}>
-                        <m.Input placeholder="filter..." onChange={this.onChangeSearch} />
+                        <m.Input placeholder='filter...' onChange={this.onChangeSearch} />
                     </m.Col>
                 </m.Row>
                 <m.Row>

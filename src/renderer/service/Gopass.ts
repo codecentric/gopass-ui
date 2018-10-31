@@ -5,8 +5,8 @@ export default class Gopass {
         return Gopass.execute(`show ${key}`)
     }
 
-    public static async sync(): Promise<string> {
-        return Gopass.execute('sync')
+    public static async sync(): Promise<void> {
+        await Gopass.execute('sync')
     }
 
     public static async getAllSecretNames(): Promise<string[]> {

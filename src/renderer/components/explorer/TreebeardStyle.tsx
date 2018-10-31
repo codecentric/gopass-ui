@@ -2,17 +2,19 @@ export const globalStyle = {
     tree: {
         base: {
             listStyle: 'none',
-            backgroundColor: '#21252B',
+            backgroundColor: '#FFFFFF',
             margin: 0,
             padding: 0,
-            color: '#9DA5AB',
-            fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
+            color: '#000000',
+            fontFamily:
+                '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;',
             fontSize: '18px'
         },
         node: {
             base: {
                 position: 'relative',
-                marginLeft: '10px'
+                marginLeft: '15px',
+                marginTop: '5px'
             },
             link: {
                 cursor: 'pointer',
@@ -21,7 +23,7 @@ export const globalStyle = {
                 display: 'block'
             },
             activeLink: {
-                background: '#31363F'
+                background: '#FFFFFF'
             },
             toggle: {
                 base: {
@@ -42,7 +44,7 @@ export const globalStyle = {
                 height: 12,
                 width: 12,
                 arrow: {
-                    fill: '#9DA5AB',
+                    fill: '#FFFFFF',
                     strokeWidth: 0
                 }
             },
@@ -73,33 +75,6 @@ export const globalStyle = {
             loading: {
                 color: '#E2C089'
             }
-        }
-    }
-}
-
-export const customStyle = {
-    component: {
-        width: '50%',
-        display: 'inline-block',
-        verticalAlign: 'top',
-        padding: '20px',
-        '@media (max-width: 640px)': {
-            width: '100%',
-            display: 'block'
-        }
-    },
-    searchBox: {
-        padding: '20px 20px 0 20px'
-    },
-    viewer: {
-        base: {
-            fontSize: '12px',
-            whiteSpace: 'pre-wrap',
-            backgroundColor: '#282C34',
-            border: 'solid 1px black',
-            padding: '20px',
-            color: '#9DA5AB',
-            minHeight: '250px'
         }
     }
 }

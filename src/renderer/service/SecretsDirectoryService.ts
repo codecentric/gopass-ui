@@ -1,4 +1,4 @@
-import { Tree, Child } from '../components/explorer/TreeComponent'
+import { Tree } from '../components/explorer/TreeComponent'
 
 export default class SecretsDirectoryService {
     public static secretPathsToTree(secretPaths: string[]): Tree {
@@ -41,22 +41,24 @@ export default class SecretsDirectoryService {
      *  to Tree interface
      */
     private static directoryToTree(directory: any): Tree {
-        const children: Child[] = []
+        const children: Tree[] = []
         const tree: Tree = {
             name: 'Stores',
             toggled: true,
-            children: SecretsDirectoryService.getChildren(directory)
+            children: SecretsDirectoryService.getChildren(directory, true)
         }
 
         return tree
     }
 
-    private static getChildren(directory: any | string): Child[] | undefined {
+    private static getChildren(
+        directory: any | string,
+        toggled: boolean = false
+    ): Tree[] | undefined {
         if (!(directory instanceof Object)) {
             return undefined
         }
-
-        const keys = Object.keys(directory)
+        const keys = Object.keys(directory).filter(key => key !== '')
 
         if (keys.length === 0) {
             return undefined
@@ -67,6 +69,7 @@ export default class SecretsDirectoryService {
             return {
                 name,
                 children,
+                toggled,
                 entryId: children && children.length > 0 ? undefined : directory[name]
             }
         })

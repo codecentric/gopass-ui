@@ -1,19 +1,15 @@
 import * as React from 'react'
 import * as t from 'react-treebeard'
 import * as m from 'react-materialize'
-import { customStyle, globalStyle } from './TreebeardStyle'
-
-export interface Child {
-    name: string
-    children?: Child[]
-    loading?: boolean
-    entryId?: any
-}
+import { globalStyle } from './TreebeardStyle'
+import credentialIconMappings, { CredentialIconMapping } from './CredentialIconMappings'
 
 export interface Tree {
     name: string
-    toggled: boolean
-    children?: Child[]
+    toggled?: boolean
+    loading?: boolean
+    children?: Tree[]
+    entryId?: any
 }
 
 export interface TreeComponentProps {
@@ -26,8 +22,24 @@ const decorators = {
 }
 
 decorators.Header = ({ style, node }: any) => {
-    const iconType = node.children ? 'folder' : 'insert_drive_file'
     const iconStyle = { marginRight: '5px' }
+    let iconType = 'folder'
+
+    if (!node.children && node.entryId) {
+        credentialIconMappings.forEach((mapping: CredentialIconMapping) => {
+            const includesAnyCharacteristica = mapping.mustIncludeOnOf.find(needle =>
+                node.name.includes(needle)
+            )
+
+            if (includesAnyCharacteristica) {
+                iconType = mapping.icon
+            }
+        })
+
+        if (iconType === 'folder') {
+            iconType = 'comment'
+        }
+    }
 
     return (
         <div style={style.base}>

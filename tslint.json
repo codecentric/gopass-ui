@@ -21,6 +21,7 @@
         "semicolon": [true, "never"],
         "jsx-equals-spacing": [true, "never"],
         "jsx-no-string-ref": true,
+        "quotemark": [true, "single"],
         "jsx-self-close": true,
         "jsx-wrap-multiline": true,
         "import-name": false,
