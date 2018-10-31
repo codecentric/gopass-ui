@@ -9,6 +9,7 @@ const NUMBER_OF_SEARCH_RESULTS = 15
 interface SearchResultsState {
     results: string[]
     secretNames: string[]
+    filteredSecretNames: string[]
     searchValues: string[]
     selectedItemIndex: number
 }
@@ -22,6 +23,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
         this.state = {
             results: [],
             secretNames: [],
+            filteredSecretNames: [],
             searchValues: [],
             selectedItemIndex: 0
         }
@@ -33,39 +35,27 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
         this.setState({
             secretNames
         })
+
+        this.updateFilteredSecrets()
     }
 
     public componentWillReceiveProps(props: SearchResultsProps) {
-        if (props.search) {
-            this.setState({
-                searchValues: props.search
-                    .split(' ')
-                    .map(searchValue => searchValue.trim())
-                    .filter(searchValue => searchValue !== ''),
-                selectedItemIndex: 0
-            })
-        } else {
-            this.setState({
-                searchValues: [],
-                selectedItemIndex: 0
-            })
-        }
+        this.updateFilteredSecrets(props.search)
     }
 
     public render() {
-        const filteredSecretNames = this.state.secretNames.filter(this.filterMatchingSecrets).slice(0, NUMBER_OF_SEARCH_RESULTS)
         const highlightRegExp = this.state.searchValues.length > 0 ? new RegExp(`(${this.state.searchValues.join('|')})`, 'g') : undefined
 
         return (
             <div>
                 <KeyboardEventHandler handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter' ] } handleFocusableElements onKeyEvent={ this.onKeyEvent } />
                 <m.Collection>
-                    {filteredSecretNames.map((secretName, i) => {
+                    { this.state.filteredSecretNames.map((secretName, i) => {
                         const splittedSecretName = secretName.split('/')
                         const isSelected = i === this.state.selectedItemIndex ? 'selected' : undefined
 
                         return (
-                            <m.CollectionItem key={`secret-${i}`} className={ isSelected }>
+                            <m.CollectionItem key={ `secret-${i}` } className={ isSelected }>
                                 {splittedSecretName.reduce(
                                     (result: string[], segment, currentIndex) => {
                                         const extendedResult = result.concat(
@@ -78,14 +68,31 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
 
                                         return extendedResult
                                     },
-                                    []
+                                    [ ]
                                 )}
                             </m.CollectionItem>
                         )
-                    })}
+                    } ) }
                 </m.Collection>
             </div>
         )
+    }
+
+    private updateFilteredSecrets = (search?: string) => {
+        if (search) {
+            const searchValues = search.split(' ').map(searchValue => searchValue.trim())
+            this.setState({
+                searchValues,
+                filteredSecretNames: this.state.secretNames.filter(this.filterMatchingSecrets(searchValues)).slice(0, NUMBER_OF_SEARCH_RESULTS),
+                selectedItemIndex: 0
+            })
+        } else {
+            this.setState({
+                searchValues: [],
+                filteredSecretNames: this.state.secretNames.slice(0, NUMBER_OF_SEARCH_RESULTS),
+                selectedItemIndex: 0
+            })
+        }
     }
 
     private onKeyEvent = (key: string, event: any) => {
@@ -101,7 +108,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                 break
             case 'down':
             case 'tab':
-                if (this.state.selectedItemIndex < this.state.secretNames.length) {
+                if (this.state.selectedItemIndex < this.state.filteredSecretNames.length) {
                     this.setState({
                         selectedItemIndex: this.state.selectedItemIndex + 1
                     })
@@ -109,6 +116,13 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                 }
                 break
             case 'enter':
+                const secretKey = this.state.filteredSecretNames[this.state.selectedItemIndex]
+                if (secretKey) {
+                    Gopass.show(secretKey).then(value => {
+                        console.log(value)
+                    })
+                }
+
                 event.preventDefault()
                 break
         }
@@ -124,11 +138,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
         })
     }
 
-    private filterMatchingSecrets = (secretName: string) => {
-        if (this.state.searchValues.length > 0) {
-            return this.state.searchValues.every(searchValue => secretName.includes(searchValue))
-        }
-
-        return true
+    private filterMatchingSecrets = (searchValues: string[]) => (secretName: string) => {
+        return searchValues.every(searchValue => secretName.includes(searchValue))
     }
 }
