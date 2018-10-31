@@ -3,10 +3,11 @@ import * as m from 'react-materialize'
 import { SecretState } from '../MainApplication'
 
 const copySecretToClipboard = () => alert('Secret has been copied to your clipboard.')
-const copyToClipboardAction =
+const copyToClipboardAction = (
     <a key='copy-clipboard' onClick={copySecretToClipboard}>
         Copy to clipboard
     </a>
+)
 
 type SecretDetailsProps = SecretState
 export default class SecretDetails extends React.Component<SecretDetailsProps, any> {
@@ -20,7 +21,8 @@ export default class SecretDetails extends React.Component<SecretDetailsProps, a
                     secretIsChosen ?
                         <m.Card
                             title={secretName}
-                            actions={[copyToClipboardAction]}>
+                            actions={[copyToClipboardAction]}
+                        >
                             {secretValue}
                         </m.Card> :
                         <m.CardPanel>

@@ -60,16 +60,12 @@ export default class SecretsDirectoryService {
             return undefined
         }
 
-        if (toggleAll) {
-            toggled = true
-        }
-
         return keys.map(name => {
             const children = SecretsDirectoryService.getChildren(directory[name], false, toggleAll)
             return {
                 name,
                 children,
-                toggled,
+                toggled: toggleAll ? true : toggled,
                 entryId: children && children.length > 0 ? undefined : directory[name]
             }
         })
