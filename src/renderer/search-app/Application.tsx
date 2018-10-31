@@ -4,6 +4,8 @@ import SearchResults from './SearchResults'
 
 import './application.css'
 
+const NAVIGATION_KEYS = [ 'ArrowUp', 'ArrowDown', 'Enter', 'Tab' ]
+
 export default class Application extends React.Component<any, { searchValue: string }> {
     constructor(props: any) {
         super(props)
@@ -17,7 +19,7 @@ export default class Application extends React.Component<any, { searchValue: str
             <div>
                 <m.Row>
                     <m.Col s={12}>
-                        <m.Input placeholder='filter...' onChange={this.onChangeSearch} />
+                        <m.Input placeholder='filter...' onChange={this.onChangeSearch} onKeyDown={ this.preventNavigationKeys }/>
                     </m.Col>
                 </m.Row>
                 <m.Row>
@@ -27,6 +29,12 @@ export default class Application extends React.Component<any, { searchValue: str
                 </m.Row>
             </div>
         )
+    }
+
+    private preventNavigationKeys = (event: any) => {
+        if (NAVIGATION_KEYS.includes(event.key)) {
+            event.preventDefault()
+        }
     }
 
     private onChangeSearch = (_: any, searchValue: string) => {

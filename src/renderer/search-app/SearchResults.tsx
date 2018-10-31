@@ -44,6 +44,11 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                     .filter(searchValue => searchValue !== ''),
                 selectedItemIndex: 0
             })
+        } else {
+            this.setState({
+                searchValues: [],
+                selectedItemIndex: 0
+            })
         }
     }
 
@@ -53,7 +58,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
 
         return (
             <div>
-                <KeyboardEventHandler handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter' ] } onKeyEvent={ this.onKeyEvent } />
+                <KeyboardEventHandler handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter' ] } handleFocusableElements onKeyEvent={ this.onKeyEvent } />
                 <m.Collection>
                     {filteredSecretNames.map((secretName, i) => {
                         const splittedSecretName = secretName.split('/')
@@ -83,7 +88,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
         )
     }
 
-    private onKeyEvent = (key: string) => {
+    private onKeyEvent = (key: string, event: any) => {
         switch (key) {
             case 'shift+tab':
             case 'up':
@@ -91,6 +96,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                     this.setState({
                         selectedItemIndex: this.state.selectedItemIndex - 1
                     })
+                    event.preventDefault()
                 }
                 break
             case 'down':
@@ -99,10 +105,11 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                     this.setState({
                         selectedItemIndex: this.state.selectedItemIndex + 1
                     })
+                    event.preventDefault()
                 }
                 break
             case 'enter':
-
+                event.preventDefault()
                 break
         }
     }
