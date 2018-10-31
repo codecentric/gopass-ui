@@ -8,7 +8,7 @@
 Clone the repository with Git:
 
 ```bash
-git clone --depth=1 git@github.com:codecentric/gopass-ui.git
+git clone git@github.com:codecentric/gopass-ui.git
 ```
 
 And then install the dependencies:
@@ -20,11 +20,13 @@ npm install
 ```
 
 ## Usage
-Both processes have to be started **simultaneously** in different console tabs:
+The app is divided into two renderer processes. One for the global search window, one for the main explorer window.
+All processes have to be started **simultaneously** in different console tabs:
 
 ```bash
-npm run start-renderer-dev
-npm run start-main-dev
+npm run start-renderer-app-dev # for the main-app process
+npm run start-renderer-search-dev # for the search-app process
+npm run start-main-dev # the main process
 ```
 
 This will start the application with hot-reload so you can instantly start developing your application.
@@ -49,19 +51,6 @@ You can make builds for specific platforms (or multiple platforms) by using the 
 ```bash
 npm run dist -- -mwl
 ```
-
-## Husky and Prettier
-This project comes with both Husky and Prettier setup to ensure a consistent code style. 
-
-To change the code style, you can change the configuration in `.prettierrc`. 
-
-In case you want to get rid of this, you can removing the following from `package.json`:
-
-1. Remove `precommit` from the `scripts` section
-1. Remove the `lint-staged` section
-1. Remove `lint-staged`, `prettier`, `tslint-config-prettier`, and `husky` from the `devDependencies`
-
-Also remove `tslint-config-prettier` from the `extends` section in `tslint.json`.
 
 ## License
 MIT
