@@ -1,5 +1,5 @@
 import SecretsDirectoryService from '../src/renderer/secrets/SecretsDirectoryService'
-import { Tree } from '../src/renderer/components/explorer/TreeComponent'
+import { Tree } from '../src/renderer/explorer/TreeComponent'
 
 describe('SecretsDirectoryService', () => {
     it('should transform a list of secret names into tree structure', () => {
