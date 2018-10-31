@@ -1,4 +1,4 @@
-import { Tree } from '../explorer/TreeComponent'
+import { Tree } from '../main-app/explorer/TreeComponent'
 
 export default class SecretsDirectoryService {
     public static secretPathsToTree(secretPaths: string[]): Tree {

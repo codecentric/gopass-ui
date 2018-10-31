@@ -3,8 +3,8 @@ import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
 
-import Application from './Application'
-import store from './store'
+import Application from './main-app/Application'
+import store from './state/store'
 
 import 'materialize-css/dist/css/materialize.css'
 import 'material-design-icons/iconfont/material-icons.css'
