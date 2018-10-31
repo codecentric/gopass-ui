@@ -12,3 +12,8 @@ declare module '@emotion/styled' {
     const x: any
     export = x
 }
+
+declare module 'react-keyboard-event-handler' {
+    const x: any
+    export = x
+}

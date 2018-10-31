@@ -1,3 +1,7 @@
 strong {
     font-weight: bolder;
 }
+
+.collection .collection-item.selected {
+    background-color: #DCDCDC;
+}
