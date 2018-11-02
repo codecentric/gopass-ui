@@ -13,10 +13,7 @@ interface SecretTreeViewerState {
     tree: Tree
 }
 
-export default class SecretTreeViewer extends React.Component<
-    SecretTreeViewerProps,
-    SecretTreeViewerState
-    > {
+export default class SecretTreeViewer extends React.Component<SecretTreeViewerProps, SecretTreeViewerState> {
     constructor(props: any) {
         super(props)
         this.state = {

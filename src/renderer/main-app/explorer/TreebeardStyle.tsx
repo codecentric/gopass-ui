@@ -47,7 +47,8 @@ export const globalStyle = {
                 base: {
                     display: 'inline-block',
                     verticalAlign: 'top',
-                    color: '#555'
+                    color: '#555',
+                    cursor: 'pointer'
                 }
             },
             subtree: {
