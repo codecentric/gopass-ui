@@ -81,7 +81,7 @@ const setTray = () => {
 
 const createSearchWindow = () => {
     searchWindow = new BrowserWindow({
-        width: 600,
+        width: process.env.NODE_ENV !== 'production' ? 1200 : 600,
         height: 600,
         center: true,
         skipTaskbar: true,
