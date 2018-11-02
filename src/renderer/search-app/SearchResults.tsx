@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { ipcRenderer } from 'electron'
 import * as m from 'react-materialize'
 import * as replace from 'string-replace-to-array'
 import Gopass from '../secrets/Gopass'
@@ -124,6 +125,8 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                 if (secretKey) {
                     Gopass.copy(secretKey).then(result => {
                         alert(result)
+
+                        ipcRenderer.send('hideSearchWindow')
                     })
                 }
 

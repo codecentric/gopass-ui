@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, Menu, Tray } from 'electron'
+import { app, BrowserWindow, globalShortcut, Menu, Tray, ipcMain } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
 
@@ -147,6 +147,12 @@ const setup = async () => {
 
     setGlobalShortcut()
     setTray()
+
+    ipcMain.on('hideSearchWindow', () => {
+        if (searchWindow) {
+            searchWindow.hide()
+        }
+    })
 }
 
 app.on('ready', setup)
