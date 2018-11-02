@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
+import { HashRouter as Router, Route } from 'react-router-dom'
 import { AppContainer } from 'react-hot-loader'
 
 import MainApplication from './main-app/MainApplication'
@@ -16,7 +17,9 @@ document.body.appendChild(mainElement)
 ReactDOM.render(
     <AppContainer>
         <Provider store={store}>
-            <MainApplication />
+            <Router>
+                <Route component={ MainApplication }/>
+            </Router>
         </Provider>
     </AppContainer>,
     mainElement
