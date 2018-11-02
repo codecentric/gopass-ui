@@ -13,7 +13,6 @@ interface FullActionNavigationProps {
 }
 
 export default class FullActionNavigation extends React.Component<FullActionNavigationProps, any> {
-
     render() {
         const { secretName, history } = this.props
 

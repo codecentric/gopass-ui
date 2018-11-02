@@ -75,6 +75,7 @@
   },
   "homepage": "https://github.com/codecentric/gopass-ui",
   "devDependencies": {
+    "@types/electron-settings": "^3.1.1",
     "@types/electron-devtools-installer": "^2.0.2",
     "@types/jest": "^21.1.9",
     "@types/lodash": "^4.14.117",
@@ -119,7 +120,6 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
-    "@types/electron-settings": "^3.1.1",
     "electron-settings": "^3.2.0",
     "history": "^4.7.2",
     "lodash": "^4.17.11",

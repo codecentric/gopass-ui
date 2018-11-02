@@ -8,6 +8,7 @@ import EditSecret from './crud/EditSecret'
 import CreateSecret from './crud/CreateSecret'
 import FullActionNavigation from './navigation/FullActionNavigation'
 import SmallActionNavigation from './navigation/SmallActionNavigation'
+import Settings from './settings/Settings'
 
 /* tslint:disable:jsx-no-lambda */
 export default class MainContent extends React.Component<{ history: History }, {}> {
@@ -62,6 +63,16 @@ export default class MainContent extends React.Component<{ history: History }, {
                                     </div>
                                 )
                             }}
+                        />
+                        <Route
+                            path='/settings'
+                            exact
+                            render={(props: { history: History }) => (
+                                <div>
+                                    <SmallActionNavigation history={history} />
+                                    <Settings history={history} />
+                                </div>
+                            )}
                         />
                     </m.Col>
                 </m.Row>
