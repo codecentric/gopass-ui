@@ -1,51 +1,30 @@
-import TreeComponent, { Tree } from './TreeComponent'
 import * as React from 'react'
-import Gopass from '../../secrets/Gopass'
-import SecretsDirectoryService from '../../secrets/SecretsDirectoryService'
-import SecretsFilterService from '../../secrets/SecretsFilterService'
+import * as m from 'react-materialize'
+import { History } from 'history'
+import * as KeyboardEventHandler from 'react-keyboard-event-handler'
+import SecretTreeViewer from './SecretTreeViewer'
 
-export interface SecretExplorerProps {
-    onSecretClick: (name: string, value: string) => void
+interface SecretExplorerProps {
     searchValue: string
+    onSearchChange: (event: any, searchValue: string) => void
+    onCancelSearch: (event: any, searchValue: string) => void
+    history: History
 }
 
-interface SecretExplorerState {
-    tree: Tree
-}
-
-export default class SecretExplorer extends React.Component<
-    SecretExplorerProps,
-    SecretExplorerState
-    > {
-    constructor(props: any) {
-        super(props)
-        this.state = {
-            tree: {
-                name: 'Stores',
-                toggled: true,
-                children: []
-            }
-        }
-    }
-
-    async componentDidMount() {
-        const secretNames = await Gopass.getAllSecretNames()
-        const filteredSecretNames = SecretsFilterService.filterBySearch(secretNames, this.props.searchValue)
-        const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames)
-        this.setState({ ...this.state, tree })
-    }
-
-    async componentWillReceiveProps(props: SecretExplorerProps) {
-        if (props.searchValue !== this.props.searchValue) {
-            await this.componentDidMount()
-        }
-    }
-
+export default class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
     render() {
-        return <TreeComponent tree={this.state.tree} onLeafClick={this.onSecretClick} />
+        const { searchValue, onSearchChange, onCancelSearch } = this.props
+
+        return (
+            <div className='secret-explorer'>
+                <KeyboardEventHandler handleKeys={['esc']} handleFocusableElements onKeyEvent={onCancelSearch} />
+                <m.Input className='search-bar' value={searchValue} placeholder='Search...' onChange={onSearchChange} />
+                <SecretTreeViewer searchValue={searchValue} onSecretClick={this.onSecretClick} />
+            </div>
+        )
     }
 
-    onSecretClick = async (secretName: string) => {
-        this.props.onSecretClick(secretName, await Gopass.show(secretName))
+    private onSecretClick = (secretName: string) => {
+        this.props.history.replace(`/${btoa(secretName)}/view`)
     }
 }

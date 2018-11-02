@@ -6,9 +6,11 @@ import ActionButton from '../../common/ActionButton'
 
 export default class SmallActionNavigation extends React.Component<{ history: History }, any> {
     render() {
+        const onClick = () => this.props.history.replace('/')
+
         return (
             <ActionNavigationWrapper>
-                <ActionButton icon='arrow_back' onClick={() => this.props.history.replace('/')} />
+                <ActionButton icon='arrow_back' onClick={onClick} />
             </ActionNavigationWrapper>
         )
     }

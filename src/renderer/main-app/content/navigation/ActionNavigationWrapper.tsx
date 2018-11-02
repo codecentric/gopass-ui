@@ -7,12 +7,12 @@ const ActionNavigationWrapper = ({ children }: { children: any[] | any }) => {
     return (
         <div style={{ padding: '20px 10px 10px 10px' }}>
             {
+                /* provide 'btnStyle' to all children except the first one */
                 React.Children.map(definedChildren, (child: any, i) => {
                     if (i === 0) {
                         return child
-                    } else {
-                        return React.cloneElement(child, { style: btnStyle })
                     }
+                    return React.cloneElement(child, { style: btnStyle })
                 })
             }
         </div>

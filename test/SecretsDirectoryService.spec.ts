@@ -24,18 +24,18 @@ describe('SecretsDirectoryService', () => {
                                             children: undefined,
                                             entryId: 'codecentric/common/github/password',
                                             name: 'password',
-                                            toggled: false
+                                            toggled: true
                                         },
                                         {
                                             children: undefined,
                                             entryId: 'codecentric/common/github/username',
                                             name: 'username',
-                                            toggled: false
+                                            toggled: true
                                         }
                                     ],
                                     entryId: undefined,
                                     name: 'github',
-                                    toggled: false
+                                    toggled: true
                                 },
                                 {
                                     children: [
@@ -43,23 +43,23 @@ describe('SecretsDirectoryService', () => {
                                             children: undefined,
                                             entryId: 'codecentric/common/gitlab/password',
                                             name: 'password',
-                                            toggled: false
+                                            toggled: true
                                         },
                                         {
                                             children: undefined,
                                             entryId: 'codecentric/common/gitlab/username',
                                             name: 'username',
-                                            toggled: false
+                                            toggled: true
                                         }
                                     ],
                                     entryId: undefined,
                                     name: 'gitlab',
-                                    toggled: false
+                                    toggled: true
                                 }
                             ],
                             entryId: undefined,
                             name: 'common',
-                            toggled: false
+                            toggled: true
                         },
                         {
                             children: [
@@ -69,17 +69,17 @@ describe('SecretsDirectoryService', () => {
                                             children: undefined,
                                             entryId: 'codecentric/customers/some/notes',
                                             name: 'notes',
-                                            toggled: false
+                                            toggled: true
                                         }
                                     ],
                                     entryId: undefined,
                                     name: 'some',
-                                    toggled: false
+                                    toggled: true
                                 }
                             ],
                             entryId: undefined,
                             name: 'customers',
-                            toggled: false
+                            toggled: true
                         }
                     ],
                     entryId: undefined,
