@@ -2,6 +2,14 @@ strong {
     font-weight: bolder;
 }
 
+.collection .collection-item:hover {
+    background-color: #EBEBEB;
+}
+
 .collection .collection-item.selected {
     background-color: #DCDCDC;
+}
+
+.collection .collection-item {
+    cursor: pointer;
 }
