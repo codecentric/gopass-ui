@@ -47,6 +47,10 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
     public render() {
         const highlightRegExp = this.state.searchValues.length > 0 ? new RegExp(`(${this.state.searchValues.join('|')})`, 'g') : undefined
 
+        const onSelectCollectionItem = (secretKey: string) => () => {
+            this.selectSecret(secretKey)
+        }
+
         return (
             <div>
                 <KeyboardEventHandler
@@ -60,7 +64,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                         const isSelected = i === this.state.selectedItemIndex ? 'selected' : undefined
 
                         return (
-                            <m.CollectionItem key={ `secret-${i}` } className={ isSelected }>
+                            <m.CollectionItem key={ `secret-${i}` } className={ isSelected } onClick={ onSelectCollectionItem(secretName) }>
                                 {splittedSecretName.reduce(
                                     (result: string[], segment, currentIndex) => {
                                         const extendedResult = result.concat(
@@ -81,6 +85,14 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                 </m.Collection>
             </div>
         )
+    }
+
+    private selectSecret(secretKey: string) {
+        Gopass.copy(secretKey).then(result => {
+            alert(result)
+
+            ipcRenderer.send('hideSearchWindow')
+        })
     }
 
     private updateFilteredSecrets = (search?: string) => {
@@ -123,11 +135,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
             case 'enter':
                 const secretKey = this.state.filteredSecretNames[this.state.selectedItemIndex]
                 if (secretKey) {
-                    Gopass.copy(secretKey).then(result => {
-                        alert(result)
-
-                        ipcRenderer.send('hideSearchWindow')
-                    })
+                    this.selectSecret(secretKey)
                 }
 
                 event.preventDefault()
