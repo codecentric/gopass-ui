@@ -48,7 +48,11 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
 
         return (
             <div>
-                <KeyboardEventHandler handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter' ] } handleFocusableElements onKeyEvent={ this.onKeyEvent } />
+                <KeyboardEventHandler
+                    handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter' ] }
+                    handleFocusableElements
+                    onKeyEvent={ this.onKeyEvent }
+                />
                 <m.Collection>
                     { this.state.filteredSecretNames.map((secretName, i) => {
                         const splittedSecretName = secretName.split('/')
@@ -118,8 +122,8 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
             case 'enter':
                 const secretKey = this.state.filteredSecretNames[this.state.selectedItemIndex]
                 if (secretKey) {
-                    Gopass.show(secretKey).then(value => {
-                        console.log(value)
+                    Gopass.copy(secretKey).then(result => {
+                        alert(result)
                     })
                 }
 
