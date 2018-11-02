@@ -1,4 +1,4 @@
-# gopass-ui
+# Gopass UI
 
 ### UI for gopass
 
