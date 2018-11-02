@@ -6,8 +6,7 @@ export const globalStyle = {
             margin: 0,
             padding: 0,
             color: '#000000',
-            fontFamily:
-                '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;',
             fontSize: '18px'
         },
         node: {
