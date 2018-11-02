@@ -54,7 +54,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
         return (
             <div>
                 <KeyboardEventHandler
-                    handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter' ] }
+                    handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter', 'esc' ] }
                     handleFocusableElements
                     onKeyEvent={ this.onKeyEvent }
                 />
@@ -123,6 +123,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                     event.preventDefault()
                 }
                 break
+
             case 'down':
             case 'tab':
                 if (this.state.selectedItemIndex < this.state.filteredSecretNames.length - 1) {
@@ -132,6 +133,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                     event.preventDefault()
                 }
                 break
+
             case 'enter':
                 const secretKey = this.state.filteredSecretNames[this.state.selectedItemIndex]
                 if (secretKey) {
@@ -139,6 +141,10 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                 }
 
                 event.preventDefault()
+                break
+
+            case 'esc':
+                ipcRenderer.send('hideSearchWindow')
                 break
         }
     }
