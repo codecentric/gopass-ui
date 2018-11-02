@@ -5,8 +5,9 @@
   "main": "./dist/main.js",
   "scripts": {
     "build-main": "cross-env NODE_ENV=production webpack --config webpack.main.prod.config.js",
-    "build-renderer": "cross-env NODE_ENV=production webpack --config webpack.renderer.prod.config.js",
-    "build": "npm run build-main && npm run build-renderer",
+    "build-search-renderer": "cross-env NODE_ENV=production webpack --config webpack.renderer.search.prod.config.js",
+    "build-app-renderer": "cross-env NODE_ENV=production webpack --config webpack.renderer.app.prod.config.js",
+    "build": "npm run build-main && npm run build-app-renderer && npm run build-search-renderer",
     "start-renderer-search-dev": "webpack-dev-server --config webpack.renderer.search.dev.config.js",
     "start-renderer-app-dev": "webpack-dev-server --config webpack.renderer.app.dev.config.js",
     "start-main-dev": "webpack --config webpack.main.config.js && electron ./dist/main.js",
