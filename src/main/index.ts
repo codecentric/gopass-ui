@@ -25,8 +25,7 @@ const contextMenu = Menu.buildFromTemplate([
             if (searchWindow) {
                 searchWindow.show()
             } else {
-                createSearchWindow()
-                // searchWindow.show()
+                createSearchWindow(true)
             }
         }
     },
@@ -70,6 +69,8 @@ const setGlobalShortcut = (shortcut: string) => {
             } else {
                 searchWindow.show()
             }
+        } else {
+            createSearchWindow(true)
         }
     })
 }
@@ -95,13 +96,13 @@ const updateTray = (showTray: boolean) => {
     }
 }
 
-const createSearchWindow = () => {
+const createSearchWindow = (show = false) => {
     searchWindow = new BrowserWindow({
         width: process.env.NODE_ENV !== 'production' ? 1200 : 600,
         height: 600,
         center: true,
         skipTaskbar: true,
-        show: false,
+        show,
         resizable: false
     })
 
