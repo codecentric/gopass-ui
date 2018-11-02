@@ -52,5 +52,11 @@ You can make builds for specific platforms (or multiple platforms) by using the 
 npm run dist -- -mwl
 ```
 
+## Contributors
+
+| [<img alt="Jonas Verhoelen" src="https://avatars1.githubusercontent.com/u/6791360?v=4&s=200" width="200">](https://github.com/jverhoelen) | [<img alt="Matthias Rütten" src="https://avatars1.githubusercontent.com/u/2926623?v=4&s=200" width="200">](https://github.com/ruettenm) |
+:---: | :---:
+|[Jonas Verhoelen](https://github.com/jverhoelen) | [Matthias Rütten](https://github.com/ruettenm)|
+
 ## License
 MIT
