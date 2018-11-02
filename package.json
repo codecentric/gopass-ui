@@ -119,6 +119,8 @@
     "webpack-merge": "^4.1.1"
   },
   "dependencies": {
+    "@types/electron-settings": "^3.1.1",
+    "electron-settings": "^3.2.0",
     "history": "^4.7.2",
     "lodash": "^4.17.11",
     "material-design-icons": "^3.0.1",

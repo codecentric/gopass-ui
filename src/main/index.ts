@@ -1,6 +1,8 @@
-import { app, BrowserWindow, globalShortcut, Menu, Tray, ipcMain } from 'electron'
+import { app, BrowserWindow, globalShortcut, Menu, Tray, ipcMain, Event } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
+import { DEFAULT_SETTINGS, GopassUiHistorySettings } from '../renderer/shared/settings'
+import * as electronSettings from 'electron-settings'
 
 let mainWindow: BrowserWindow | null
 let searchWindow: BrowserWindow | null
@@ -54,8 +56,9 @@ const hideMainWindow = () => {
     }
 }
 
-const setGlobalShortcut = () => {
-    globalShortcut.register('CmdOrCtrl+Shift+p', () => {
+const setGlobalShortcut = (shortcut: string) => {
+    globalShortcut.unregisterAll()
+    globalShortcut.register(shortcut, () => {
         if (searchWindow) {
             if (searchWindow.isFocused()) {
                 searchWindow.hide()
@@ -66,17 +69,25 @@ const setGlobalShortcut = () => {
     })
 }
 
-const setTray = () => {
-    if (process.platform === 'darwin') {
-        tray = new Tray(path.join(__dirname, 'assets', 'icon-mac@2x.png'))
-    } else if (process.platform === 'linux') {
-        tray = new Tray(path.join(__dirname, 'assets', 'icon@2x.png'))
-    } else {
-        tray = new Tray(path.join(__dirname, 'assets', 'icon.png'))
-    }
+const updateTray = (showTray: boolean) => {
+    if (showTray) {
+        if (!tray || tray.isDestroyed()) {
+            if (process.platform === 'darwin') {
+                tray = new Tray(path.join(__dirname, 'assets', 'icon-mac@2x.png'))
+            } else if (process.platform === 'linux') {
+                tray = new Tray(path.join(__dirname, 'assets', 'icon@2x.png'))
+            } else {
+                tray = new Tray(path.join(__dirname, 'assets', 'icon.png'))
+            }
 
-    tray.setToolTip('gopass ui!')
-    tray.setContextMenu(contextMenu)
+            tray.setToolTip('Gopass UI')
+            tray.setContextMenu(contextMenu)
+        }
+    } else {
+        if (tray && !tray.isDestroyed()) {
+            tray.destroy()
+        }
+    }
 }
 
 const createSearchWindow = () => {
@@ -137,22 +148,52 @@ const createMainWindow = () => {
     })
 }
 
-const setup = async () => {
-    if (process.env.NODE_ENV !== 'production') {
-        await installExtensions()
-    }
+const getSettings = (): GopassUiHistorySettings => {
+    return electronSettings.get('settings') as any || DEFAULT_SETTINGS
+}
 
-    createMainWindow()
-    createSearchWindow()
-
-    setGlobalShortcut()
-    setTray()
-
+const listenEvents = () => {
     ipcMain.on('hideSearchWindow', () => {
         if (searchWindow) {
             searchWindow.hide()
         }
     })
+
+    ipcMain.on('getSettings', (event: Event) => {
+        event.returnValue = getSettings()
+    })
+
+    ipcMain.on('setSettings', (_: Event, value: GopassUiHistorySettings) => {
+        setGlobalShortcut(value.searchShortcut)
+        updateTray(value.showTray)
+        updateStartOnLoginConfiguration(value.startOnLogin)
+
+        electronSettings.set('settings', value as any)
+    })
+}
+
+const updateStartOnLoginConfiguration = (startOnLogin: boolean) => {
+    app.setLoginItemSettings({
+        openAtLogin: startOnLogin,
+        openAsHidden: true
+    })
+}
+
+const setup = async () => {
+    if (process.env.NODE_ENV !== 'production') {
+        await installExtensions()
+    }
+
+    const settings = getSettings()
+
+    createMainWindow()
+    createSearchWindow()
+
+    setGlobalShortcut(settings.searchShortcut)
+    updateTray(settings.showTray)
+    updateStartOnLoginConfiguration(settings.startOnLogin)
+
+    listenEvents()
 }
 
 app.on('ready', setup)

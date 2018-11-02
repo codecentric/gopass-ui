@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import Gopass from '../../../secrets/Gopass'
 import { History } from 'history'
 
 export default class CreateSecret extends React.Component<{ history: History }, { name?: string, secret?: string }> {
