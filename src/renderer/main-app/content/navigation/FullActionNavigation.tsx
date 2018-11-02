@@ -19,7 +19,7 @@ export default class FullActionNavigation extends React.Component<FullActionNavi
 
         return (
             <ActionNavigationWrapper>
-                <ActionButton icon='add' onClick={routeTo(history)(`/create-new-secret`)} />
+                <ActionButton icon='add' onClick={routeTo(history)('/create-new-secret')} />
                 <ActionButton
                     icon='refresh'
                     onClick={this.refreshGopassStores}
@@ -31,6 +31,7 @@ export default class FullActionNavigation extends React.Component<FullActionNavi
                             onClick={routeTo(history)(`/${btoa(secretName)}/edit`)}
                         /> : null
                 }
+                <ActionButton icon='settings' onClick={routeTo(history)('/settings')} />
             </ActionNavigationWrapper>
         )
     }

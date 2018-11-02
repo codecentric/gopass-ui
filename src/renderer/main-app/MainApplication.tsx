@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { Route, Switch, match } from 'react-router-dom'
+import { Route, match } from 'react-router-dom'
 import { History } from 'history'
 import * as KeyboardEventHandler from 'react-keyboard-event-handler'
 
@@ -8,11 +8,11 @@ import SecretExplorer from './explorer/SecretExplorer'
 import SecretDetails from './content/crud/SecretDetails'
 import EditSecret from './content/crud/EditSecret'
 import CreateSecret from './content/crud/CreateSecret'
-import ActionButton from './common/ActionButton'
 import FullActionNavigation from './content/navigation/FullActionNavigation'
 import SmallActionNavigation from './content/navigation/SmallActionNavigation'
 
 import './MainApplication.css'
+import Settings from "./content/settings/Settings"
 
 export interface SecretState {
     secretName: string
@@ -84,6 +84,12 @@ export default class MainApplication extends React.Component<MainApplicationProp
                                     </div>
                                 )
                             }} />
+                            <Route path='/settings' exact render={(props: { history: History }) => (
+                                <div>
+                                    <SmallActionNavigation history={history} />
+                                    <Settings history={history} />
+                                </div>
+                            )} />
                         </m.Col>
                     </m.Row>
                 </div>

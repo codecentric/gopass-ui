@@ -1,7 +1,7 @@
 import { app, BrowserWindow, globalShortcut, Menu, Tray, ipcMain, Event } from 'electron'
 import * as path from 'path'
 import * as url from 'url'
-import { DEFAULT_SETTINGS, GopassUiHistorySettings } from '../renderer/shared/settings'
+import { DEFAULT_SETTINGS, GopassUiHistorySettings } from '../shared/settings'
 import * as electronSettings from 'electron-settings'
 
 let mainWindow: BrowserWindow | null
