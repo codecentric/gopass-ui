@@ -14,6 +14,8 @@ const contextMenu = Menu.buildFromTemplate([
         click: () => {
             if (mainWindow) {
                 mainWindow.show()
+            } else {
+                createMainWindow()
             }
         }
     },
@@ -22,6 +24,9 @@ const contextMenu = Menu.buildFromTemplate([
         click: () => {
             if (searchWindow) {
                 searchWindow.show()
+            } else {
+                createSearchWindow()
+                // searchWindow.show()
             }
         }
     },
@@ -123,7 +128,7 @@ const createSearchWindow = () => {
 
 const createMainWindow = () => {
     mainWindow = new BrowserWindow({
-        width: 800,
+        width: 1000,
         height: 600,
         title: 'Gopass UI',
         icon: path.join(__dirname, 'assets', 'icon.png')
