@@ -1,4 +1,4 @@
-import { exec } from 'child_process'
+import { ipcRenderer } from 'electron'
 
 export interface HistoryEntry {
     hash: string
@@ -9,6 +9,9 @@ export interface HistoryEntry {
 
 const lineSplitRegex = /\r?\n/
 const isDefined = (value: string) => !!value
+
+let executionId = 1
+
 export default class Gopass {
     public static async copy(key: string): Promise<string> {
         return Gopass.execute(`show ${key} -c`)
@@ -43,21 +46,21 @@ export default class Gopass {
         return flatSecrets.split(lineSplitRegex).filter(isDefined)
     }
 
-    private static async execute(command: string, args?: string[]): Promise<string> {
-        return new Promise<string>((resolve, reject) => {
-            const argsString = args ? ` ${args.join(' ')}` : ''
-            exec(
-                `gopass ${command}${argsString}`,
-                (err: Error | null, stdout: string, stderr: string) => {
-                    if (err) {
-                        reject(
-                            new Error(`Stderr: ${stderr}, Error: ${err ? JSON.stringify(err) : ''}`)
-                        )
-                    } else {
-                        resolve(stdout)
-                    }
+    private static execute(command: string, args?: string[]): Promise<string> {
+        executionId++
+
+        const result = new Promise<string>((resolve, reject) => {
+            ipcRenderer.once(`gopass-answer-${executionId}`, (_: Event, value: any) => {
+                if (value instanceof Error) {
+                    reject(value)
+                } else {
+                    resolve(value)
                 }
-            )
+            })
         })
+
+        ipcRenderer.send('gopass', { command, executionId, args })
+
+        return result
     }
 }

@@ -3,6 +3,7 @@ import * as path from 'path'
 import * as url from 'url'
 import { DEFAULT_SETTINGS, GopassUiHistorySettings } from '../shared/settings'
 import * as electronSettings from 'electron-settings'
+import GopassExecutor from './GopassExecutor'
 
 let mainWindow: BrowserWindow | null
 let searchWindow: BrowserWindow | null
@@ -159,6 +160,8 @@ const getSettings = (): GopassUiHistorySettings => {
 }
 
 const listenEvents = () => {
+    ipcMain.on('gopass', GopassExecutor.handleEvent)
+
     ipcMain.on('hideSearchWindow', () => {
         if (searchWindow) {
             searchWindow.hide()
