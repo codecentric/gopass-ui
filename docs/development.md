@@ -21,9 +21,9 @@ The app is divided into two renderer processes. One for the global search window
 All processes have to be started **simultaneously** in different console tabs:
 
 ```bash
-npm run start-renderer-app-dev # for the main-app process
-npm run start-renderer-search-dev # for the search-app process
-npm run start-main-dev # the main process
+npm run start-renderer-explorer-dev # for the main/explorer window process
+npm run start-renderer-search-dev # for the search window process
+npm run start-main-dev # the main process ("backend")
 ```
 
 This will start the application with hot-reload so you can instantly start developing your application.
