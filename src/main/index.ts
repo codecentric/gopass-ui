@@ -104,9 +104,11 @@ const createSearchWindow = (show = false) => {
     searchWindow = new BrowserWindow({
         width: process.env.NODE_ENV !== 'production' ? 1200 : 600,
         height: 600,
+        frame: false,
         center: true,
         skipTaskbar: true,
         show,
+        title: 'Gopass UI Search Window',
         resizable: false
     })
 
@@ -135,6 +137,7 @@ const createMainWindow = () => {
     mainWindow = new BrowserWindow({
         width: 1000,
         height: 600,
+        center: true,
         title: 'Gopass UI',
         icon: path.join(__dirname, 'assets', 'icon.png')
     })
