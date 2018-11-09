@@ -1,5 +1,7 @@
 # Gopass UI
 
+![alt text](docs/gopass-ui-logo-small.png "Gopass UI logo")
+
 ## What is Gopass and Gopass UI?
 
 > [Gopass](https://github.com/gopasspw/gopass) is a rewrite of the pass password manager in Go with the aim of making it cross-platform and adding additional features – (Taken from Github)
