@@ -1,6 +1,6 @@
 # Gopass UI
 
-![alt text](docs/gopass-ui-logo-small.png "Gopass UI logo")
+![alt text](docs/gopass-ui-logo.png "Gopass UI logo")
 
 ## What is Gopass and Gopass UI?
 
