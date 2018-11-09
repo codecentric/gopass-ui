@@ -1,5 +1,5 @@
 import { exec } from 'child_process'
-import { Event, ipcMain } from 'electron'
+import { Event } from 'electron'
 
 export interface GopassOptions {
     executionId: string
@@ -14,11 +14,14 @@ export default class GopassExecutor {
         exec(
             `gopass ${options.command}${argsString}`,
             (err: Error | null, stdout: string, stderr: string) => {
-                if (err) {
-                    event.sender.send(`gopass-answer-${options.executionId}`, new Error(`Stderr: ${stderr}, Error: ${err ? JSON.stringify(err) : ''}`))
-                } else {
-                    event.sender.send(`gopass-answer-${options.executionId}`, stdout)
-                }
+                event.sender.send(
+                    `gopass-answer-${options.executionId}`,
+                    {
+                        status: err ? 'ERROR' : 'OK',
+                        executionId: options.executionId,
+                        payload: err ? stderr : stdout
+                    }
+                )
             }
         )
     }

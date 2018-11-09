@@ -52,10 +52,10 @@ export default class Gopass {
 
         const result = new Promise<string>((resolve, reject) => {
             ipcRenderer.once(`gopass-answer-${executionId}`, (_: Event, value: any) => {
-                if (value instanceof Error) {
-                    reject(value)
+                if (value.status === 'ERROR') {
+                    reject(value.payload)
                 } else {
-                    resolve(value)
+                    resolve(value.payload)
                 }
             })
         })
