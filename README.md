@@ -1,58 +1,22 @@
 # Gopass UI
 
-### UI for gopass
+## What is Gopass and Gopass UI?
 
-[Gopass](https://github.com/gopasspw/gopass) is a password manager for the command line written in Golang. This repository, `gopass-ui`, is the UI wrapper for this awesome password manager.
+> [Gopass](https://github.com/gopasspw/gopass) is a rewrite of the pass password manager in Go with the aim of making it cross-platform and adding additional features – (Taken from Github)
 
-## Install
-Clone the repository with Git:
+The repository you're currently looking at contains `Gopass UI`, an Electron based UI wrapper for your `gopass` on the command line. It makes your life easier by providing a rich graphical user interface to search and manage your secrets.
 
-```bash
-git clone git@github.com:codecentric/gopass-ui.git
-```
+## How can I use it?
 
-And then install the dependencies:
+Just download the packaged application from this repository and install it according to your operating system. Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and running already.
 
-```bash
-cd gopass-ui
-nvm use
-npm install
-```
+## Issues
 
-## Usage
-The app is divided into two renderer processes. One for the global search window, one for the main explorer window.
-All processes have to be started **simultaneously** in different console tabs:
+Please report any issues and problems to us. We are very keen about your feedback and appreciate any help.
 
-```bash
-npm run start-renderer-app-dev # for the main-app process
-npm run start-renderer-search-dev # for the search-app process
-npm run start-main-dev # the main process
-```
+## Contribution
 
-This will start the application with hot-reload so you can instantly start developing your application.
-
-You can also run do the following to start both in a single process:
-
-```bash
-npm run start-dev
-```
-
-## Packaging
-We use [Electron builder](https://www.electron.build/) to build and package the application. By default you can run the following to package for your current platform:
-
-```bash
-npm run dist
-```
-
-This will create a installer for your platform in the `releases` folder.
-
-You can make builds for specific platforms (or multiple platforms) by using the options found [here](https://www.electron.build/cli). E.g. building for all platforms (Windows, Mac, Linux):
-
-```bash
-npm run dist -- -mwl
-```
-
-## Contributors
+You'd like to help us? No problem. See how to [get started with development](docs/development.md). We are looking forward to your pull requests and issues. 
 
 | [<img alt="Jonas Verhoelen" src="https://avatars1.githubusercontent.com/u/6791360?v=4&s=200" width="200">](https://github.com/jverhoelen) | [<img alt="Matthias Rütten" src="https://avatars1.githubusercontent.com/u/2926623?v=4&s=200" width="200">](https://github.com/ruettenm) |
 :---: | :---:
