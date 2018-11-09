@@ -116,7 +116,7 @@ const createSearchWindow = (show = false) => {
     } else {
         searchWindow.loadURL(
             url.format({
-                pathname: path.join(__dirname, 'search.html'),
+                pathname: path.join(__dirname, 'search', 'index.html'),
                 protocol: 'file:',
                 slashes: true
             })
@@ -143,11 +143,13 @@ const createMainWindow = () => {
     } else {
         mainWindow.loadURL(
             url.format({
-                pathname: path.join(__dirname, 'index.html'),
+                pathname: path.join(__dirname, 'explorer', 'index.html'),
                 protocol: 'file:',
                 slashes: true
             })
         )
+
+        mainWindow.webContents.openDevTools()
     }
 
     mainWindow.on('closed', () => {

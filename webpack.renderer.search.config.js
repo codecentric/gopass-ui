@@ -1,16 +1,14 @@
 const merge = require('webpack-merge')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path')
 
-const baseConfig = require('./webpack.renderer.app.config')
+const baseConfig = require('./webpack.renderer.explorer.config')
 
 module.exports = merge.smart(baseConfig, {
+    output: {
+        path: path.resolve(__dirname, 'dist', 'search'),
+    },
     target: 'electron-renderer',
     entry: {
         app: './src/renderer/search.tsx'
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            filename: 'search.html'
-        })
-    ]
+    }
 })

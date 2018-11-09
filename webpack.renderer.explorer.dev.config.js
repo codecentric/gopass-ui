@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const merge = require('webpack-merge')
 const spawn = require('child_process').spawn
 
-const baseConfig = require('./webpack.renderer.app.config')
+const baseConfig = require('./webpack.renderer.explorer.config')
 
 module.exports = merge.smart(baseConfig, {
     entry: [
