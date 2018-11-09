@@ -43,6 +43,7 @@ export default class Gopass {
 
     public static async getAllSecretNames(): Promise<string[]> {
         const flatSecrets = await Gopass.execute('list', ['--flat'])
+
         return flatSecrets.split(lineSplitRegex).filter(isDefined)
     }
 
@@ -59,7 +60,7 @@ export default class Gopass {
             })
         })
 
-        ipcRenderer.send('gopass', { command, executionId, args })
+        ipcRenderer.send('gopass', { executionId, command, args })
 
         return result
     }

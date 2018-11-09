@@ -17,3 +17,8 @@ declare module 'react-keyboard-event-handler' {
     const x: any
     export = x
 }
+
+declare module 'fix-path' {
+    const x: any
+    export = x
+}

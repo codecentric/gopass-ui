@@ -1,9 +1,12 @@
 import { app, BrowserWindow, globalShortcut, Menu, Tray, ipcMain, Event } from 'electron'
 import * as path from 'path'
+import * as fixPath from 'fix-path'
 import * as url from 'url'
 import { DEFAULT_SETTINGS, GopassUiHistorySettings } from '../shared/settings'
 import * as electronSettings from 'electron-settings'
 import GopassExecutor from './GopassExecutor'
+
+fixPath()
 
 let mainWindow: BrowserWindow | null
 let searchWindow: BrowserWindow | null
@@ -148,8 +151,6 @@ const createMainWindow = () => {
                 slashes: true
             })
         )
-
-        mainWindow.webContents.openDevTools()
     }
 
     mainWindow.on('closed', () => {
