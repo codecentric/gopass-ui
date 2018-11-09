@@ -16,7 +16,7 @@ In addition there is a globally usable search window that can be opened with `cm
 
 Just download the packaged application from this repository:
 
-* [MacOS](release/Gopass%20UI-0.1.0.dmg)
+* [MacOS](release/Gopass%20UI-0.1.0.dmg?raw=true)
 
 ...and install it according to your operating system. Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and running already.
 
