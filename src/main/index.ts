@@ -14,7 +14,7 @@ let tray: Tray
 
 const contextMenu = Menu.buildFromTemplate([
     {
-        label: 'Open',
+        label: 'Explorer',
         click: () => {
             if (mainWindow) {
                 mainWindow.show()
