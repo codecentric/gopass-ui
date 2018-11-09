@@ -1,9 +1,7 @@
 node_modules/
-dist/
-release/*.zip
-release/*.blockmap
-release/*.yml
-release/*.yaml
-release/mac
+
 .idea/
 *.iml
+
+dist/
+release/
