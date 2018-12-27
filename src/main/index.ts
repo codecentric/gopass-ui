@@ -102,12 +102,12 @@ const updateTray = (showTray: boolean) => {
 
 const createSearchWindow = (show = false) => {
     searchWindow = new BrowserWindow({
+        show,
         width: process.env.NODE_ENV !== 'production' ? 1200 : 600,
         height: 600,
         frame: false,
         center: true,
         skipTaskbar: true,
-        show,
         title: 'Gopass UI Search Window',
         resizable: false
     })

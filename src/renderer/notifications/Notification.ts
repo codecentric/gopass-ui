@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+
 import { RootState } from '../state/RootState'
 import NotificationView, { NotificationViewProps } from './NotificationView'
-import { Dispatch } from "redux"
-import Gopass from "../secrets/Gopass"
-import { hideNotification, showNotification } from "./notificationActions"
+import { hideNotification } from './notificationActions'
 
 const mapStateToProps = (state: RootState): NotificationViewProps => ({
     notification: state.notification.notification
@@ -11,7 +11,6 @@ const mapStateToProps = (state: RootState): NotificationViewProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): any => ({
     hideNotification: () => {
-        console.log('HIDE NOTIFICATION')
         dispatch(hideNotification())
     }
 })
