@@ -1,8 +1,7 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { History } from 'history'
 
-export default class Settings extends React.Component<{ history: History }, {}> {
+export default class Settings extends React.Component {
     constructor(props: any) {
         super(props)
         this.state = {}

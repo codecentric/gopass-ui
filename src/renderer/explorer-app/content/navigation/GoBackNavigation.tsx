@@ -1,9 +1,10 @@
 import * as React from 'react'
+import { withRouter } from 'react-router'
 import { History } from 'history'
 
 import ActionButton from '../../common/ActionButton'
 
-export default class GoBackNavigation extends React.Component<{ history: History }, any> {
+class GoBackNavigation extends React.Component<{ history: History }, any> {
     render() {
         const onClick = () => this.props.history.replace('/')
 
@@ -14,3 +15,5 @@ export default class GoBackNavigation extends React.Component<{ history: History
         )
     }
 }
+
+export default withRouter(GoBackNavigation as any)

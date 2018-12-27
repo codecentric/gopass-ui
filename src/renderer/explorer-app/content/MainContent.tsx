@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import { Route, match } from 'react-router-dom'
-import { History } from 'history'
 
 import SecretDetails from './crud/SecretDetails'
 import FullActionNavigation from './navigation/FullActionNavigation'
@@ -10,10 +9,8 @@ import Settings from './settings/Settings'
 import Notification from '../../notifications/Notification'
 
 /* tslint:disable:jsx-no-lambda */
-export default class MainContent extends React.Component<{ history: History }, {}> {
+export default class MainContent extends React.Component {
     render() {
-        const { history } = this.props
-
         return (
             <div className='main-content'>
                 <Notification />
@@ -24,7 +21,7 @@ export default class MainContent extends React.Component<{ history: History }, {
                             exact
                             render={() => (
                                 <div>
-                                    <FullActionNavigation history={history} />
+                                    <FullActionNavigation />
                                     <m.CardPanel>
                                         Choose a secret from the navigation or use the actions at the top.
                                     </m.CardPanel>
@@ -38,7 +35,7 @@ export default class MainContent extends React.Component<{ history: History }, {
 
                                 return (
                                     <div>
-                                        <FullActionNavigation history={history} secretName={chosenSecretName} />
+                                        <FullActionNavigation secretName={chosenSecretName} />
                                         <SecretDetails secretName={chosenSecretName} />
                                     </div>
                                 )
@@ -47,10 +44,10 @@ export default class MainContent extends React.Component<{ history: History }, {
                         <Route
                             path='/settings'
                             exact
-                            render={(props: { history: History }) => (
+                            render={() => (
                                 <div>
-                                    <GoBackNavigation history={history} />
-                                    <Settings history={history} />
+                                    <GoBackNavigation />
+                                    <Settings />
                                 </div>
                             )}
                         />

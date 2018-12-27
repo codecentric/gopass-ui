@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { History } from 'history'
 
 import SecretExplorer from './side-navigation/SecretExplorer'
 import MainContent from './content/MainContent'
@@ -8,11 +7,8 @@ import './ExplorerApplication.css'
 interface MainApplicationState {
     searchValue: string
 }
-interface MainApplicationProps {
-    history: History
-}
 
-export default class ExplorerApplication extends React.Component<MainApplicationProps, MainApplicationState> {
+export default class ExplorerApplication extends React.Component<{}, MainApplicationState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -22,12 +18,11 @@ export default class ExplorerApplication extends React.Component<MainApplication
 
     render() {
         const { searchValue } = this.state
-        const { history } = this.props
 
         return (
             <div className='wrapper'>
-                <SecretExplorer history={history} searchValue={searchValue} onSearchChange={this.onSearchChange} onCancelSearch={this.onCancelSearch} />
-                <MainContent history={history} />
+                <SecretExplorer searchValue={ searchValue } onSearchChange={ this.onSearchChange } onCancelSearch={ this.onCancelSearch } />
+                <MainContent />
             </div>
         )
     }
@@ -38,9 +33,5 @@ export default class ExplorerApplication extends React.Component<MainApplication
 
     private onCancelSearch = (event: any, searchValue: string) => {
         this.onSearchChange(event, '')
-    }
-
-    private onSecretClick = (secretName: string) => {
-        this.props.history.replace(`/${btoa(secretName)}/view`)
     }
 }

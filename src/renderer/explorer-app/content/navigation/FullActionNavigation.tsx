@@ -2,13 +2,14 @@ import * as React from 'react'
 import { History } from 'history'
 import Gopass from '../../../secrets/Gopass'
 import ActionButton from '../../common/ActionButton'
+import { withRouter } from "react-router"
 
 interface FullActionNavigationProps {
-    history: History
+    history?: History
     secretName?: string
 }
 
-export default class FullActionNavigation extends React.Component<FullActionNavigationProps, any> {
+class FullActionNavigation extends React.Component<FullActionNavigationProps, any> {
     render() {
         const { history } = this.props
 
@@ -18,7 +19,7 @@ export default class FullActionNavigation extends React.Component<FullActionNavi
                     icon='refresh'
                     onClick={ this.refreshGopassStores }
                 />
-                <ActionButton icon='settings' onClick={ () => history.replace('/settings') } />
+                <ActionButton icon='settings' onClick={ () => history!.replace('/settings') } />
             </div>
         )
     }
@@ -32,3 +33,5 @@ export default class FullActionNavigation extends React.Component<FullActionNavi
         }
     }
 }
+
+export default withRouter(FullActionNavigation as any) as any
