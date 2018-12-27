@@ -28,7 +28,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                 <m.Card
                     title={ secretName }
                     actions={ [
-                        <a key='copy-clipboard' style={ { cursor: 'pointer' } } onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>
+                        <a key='copy-clipboard link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>
                     ] }
                 >
                     { secretValue }

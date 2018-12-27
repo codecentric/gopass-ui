@@ -30,15 +30,10 @@
     margin-top: 55px;
 }
 
-hr {
-    border: none !important;
-    height: 1px !important;
-    background-color: rgba(0, 0, 0, 0.14) !important;
-    margin: 40px 0;
+.panel-headline {
+    margin-top: 0;
 }
 
-textarea {
-    border: 1px solid rgba(0, 0, 0, 0.14);
-    resize: vertical;
-    height: 10rem !important;
+.link {
+    cursor: pointer
 }

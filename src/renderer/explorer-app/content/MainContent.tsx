@@ -2,15 +2,16 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 import { Route, match } from 'react-router-dom'
 
-import SecretDetails from './crud/SecretDetails'
+import SecretDetails from './pages/SecretDetails'
+import Settings from './pages/Settings'
+import Home from './pages/Home'
 import FullActionNavigation from './navigation/FullActionNavigation'
 import GoBackNavigation from './navigation/GoBackNavigation'
-import Settings from './settings/Settings'
 import Notification from '../../notifications/Notification'
 
 /* tslint:disable:jsx-no-lambda */
 export default class MainContent extends React.Component {
-    render() {
+    public render() {
         return (
             <div className='main-content'>
                 <Notification />
@@ -22,15 +23,13 @@ export default class MainContent extends React.Component {
                             render={() => (
                                 <div>
                                     <FullActionNavigation />
-                                    <m.CardPanel>
-                                        Choose a secret from the navigation or use the actions at the top.
-                                    </m.CardPanel>
+                                    <Home />
                                 </div>
                             )}
                         />
                         <Route
                             path='/:encodedSecretName/view'
-                            render={(props: { match: match<{ encodedSecretName: string }> }) => {
+                            render={ (props: { match: match<{ encodedSecretName: string }> }) => {
                                 const chosenSecretName = atob(props.match.params.encodedSecretName)
 
                                 return (
@@ -39,17 +38,17 @@ export default class MainContent extends React.Component {
                                         <SecretDetails secretName={chosenSecretName} />
                                     </div>
                                 )
-                            }}
+                            } }
                         />
                         <Route
                             path='/settings'
                             exact
-                            render={() => (
+                            render={ () => (
                                 <div>
                                     <GoBackNavigation />
                                     <Settings />
                                 </div>
-                            )}
+                            ) }
                         />
                     </m.Col>
                 </m.Row>

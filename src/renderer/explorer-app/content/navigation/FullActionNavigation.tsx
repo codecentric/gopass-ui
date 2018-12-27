@@ -15,11 +15,11 @@ class FullActionNavigation extends React.Component<FullActionNavigationProps, an
 
         return (
             <div style={ { paddingTop: '0.75rem' } }>
+                <ActionButton icon='home' onClick={ () => history!.replace('/') } />
                 <ActionButton
                     icon='refresh'
                     onClick={ this.refreshGopassStores }
                 />
-                <ActionButton icon='settings' onClick={ () => history!.replace('/settings') } />
             </div>
         )
     }

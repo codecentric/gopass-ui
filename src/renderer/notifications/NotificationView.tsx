@@ -23,7 +23,7 @@ export default class NotificationView extends React.Component<NotificationViewPr
                             <span>{ notification.message }</span>
                         </m.Col>
                         <m.Col s={1} style={ { textAlign: 'right' } } >
-                            <a className='black-text' style={ { cursor: 'pointer' } } onClick={ () => this.props.hideNotification!() }><m.Icon small>close</m.Icon></a>
+                            <a className='black-text link' onClick={ () => this.props.hideNotification!() }><m.Icon small>close</m.Icon></a>
                         </m.Col>
                     </m.Row>
                 </m.CardPanel>
