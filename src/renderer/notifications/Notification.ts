@@ -11,6 +11,7 @@ const mapStateToProps = (state: RootState): NotificationViewProps => ({
 
 const mapDispatchToProps = (dispatch: Dispatch): any => ({
     hideNotification: () => {
+        console.log('HIDE NOTIFICATION')
         dispatch(hideNotification())
     }
 })

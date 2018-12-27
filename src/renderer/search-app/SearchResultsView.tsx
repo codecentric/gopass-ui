@@ -14,11 +14,13 @@ interface SearchResultsState {
     searchValues: string[]
     selectedItemIndex: number
 }
-interface SearchResultsProps {
+
+export interface SearchResultsProps {
     search?: string
+    copySecretToClipboard?: (secretName: string) => void
 }
 
-export default class SearchResults extends React.Component<SearchResultsProps, SearchResultsState> {
+export default class SearchResultsView extends React.Component<SearchResultsProps, SearchResultsState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -48,7 +50,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
         const highlightRegExp = this.state.searchValues.length > 0 ? new RegExp(`(${this.state.searchValues.join('|')})`, 'g') : undefined
 
         const onSelectCollectionItem = (secretKey: string) => () => {
-            this.selectSecret(secretKey)
+            this.props.copySecretToClipboard!(secretKey)
         }
 
         return (
@@ -85,14 +87,6 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
                 </m.Collection>
             </div>
         )
-    }
-
-    private selectSecret(secretKey: string) {
-        Gopass.copy(secretKey).then(result => {
-            alert(result)
-
-            ipcRenderer.send('hideSearchWindow')
-        })
     }
 
     private updateFilteredSecrets = (search?: string) => {
@@ -137,7 +131,7 @@ export default class SearchResults extends React.Component<SearchResultsProps, S
             case 'enter':
                 const secretKey = this.state.filteredSecretNames[this.state.selectedItemIndex]
                 if (secretKey) {
-                    this.selectSecret(secretKey)
+                    this.props.copySecretToClipboard!(secretKey)
                 }
 
                 event.preventDefault()

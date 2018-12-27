@@ -13,3 +13,7 @@ strong {
 .collection .collection-item {
     cursor: pointer;
 }
+
+.link {
+    cursor: pointer
+}
