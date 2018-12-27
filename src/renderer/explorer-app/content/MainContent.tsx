@@ -5,7 +5,7 @@ import { Route, match } from 'react-router-dom'
 import SecretDetails from './pages/SecretDetails'
 import Settings from './pages/Settings'
 import Home from './pages/Home'
-import FullActionNavigation from './navigation/FullActionNavigation'
+import MainNavigation from './navigation/MainNavigation'
 import GoBackNavigation from './navigation/GoBackNavigation'
 import Notification from '../../notifications/Notification'
 
@@ -16,26 +16,26 @@ export default class MainContent extends React.Component {
             <div className='main-content'>
                 <Notification />
                 <m.Row>
-                    <m.Col s={12}>
+                    <m.Col s={ 12 }>
                         <Route
                             path='/'
                             exact
-                            render={() => (
+                            render={ () => (
                                 <div>
-                                    <FullActionNavigation />
+                                    <MainNavigation />
                                     <Home />
                                 </div>
-                            )}
+                            ) }
                         />
                         <Route
-                            path='/:encodedSecretName/view'
+                            path='/secrets/:encodedSecretName/view'
                             render={ (props: { match: match<{ encodedSecretName: string }> }) => {
                                 const chosenSecretName = atob(props.match.params.encodedSecretName)
 
                                 return (
                                     <div>
-                                        <FullActionNavigation secretName={chosenSecretName} />
-                                        <SecretDetails secretName={chosenSecretName} />
+                                        <MainNavigation />
+                                        <SecretDetails secretName={ chosenSecretName } />
                                     </div>
                                 )
                             } }

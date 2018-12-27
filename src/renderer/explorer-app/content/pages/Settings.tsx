@@ -10,9 +10,9 @@ export default class Settings extends React.Component {
     render() {
         return (
             <div>
+                <h4>Settings</h4>
                 <m.CardPanel>
-                    <h2 className='panel-headline'>Help</h2>
-                    Choose a secret from the navigation or use the actions at the top.
+                    [ ... ]
                 </m.CardPanel>
             </div>
         )

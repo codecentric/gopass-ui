@@ -27,7 +27,7 @@ class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
     }
 
     private onSecretClick = (secretName: string) => {
-        this.props.history!.replace(`/${btoa(secretName)}/view`)
+        this.props.history!.replace(`/secrets/${btoa(secretName)}/view`)
     }
 }
 

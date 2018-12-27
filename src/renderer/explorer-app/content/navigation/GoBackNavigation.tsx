@@ -5,7 +5,7 @@ import { History } from 'history'
 import ActionButton from '../../common/ActionButton'
 
 class GoBackNavigation extends React.Component<{ history: History }, any> {
-    render() {
+    public render() {
         const onClick = () => this.props.history.replace('/')
 
         return (
