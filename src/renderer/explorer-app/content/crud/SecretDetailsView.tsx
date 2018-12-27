@@ -31,7 +31,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                         <a key='copy-clipboard' style={ { cursor: 'pointer' } } onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>
                     ] }
                 >
-                    {secretValue}
+                    { secretValue }
                 </m.Card>
 
                 <h4 className='m-top'>History</h4>
@@ -45,15 +45,13 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                     </thead>
 
                     <tbody>
-                        {
-                            historyEntries.map(entry => (
-                                <tr key={ entry.hash }>
-                                    <td>{ entry.timestamp }</td>
-                                    <td>{ entry.author }</td>
-                                    <td>{ entry.message }</td>
-                                </tr>
-                            ))
-                        }
+                        { historyEntries.map(entry => (
+                            <tr key={ entry.hash }>
+                                <td>{ entry.timestamp }</td>
+                                <td>{ entry.author }</td>
+                                <td>{ entry.message }</td>
+                            </tr>
+                        )) }
                     </tbody>
                 </m.Table>
             </div>

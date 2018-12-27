@@ -4,18 +4,17 @@ import * as m from 'react-materialize'
 export interface ActionButtonProps {
     icon: string
     onClick?: () => void
-    style?: any
 }
 
-const ActionButton = ({ icon, onClick, style }: ActionButtonProps) => (
+const ActionButton = ({ icon, onClick }: ActionButtonProps) => (
     <m.Button
         floating
         large
         className='red'
         waves='light'
-        icon={icon}
-        onClick={onClick}
-        style={style}
+        icon={ icon }
+        onClick={ onClick }
+        style={ { marginRight: '0.75rem' } }
     />
 )
 

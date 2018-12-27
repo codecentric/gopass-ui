@@ -1,11 +1,7 @@
 import * as React from 'react'
 import { History } from 'history'
-import * as m from 'react-materialize'
 import Gopass from '../../../secrets/Gopass'
 import ActionButton from '../../common/ActionButton'
-import ActionNavigationWrapper from './ActionNavigationWrapper'
-
-const routeTo = (history: History) => (route: string) => () => history.replace(route)
 
 interface FullActionNavigationProps {
     history: History
@@ -14,24 +10,16 @@ interface FullActionNavigationProps {
 
 export default class FullActionNavigation extends React.Component<FullActionNavigationProps, any> {
     render() {
-        const { secretName, history } = this.props
+        const { history } = this.props
 
         return (
-            <ActionNavigationWrapper>
-                {/*<ActionButton icon='add' onClick={routeTo(history)('/create-new-secret')} />*/}
+            <div style={ { paddingTop: '0.75rem' } }>
                 <ActionButton
                     icon='refresh'
-                    onClick={this.refreshGopassStores}
+                    onClick={ this.refreshGopassStores }
                 />
-                {/*{*/}
-                    {/*(!!secretName) ?*/}
-                        {/*<ActionButton*/}
-                            {/*icon='edit'*/}
-                            {/*onClick={routeTo(history)(`/${btoa(secretName)}/edit`)}*/}
-                        {/*/> : null*/}
-                {/*}*/}
-                <ActionButton icon='settings' onClick={routeTo(history)('/settings')} />
-            </ActionNavigationWrapper>
+                <ActionButton icon='settings' onClick={ () => history.replace('/settings') } />
+            </div>
         )
     }
 

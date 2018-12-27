@@ -7,7 +7,6 @@
     width: 450px;
     overflow: auto;
     min-width: 300px;
-    /*resize: horizontal;*/
     border-right: 1px solid rgba(0, 0, 0, 0.14);
 }
 

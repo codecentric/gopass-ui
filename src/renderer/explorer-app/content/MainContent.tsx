@@ -4,10 +4,8 @@ import { Route, match } from 'react-router-dom'
 import { History } from 'history'
 
 import SecretDetails from './crud/SecretDetails'
-import EditSecret from './crud/EditSecret'
-import CreateSecret from './crud/CreateSecret'
 import FullActionNavigation from './navigation/FullActionNavigation'
-import SmallActionNavigation from './navigation/SmallActionNavigation'
+import GoBackNavigation from './navigation/GoBackNavigation'
 import Settings from './settings/Settings'
 import Notification from '../../notifications/Notification'
 
@@ -34,26 +32,6 @@ export default class MainContent extends React.Component<{ history: History }, {
                             )}
                         />
                         <Route
-                            path='/create-new-secret'
-                            exact
-                            render={(props: { history: History }) => (
-                                <div>
-                                    <SmallActionNavigation history={history} />
-                                    <CreateSecret history={history} />
-                                </div>
-                            )}
-                        />
-                        <Route
-                            path='/:encodedSecretName/edit'
-                            render={(props: { match: match<{ encodedSecretName: string }> }) => (
-                                <div>
-                                    <SmallActionNavigation history={history} />
-                                    <EditSecret history={history} secretName={atob(props.match.params.encodedSecretName)} />
-                                </div>
-                            )
-                            }
-                        />
-                        <Route
                             path='/:encodedSecretName/view'
                             render={(props: { match: match<{ encodedSecretName: string }> }) => {
                                 const chosenSecretName = atob(props.match.params.encodedSecretName)
@@ -71,7 +49,7 @@ export default class MainContent extends React.Component<{ history: History }, {
                             exact
                             render={(props: { history: History }) => (
                                 <div>
-                                    <SmallActionNavigation history={history} />
+                                    <GoBackNavigation history={history} />
                                     <Settings history={history} />
                                 </div>
                             )}
