@@ -28,10 +28,10 @@ export default class ExplorerApplication extends React.Component<{}, MainApplica
     }
 
     private onSearchChange = (event: any, searchValue: string) => {
-        this.setState({ ...this.state, searchValue })
+        this.setState({ searchValue })
     }
 
-    private onCancelSearch = (event: any, searchValue: string) => {
-        this.onSearchChange(event, '')
+    private onCancelSearch = () => {
+        this.setState({ searchValue: '' })
     }
 }
