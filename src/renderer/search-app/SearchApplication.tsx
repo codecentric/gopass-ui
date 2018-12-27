@@ -2,11 +2,11 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 import SearchResults from './SearchResults'
 
-import './application.css'
+import './SearchApplication.css'
 
 const NAVIGATION_KEYS = [ 'ArrowUp', 'ArrowDown', 'Enter', 'Tab' ]
 
-export default class Application extends React.Component<any, { searchValue: string }> {
+export default class SearchApplication extends React.Component<any, { searchValue: string }> {
     constructor(props: any) {
         super(props)
         this.state = {

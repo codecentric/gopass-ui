@@ -8,7 +8,7 @@ const baseConfig = require('./webpack.renderer.explorer.config')
 module.exports = merge.smart(baseConfig, {
     entry: [
         'react-hot-loader/patch',
-        './src/renderer/app.tsx'
+        './src/renderer/explorer-app.tsx'
     ],
     module: {
         rules: [

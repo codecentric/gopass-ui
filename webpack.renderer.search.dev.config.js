@@ -8,7 +8,7 @@ const baseConfig = require('./webpack.renderer.search.config')
 module.exports = merge.smart(baseConfig, {
     entry: [
         'react-hot-loader/patch',
-        './src/renderer/search.tsx'
+        './src/renderer/search-app.tsx'
     ],
     module: {
         rules: [

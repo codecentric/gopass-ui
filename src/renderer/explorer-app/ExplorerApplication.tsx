@@ -1,10 +1,9 @@
 import * as React from 'react'
 import { History } from 'history'
 
-import SecretExplorer from './explorer/SecretExplorer'
+import SecretExplorer from './side-navigation/SecretExplorer'
 import MainContent from './content/MainContent'
-import './MainApplication.css'
-import Settings from './content/settings/Settings'
+import './ExplorerApplication.css'
 
 interface MainApplicationState {
     searchValue: string
@@ -13,7 +12,7 @@ interface MainApplicationProps {
     history: History
 }
 
-export default class MainApplication extends React.Component<MainApplicationProps, MainApplicationState> {
+export default class ExplorerApplication extends React.Component<MainApplicationProps, MainApplicationState> {
     constructor(props: any) {
         super(props)
         this.state = {

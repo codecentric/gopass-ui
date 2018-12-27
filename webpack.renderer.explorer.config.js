@@ -11,7 +11,7 @@ module.exports = merge.smart(baseConfig, {
     },
     target: 'electron-renderer',
     entry: {
-        app: './src/renderer/app.tsx'
+        app: './src/renderer/explorer-app.tsx'
     },
     module: {
         rules: [

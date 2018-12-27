@@ -9,6 +9,6 @@ module.exports = merge.smart(baseConfig, {
     },
     target: 'electron-renderer',
     entry: {
-        app: './src/renderer/search.tsx'
+        app: './src/renderer/search-app.tsx'
     }
 })
