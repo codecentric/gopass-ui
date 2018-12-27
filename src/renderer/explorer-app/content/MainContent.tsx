@@ -9,6 +9,7 @@ import CreateSecret from './crud/CreateSecret'
 import FullActionNavigation from './navigation/FullActionNavigation'
 import SmallActionNavigation from './navigation/SmallActionNavigation'
 import Settings from './settings/Settings'
+import Notification from '../../notifications/Notification'
 
 /* tslint:disable:jsx-no-lambda */
 export default class MainContent extends React.Component<{ history: History }, {}> {
@@ -17,6 +18,7 @@ export default class MainContent extends React.Component<{ history: History }, {
 
         return (
             <div className='main-content'>
+                <Notification />
                 <m.Row>
                     <m.Col s={12}>
                         <Route

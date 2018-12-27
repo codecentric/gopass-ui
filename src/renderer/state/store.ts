@@ -1,7 +1,8 @@
 import { applyMiddleware, createStore, Store } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import { rootReducer, RootState } from './reducers'
+import { rootReducer } from './reducers'
+import { RootState } from './RootState'
 
 const configureStore = (initialState?: RootState): Store<RootState | undefined> => {
     const middlewares: any[] = []

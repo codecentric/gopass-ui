@@ -2,18 +2,18 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 
-const copySecretToClipboard = (secretName: string) => async () => {
-    await Gopass.copy(secretName)
-    alert('Secret has been copied to your clipboard.')
-}
-
 interface SecretDetailsState {
     secretValue: string
     historyEntries: HistoryEntry[]
 }
 
-export default class SecretDetails extends React.Component<{ secretName: string }, SecretDetailsState> {
-    constructor(props: any) {
+interface SecretDetailsViewProps {
+    secretName: string
+    copySecretToClipboard?: (secretName: string) => void
+}
+
+export default class SecretDetailsView extends React.Component<SecretDetailsViewProps, SecretDetailsState> {
+    constructor(props: SecretDetailsViewProps) {
         super(props)
         this.state = { secretValue: '', historyEntries: [] }
     }
@@ -26,14 +26,10 @@ export default class SecretDetails extends React.Component<{ secretName: string 
             <div>
                 <h4>Secret</h4>
                 <m.Card
-                    title={secretName}
-                    actions={
-                        [
-                            <a key='copy-clipboard' onClick={copySecretToClipboard(secretName)}>
-                                Copy to clipboard
-                            </a>
-                        ]
-                    }
+                    title={ secretName }
+                    actions={ [
+                        <a key='copy-clipboard' style={ { cursor: 'pointer' } } onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>
+                    ] }
                 >
                     {secretValue}
                 </m.Card>
@@ -51,10 +47,10 @@ export default class SecretDetails extends React.Component<{ secretName: string 
                     <tbody>
                         {
                             historyEntries.map(entry => (
-                                <tr key={entry.hash}>
-                                    <td>{entry.timestamp}</td>
-                                    <td>{entry.author}</td>
-                                    <td>{entry.message}</td>
+                                <tr key={ entry.hash }>
+                                    <td>{ entry.timestamp }</td>
+                                    <td>{ entry.author }</td>
+                                    <td>{ entry.message }</td>
                                 </tr>
                             ))
                         }
@@ -65,7 +61,7 @@ export default class SecretDetails extends React.Component<{ secretName: string 
     }
 
     async createState(secretName: string) {
-        const [secretValue, historyEntries] = await Promise.all([
+        const [ secretValue, historyEntries ] = await Promise.all([
             Gopass.show(secretName),
             Gopass.history(secretName)
         ])

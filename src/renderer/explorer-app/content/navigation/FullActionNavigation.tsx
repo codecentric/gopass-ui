@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { History } from 'history'
+import * as m from 'react-materialize'
 import Gopass from '../../../secrets/Gopass'
 import ActionButton from '../../common/ActionButton'
 import ActionNavigationWrapper from './ActionNavigationWrapper'
 
-const noop = () => undefined
 const routeTo = (history: History) => (route: string) => () => history.replace(route)
 
 interface FullActionNavigationProps {
