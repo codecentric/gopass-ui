@@ -1,6 +1,6 @@
 {
   "name": "gopass-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Awesome UI for the gopass CLI – a password manager for your daily business",
   "main": "./dist/main.js",
   "scripts": {
@@ -43,9 +43,6 @@
   "build": {
     "productName": "Gopass UI",
     "appId": "de.codecentric.gopassui",
-    "mac": {
-      "category": "public.app-category.productivity"
-    },
     "directories": {
       "output": "release"
     },
@@ -54,8 +51,11 @@
       "node_modules/",
       "package.json"
     ],
+    "mac": {
+      "category": "public.app-category.productivity"
+    },
     "linux": {
-      "target": "deb"
+      "target": [ "deb", "rpm" ]
     },
     "win": {
       "target": "nsis"
@@ -67,8 +67,18 @@
   },
   "author": {
     "name": "Matthias Rütten & Jonas Verhoelen",
-    "email": ""
+    "url": "https://www.codecentric.de"
   },
+  "contributors": [
+    {
+      "name": "Matthias Rütten",
+      "email": "matthias.ruetten@codecentric.de"
+    },
+    {
+      "name": "Jonas Verhoelen",
+      "email": "jonas.verhoelen@codecentric.de"
+    }
+  ],
   "license": "SEE LICENSE",
   "bugs": {
     "url": "https://github.com/codecentric/gopass-ui/issues"
