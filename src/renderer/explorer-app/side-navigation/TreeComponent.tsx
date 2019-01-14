@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as t from 'react-treebeard'
 import * as m from 'react-materialize'
 import { globalStyle } from './TreebeardStyle'
-import credentialIconMappings, { CredentialIconMapping } from './CredentialIconMappings'
+import { deriveSecretIcon } from './SecretIcons'
 
 export interface Tree {
     name: string
@@ -21,15 +21,7 @@ t.decorators.Header = ({ style, node }: any) => {
     let iconType = node.toggled ? 'chevron_right' : 'folder'
 
     if (!node.children && node.entryId) {
-        iconType = 'comment'
-
-        credentialIconMappings.forEach((mapping: CredentialIconMapping) => {
-            const hasIconMapping = mapping.regex.test(node.name)
-
-            if (hasIconMapping) {
-                iconType = mapping.icon
-            }
-        })
+        iconType = deriveSecretIcon(node.name)
     }
 
     return (

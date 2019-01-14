@@ -1,7 +1,8 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
-import PaginatedTable from '../../common/PaginatedTable';
+import PaginatedTable from '../../common/PaginatedTable'
+import { deriveSecretIcon } from '../../side-navigation/SecretIcons'
 
 interface SecretDetailsState {
     secretValue: string
@@ -27,7 +28,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
             <div>
                 <h4>Secret</h4>
                 <m.Card
-                    title={ secretName }
+                    title={ <>{ secretName } <m.Icon>{ deriveSecretIcon(secretName) }</m.Icon></> }
                     actions={ [
                         <a key='copy-clipboard' className='link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>
                     ] }
