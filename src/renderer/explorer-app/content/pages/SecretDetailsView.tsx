@@ -1,12 +1,16 @@
-import * as React from 'react'
-import * as m from 'react-materialize'
+    import * as React from 'react'
+    import * as m from 'react-materialize'
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import PaginatedTable from '../../common/PaginatedTable'
-import { deriveSecretIcon } from '../../side-navigation/SecretIcons'
+import { deriveSecretIcon, passwordSecretRegex } from '../../side-navigation/SecretIcons'
+import { ratePassword, PasswordRatingResult } from '../../../password-health/PasswordRules'
+import PasswordRatingComponent from '../../../password-health/PasswordRatingComponent';
 
 interface SecretDetailsState {
     secretValue: string
     historyEntries: HistoryEntry[]
+    isPassword: boolean
+    passwordRating: PasswordRatingResult | undefined
 }
 
 interface SecretDetailsViewProps {
@@ -17,12 +21,12 @@ interface SecretDetailsViewProps {
 export default class SecretDetailsView extends React.Component<SecretDetailsViewProps, SecretDetailsState> {
     constructor(props: SecretDetailsViewProps) {
         super(props)
-        this.state = { secretValue: '', historyEntries: [] }
+        this.state = { secretValue: '', historyEntries: [], passwordRating: undefined, isPassword: false }
     }
 
     render() {
         const { secretName } = this.props
-        const { secretValue, historyEntries } = this.state
+        const { secretValue, historyEntries, isPassword, passwordRating } = this.state
 
         return (
             <div>
@@ -35,6 +39,14 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                 >
                     { secretValue }
                 </m.Card>
+
+                {
+                    isPassword && passwordRating &&
+                        <>
+                            <h4 className='m-top'>Password Strength</h4>
+                            <PasswordRatingComponent passwordRating={ passwordRating } />
+                        </>
+                }
 
                 <h4 className='m-top'>History</h4>
                 <PaginatedTable
@@ -49,13 +61,19 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
         )
     }
 
-    async createState(secretName: string) {
+    private async createState(secretName: string) {
         const [ secretValue, historyEntries ] = await Promise.all([
             Gopass.show(secretName),
             Gopass.history(secretName)
         ])
+        const isPassword = passwordSecretRegex.test(secretName)
 
-        this.setState({ secretValue, historyEntries })
+        this.setState({
+            secretValue,
+            historyEntries,
+            isPassword,
+            passwordRating: isPassword ? ratePassword(secretValue) : undefined
+        })
     }
 
     async componentDidMount() {
