@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { paginationCalculator } from 'pagination-calculator'
-import './PaginatedTable.css'
+import { paginationCalculator} from 'pagination-calculator'
+import { PageInformation } from 'pagination-calculator/dist/paginationCalculator'
 
 export interface TableColumn {
     fieldName: string
@@ -27,7 +27,7 @@ export default class PaginatedTable extends React.Component<PaginatedTableProps,
         super(props)
         this.state = {
             page: 1,
-            pageSize: 10 // TODO: make configurable through settings page
+            pageSize: 7 // TODO: make configurable through settings page
         }
     }
 
@@ -40,12 +40,9 @@ export default class PaginatedTable extends React.Component<PaginatedTableProps,
             pageLimit: Math.ceil(rows.length / this.state.pageSize)
         })
         const pageRows = rows.slice(pagination.showingStart - 1, pagination.showingEnd)
-        const paginationMarkup = this.renderPagination(pagination)
 
         return (
             <>
-                { paginationMarkup }
-
                 <m.Table>
                     <thead>
                         <tr>
@@ -70,32 +67,27 @@ export default class PaginatedTable extends React.Component<PaginatedTableProps,
                     </tbody>
                 </m.Table>
 
-                { paginationMarkup }
+                { this.renderPagination(pagination) }
             </>
         )
     }
 
-    private renderPagination(pagination: any) {
+    private renderPagination(pagination: PageInformation) {
         return (
-            <div className='pagination'>
-                {
-                    pagination.current > 1 ? <span onClick={ this.changeToPage(pagination.current - 1) }><m.Icon>chevron_left</m.Icon></span> : undefined
-                }
-                {
-                    pagination.pages.map((page: number) => {
-                        if (page == pagination.current) {
-                            return <strong>{ page }</strong>
-                        } else {
-                            return <span onClick={ this.changeToPage(page as number) }>{ page }</span>
-                        }
-                    })
-                }
-                { pagination.pageCount - pagination.current > 0 ? <span onClick={ this.changeToPage(pagination.current + 1) }><m.Icon>chevron_right</m.Icon></span> : undefined }
-            </div>
+            <m.Pagination
+                items={ pagination.pageCount }
+                activePage={ pagination.current }
+                maxButtons={ pagination.pageCount <= 8 ? pagination.pageCount : 8 }
+                onSelect={ this.changeToPage(pagination.pageCount) }
+            />
         )
     }
 
-    private changeToPage = (page: number) => {
-        return () => this.setState({ ...this.state, page })
+    private changeToPage = (maxPageNumber: number) => {
+        return (page: number) => {
+            if (page <= maxPageNumber && page >= 1) {
+                this.setState({ ...this.state, page })
+            }
+        }
     }
 }

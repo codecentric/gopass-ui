@@ -1,5 +1,6 @@
-    import * as React from 'react'
-    import * as m from 'react-materialize'
+import * as React from 'react'
+import * as m from 'react-materialize'
+import * as dateformat from 'dateformat'
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import PaginatedTable from '../../common/PaginatedTable'
 import { deriveSecretIcon, passwordSecretRegex } from '../../side-navigation/SecretIcons'
@@ -24,9 +25,17 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
         this.state = { secretValue: '', historyEntries: [], passwordRating: undefined, isPassword: false }
     }
 
+    public async componentDidMount() {
+        await this.createState(this.props.secretName)
+    }
+
+    public async componentWillReceiveProps(props: { secretName: string }) {
+        await this.createState(props.secretName)
+    }
+
     render() {
         const { secretName } = this.props
-        const { secretValue, historyEntries, isPassword, passwordRating } = this.state
+        const { secretValue, isPassword, passwordRating } = this.state
 
         return (
             <div>
@@ -49,15 +58,29 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                 }
 
                 <h4 className='m-top'>History</h4>
-                <PaginatedTable
-                    columns={ [
-                        { fieldName: 'timestamp', label: 'Time' },
-                        { fieldName: 'author', label: 'Author' },
-                        { fieldName: 'message', label: 'Message' }
-                    ] }
-                    rows={ historyEntries.map(entry => ({ ...entry, id: entry.hash })) }
-                />
+                { this.renderHistoryTable() }
             </div>
+        )
+    }
+
+    private renderHistoryTable() {
+        const rows = this.state.historyEntries.map(entry => {
+            return {
+                ...entry,
+                id: entry.hash,
+                timestamp: dateformat(new Date(entry.timestamp), 'yyyy-mm-dd HH:MM')
+            }
+        })
+
+        return (
+            <PaginatedTable
+                columns={ [
+                    { fieldName: 'timestamp', label: 'Time' },
+                    { fieldName: 'author', label: 'Author' },
+                    { fieldName: 'message', label: 'Message' }
+                ] }
+                rows={ rows }
+            />
         )
     }
 
@@ -74,13 +97,5 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
             isPassword,
             passwordRating: isPassword ? ratePassword(secretValue) : undefined
         })
-    }
-
-    async componentDidMount() {
-        await this.createState(this.props.secretName)
-    }
-
-    async componentWillReceiveProps(props: { secretName: string }) {
-        await this.createState(props.secretName)
     }
 }

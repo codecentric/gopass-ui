@@ -57,3 +57,15 @@ export const ratePassword = (password: string): PasswordRatingResult => {
     }
 }
 
+export interface PasswordHealthSummary {
+    health: number
+}
+
+export const rateMultiplePasswords = (passwords: string[]): PasswordHealthSummary => {
+    const pwHealths = passwords.map(pw => ratePassword(pw).health)
+    const pwHealthSum = pwHealths.reduce((a: number, b: number) => a + b, 0)
+
+    return {
+        health: Math.round(pwHealthSum / pwHealths.length)
+    }
+}

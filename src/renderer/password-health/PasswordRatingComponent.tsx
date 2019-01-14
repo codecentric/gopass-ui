@@ -18,7 +18,7 @@ const passwordStrengthColorExtractor = (health: number): string => {
     return colorStrengthIndicator
 }
 
-const FailedRulesList = ({ failedRules }: { failedRules: PasswordRuleMeta[] }) => (
+export const FailedRulesList = ({ failedRules }: { failedRules: PasswordRuleMeta[] }) => (
     <>
         {
             failedRules.length > 0 ? (
@@ -40,7 +40,7 @@ const FailedRulesList = ({ failedRules }: { failedRules: PasswordRuleMeta[] }) =
     </>
 )
 
-const PasswordHealthIndicator = ({ health }: { health: number }) => (
+export const PasswordHealthIndicator = ({ health }: { health: number }) => (
     <div className={ `password-strength-sum ${passwordStrengthColorExtractor(health)}` }>
         <span>{ health }</span>
     </div>

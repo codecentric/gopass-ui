@@ -18,6 +18,7 @@ class MainNavigationView extends React.Component<MainNavigationViewProps> {
                 <ActionButton icon='home' onClick={ () => history!.replace('/') } />
                 <ActionButton icon='refresh' onClick={ this.props.refreshGopassStores } />
                 <ActionButton icon='settings' onClick={ () => history!.replace('/settings') } />
+                <ActionButton icon='security' onClick={ () => history!.replace('/password-health') } />
             </div>
         )
     }

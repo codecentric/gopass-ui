@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import MainNavigation from './navigation/MainNavigation'
 import GoBackNavigation from './navigation/GoBackNavigation'
 import Notification from '../../notifications/Notification'
+import PasswordHealthOverview from '../../password-health/PasswordHealthOverview';
 
 /* tslint:disable:jsx-no-lambda */
 export default class MainContent extends React.Component {
@@ -47,6 +48,16 @@ export default class MainContent extends React.Component {
                                 <div>
                                     <GoBackNavigation />
                                     <Settings />
+                                </div>
+                            ) }
+                        />
+                        <Route
+                            path='/password-health'
+                            exact
+                            render={ () => (
+                                <div>
+                                    <GoBackNavigation />
+                                    <PasswordHealthOverview />
                                 </div>
                             ) }
                         />

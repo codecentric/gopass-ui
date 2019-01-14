@@ -90,6 +90,7 @@
   },
   "homepage": "https://github.com/codecentric/gopass-ui",
   "devDependencies": {
+    "@types/dateformat": "^3.0.0",
     "@types/electron-devtools-installer": "^2.0.2",
     "@types/electron-settings": "^3.1.1",
     "@types/jest": "^21.1.9",
@@ -106,6 +107,7 @@
     "copy-webpack-plugin": "^4.5.4",
     "cross-env": "^5.1.3",
     "css-loader": "^0.28.7",
+    "dateformat": "^3.0.3",
     "electron": "^2.0.8",
     "electron-builder": "^20.28.2",
     "electron-devtools-installer": "^2.2.4",
