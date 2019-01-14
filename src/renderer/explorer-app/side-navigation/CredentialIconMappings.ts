@@ -1,23 +1,23 @@
 export interface CredentialIconMapping {
-    mustIncludeOnOf: string[]
+    regex: RegExp
     icon: string
 }
 
 const credentialIconMappings: CredentialIconMapping[] = [
     {
-        mustIncludeOnOf: ['password', 'secret', 'key', 'certificate'],
+        regex: /(password|secret|key|passphrase|certificate)/,
         icon: 'lock'
     },
     {
-        mustIncludeOnOf: ['user', 'name', 'id'],
+        regex: /(user|name|id)/,
         icon: 'person'
     },
     {
-        mustIncludeOnOf: ['note', 'comment', 'misc'],
+        regex: /(note|comment|misc)/,
         icon: 'comment'
     },
     {
-        mustIncludeOnOf: ['uri', 'url', 'connection'],
+        regex: /(uri|url|link|connection)/,
         icon: 'filter_center_focus'
     }
 ]

@@ -1,0 +1,17 @@
+.pagination > strong, span {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.pagination > span {
+    cursor: pointer;
+}
+
+.pagination > strong {
+    font-weight: 700;
+}
+
+.pagination > span > i {
+    position: relative;
+    top: 5px;
+}

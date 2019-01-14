@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
+import PaginatedTable from '../../common/PaginatedTable';
 
 interface SecretDetailsState {
     secretValue: string
@@ -35,25 +36,14 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                 </m.Card>
 
                 <h4 className='m-top'>History</h4>
-                <m.Table>
-                    <thead>
-                        <tr>
-                            <th data-field='timestamp'>Time</th>
-                            <th data-field='author'>Author</th>
-                            <th data-field='message'>Message</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        { historyEntries.map(entry => (
-                            <tr key={ entry.hash }>
-                                <td>{ entry.timestamp }</td>
-                                <td>{ entry.author }</td>
-                                <td>{ entry.message }</td>
-                            </tr>
-                        )) }
-                    </tbody>
-                </m.Table>
+                <PaginatedTable
+                    columns={ [
+                        { fieldName: 'timestamp', label: 'Time' },
+                        { fieldName: 'author', label: 'Author' },
+                        { fieldName: 'message', label: 'Message' }
+                    ] }
+                    rows={ historyEntries.map(entry => ({ ...entry, id: entry.hash })) }
+                />
             </div>
         )
     }

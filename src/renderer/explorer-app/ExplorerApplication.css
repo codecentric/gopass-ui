@@ -37,3 +37,7 @@
 .link {
     cursor: pointer
 }
+
+.card-panel pre {
+    margin-bottom: 0px;
+}

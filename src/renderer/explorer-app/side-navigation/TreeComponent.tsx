@@ -24,23 +24,21 @@ t.decorators.Header = ({ style, node }: any) => {
         iconType = 'comment'
 
         credentialIconMappings.forEach((mapping: CredentialIconMapping) => {
-            const includesAnyCharacteristica = mapping.mustIncludeOnOf.find(needle =>
-                node.name.includes(needle)
-            )
+            const hasIconMapping = mapping.regex.test(node.name)
 
-            if (includesAnyCharacteristica) {
+            if (hasIconMapping) {
                 iconType = mapping.icon
             }
         })
     }
 
     return (
-        <div style={style.base}>
+        <div style={ style.base }>
             <m.Icon small>
-                {iconType}
+                { iconType }
             </m.Icon>
 
-            {node.name}
+            { node.name }
         </div>
     )
 }
@@ -76,10 +74,10 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
         return (
             <div>
                 <t.Treebeard
-                    data={this.props.tree}
-                    decorators={t.decorators}
-                    onToggle={this.onToggle}
-                    style={globalStyle}
+                    data={ this.props.tree }
+                    decorators={ t.decorators }
+                    onToggle={ this.onToggle }
+                    style={ globalStyle }
                 />
             </div>
         )
