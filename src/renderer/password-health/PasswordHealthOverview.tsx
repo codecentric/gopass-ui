@@ -1,8 +1,10 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
+import { withRouter } from 'react-router'
 import { PasswordHealthIndicator } from './PasswordRatingComponent'
 import AsyncPasswordCollector, { CollectionStats } from '../secrets/AsyncPasswordCollector'
 import { rateMultiplePasswords } from './PasswordRules'
+import PaginatedTable from '../explorer-app/common/PaginatedTable'
 
 interface PasswordHealthOverviewState {
     collector: AsyncPasswordCollector
@@ -10,7 +12,7 @@ interface PasswordHealthOverviewState {
     stats?: CollectionStats
 }
 
-export default class PasswordHealthOverview extends React.Component<any, PasswordHealthOverviewState> {
+class PasswordHealthOverview extends React.Component<any, PasswordHealthOverviewState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -18,7 +20,7 @@ export default class PasswordHealthOverview extends React.Component<any, Passwor
         }
     }
 
-    async componentDidMount() {
+    public async componentDidMount() {
         this.state.collector.start()
         
         const statsChecker = setInterval(() => {
@@ -27,7 +29,7 @@ export default class PasswordHealthOverview extends React.Component<any, Passwor
         this.setState({ ...this.state, statsChecker })
     }
 
-    async componentWillUnmount() {
+    public async componentWillUnmount() {
         this.state.collector.stopAndReset()
 
         if (this.state.statsChecker) {
@@ -49,32 +51,57 @@ export default class PasswordHealthOverview extends React.Component<any, Passwor
 
         if (stats) {
             if (stats.inProgress) {
+                const progressPercentage = Math.round((stats.passwordsCollected / stats.totalPasswords) * 100)
+
                 return (
                     <>
-                        <p>Your password are currently being collected and analysed, please wait until ready...</p>
+                        <p>Your passwords are currently being collected and analysed, please wait until ready... { progressPercentage }%</p>
                         <div style={{width: '60%', minWidth: '200px', marginTop: '30px'}}>
-                            <m.ProgressBar progress={ (stats.passwordsCollected / stats.totalPasswords) * 100 } />
+                            <m.ProgressBar progress={ progressPercentage } />
                         </div>
                     </>
                 )
             }
 
             if (!stats.inProgress && !stats.error) {
+                const overallPasswordHealth = rateMultiplePasswords(stats.passwords)
+
                 return (
-                    <div className='row'>
-                        <div className='col s12'>
-                            <div className='card-panel z-depth-1'>
-                            <div className='row valign-wrapper'>
-                                <div className='col s2'>
-                                    <PasswordHealthIndicator health={ rateMultiplePasswords(stats.passwords).health } />
+                    <>
+                        <div className='row'>
+                            <div className='col s12'>
+                                <div className='card-panel z-depth-1'>
+                                <div className='row valign-wrapper'>
+                                    <div className='col s2'>
+                                        <PasswordHealthIndicator health={ overallPasswordHealth.health } />
+                                    </div>
+                                    <div className='col s10'>
+                                        This is the average health for your passwords. Soon you can get sumarised recommendations here!
+                                    </div>
                                 </div>
-                                <div className='col s10'>
-                                    This is the average health for your passwords. Soon you can get sumarised recommendations here!
                                 </div>
-                            </div>
                             </div>
                         </div>
-                    </div>
+
+                        <h4 className='m-top'>Improvement Potential</h4>
+                        <PaginatedTable
+                            columns={ [
+                                { fieldName: 'name', label: 'Name' },
+                                { fieldName: 'health', label: 'Health' },
+                                { fieldName: 'rulesToImprove', label: 'Rules to improve' }
+                            ] }
+                            rows={
+                                overallPasswordHealth.ratedPasswordSecrets
+                                    .filter(rated => rated.health && rated.health < 100)
+                                    .map(rated => ({
+                                        id: rated.name,
+                                        name: <a onClick={ this.onSecretClick(rated.name) }>{ rated.name }</a>,
+                                        health: `${rated.health}`,
+                                        rulesToImprove: `${rated.failedRulesCount}`
+                                    }))
+                            }
+                        />
+                    </>
                 )
             }
 
@@ -85,4 +112,10 @@ export default class PasswordHealthOverview extends React.Component<any, Passwor
 
         return <m.Preloader size='big'/>
     }
+
+    private onSecretClick = (secretName: string) => {
+        return () => this.props.history!.replace(`/secrets/${btoa(secretName)}/view`)
+    }
 }
+
+export default withRouter(PasswordHealthOverview as any) as any

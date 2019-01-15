@@ -1,11 +1,18 @@
 import Gopass from './Gopass'
 import { passwordSecretRegex } from '../explorer-app/side-navigation/SecretIcons'
 
+export interface PasswordSecret {
+    name: string
+    value: string
+    health?: number
+    failedRulesCount?: number
+}
+
 export interface CollectionStats {
     totalPasswords: number
     passwordsCollected: number
     inProgress: boolean
-    passwords: string[]
+    passwords: PasswordSecret[]
     error: Error | undefined
 }
 
@@ -13,7 +20,7 @@ export default class AsyncPasswordCollector {
     private totalPasswords: number = 0
     private passwordsCollected: number = 0
     private inProgress: boolean = false
-    private passwords: string[] = []
+    private passwords: PasswordSecret[] = []
     private error: Error | undefined = undefined
 
     public async start() {
@@ -57,9 +64,9 @@ export default class AsyncPasswordCollector {
 
         for (let name of passwordSecretNames) {
             if (this.inProgress) {
-                const pw = await Gopass.show(name)
+                const value = await Gopass.show(name)
                 
-                this.passwords.push(pw)
+                this.passwords.push({ name, value })
                 this.passwordsCollected++
             } else {
                 return

@@ -1,3 +1,5 @@
+import { PasswordSecret } from '../secrets/AsyncPasswordCollector'
+
 export interface PasswordRuleMeta {
     name: string
     description: string
@@ -10,7 +12,7 @@ export interface PasswordRule extends PasswordRuleMeta {
 const minimumLengthRule: PasswordRule = {
     matcher: (password: string) => password.length >= 10,
     name: 'Minimal length of 10 characters',
-    description: 'Good passwords must have a minimum of 10 characters'
+    description: 'Good passwords should have a minimum of 10 characters'
 }
 
 const lowerCaseRule: PasswordRule = {
@@ -28,16 +30,22 @@ const upperCaseRule: PasswordRule = {
 const specialCharRule: PasswordRule = {
     matcher: (password: string) => /(?=.*\W)/.test(password),
     name: 'Special characters',
-    description: 'Use special characters to make your passwords stronger'
+    description: 'Use special characters to make your password stronger'
 }
 
 const numbersRule: PasswordRule = {
     matcher: (password: string) => /(?=.*\d)/.test(password),
     name: 'Numbers',
-    description: 'Make sure to use at least one number to improve your passwords'
+    description: 'Make sure to use at least one number to improve your password'
 }
 
-const allRules: PasswordRule[] = [ minimumLengthRule, lowerCaseRule, upperCaseRule, specialCharRule, numbersRule ]
+const noRepetitiveCharactersRule: PasswordRule = {
+    matcher: (password: string) => !/(.)\1{2,}/.test(password),
+    name: 'No repetitive characters',
+    description: 'Passwords are better if characters are not repeated often (sequence of three or more).'
+}
+
+const allRules: PasswordRule[] = [ minimumLengthRule, lowerCaseRule, upperCaseRule, specialCharRule, numbersRule, noRepetitiveCharactersRule ]
 
 export interface PasswordRatingResult {
     totalRulesCount: number
@@ -59,13 +67,23 @@ export const ratePassword = (password: string): PasswordRatingResult => {
 
 export interface PasswordHealthSummary {
     health: number
+    ratedPasswordSecrets: PasswordSecret[]
 }
 
-export const rateMultiplePasswords = (passwords: string[]): PasswordHealthSummary => {
-    const pwHealths = passwords.map(pw => ratePassword(pw).health)
-    const pwHealthSum = pwHealths.reduce((a: number, b: number) => a + b, 0)
+export const rateMultiplePasswords = (passwords: PasswordSecret[]): PasswordHealthSummary => {
+    const pwHealths = passwords.map((passwordSecret: PasswordSecret) => {
+        const pwRating = ratePassword(passwordSecret.value)
+        return {
+            health: pwRating.health,
+            failedRulesCount: pwRating.failedRules.length,
+            value: '***',
+            name: passwordSecret.name
+        }
+    }).sort((a, b) => a.health - b.health)
+    const pwHealthSum: number = pwHealths.map(h => h.health).reduce((a: number, b: number) => a + b, 0)
 
     return {
-        health: Math.round(pwHealthSum / pwHealths.length)
+        health: Math.round(pwHealthSum / pwHealths.length),
+        ratedPasswordSecrets: pwHealths
     }
 }

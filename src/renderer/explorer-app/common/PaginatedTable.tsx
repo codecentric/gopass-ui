@@ -10,7 +10,7 @@ export interface TableColumn {
 
 export interface TableRow {
     id: string
-    [fieldName: string]: string
+    [fieldName: string]: string | React.ReactNode
 }
 
 export interface PaginatedTableProps {
