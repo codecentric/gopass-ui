@@ -1,6 +1,6 @@
 {
   "name": "gopass-ui",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Awesome UI for the gopass CLI – a password manager for your daily business",
   "main": "./dist/main.js",
   "scripts": {
@@ -72,6 +72,7 @@
   },
   "author": {
     "name": "Matthias Rütten & Jonas Verhoelen",
+    "email": "jonas.verhoelen+gopassui@codecentric.de",
     "url": "https://www.codecentric.de"
   },
   "contributors": [
