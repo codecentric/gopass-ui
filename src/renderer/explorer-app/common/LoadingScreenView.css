@@ -1,0 +1,13 @@
+.loading-screen-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+    font-size: 24px;
+}
+
+.loading-screen-message {
+    width: 40%;
+    min-width: 300px;
+    text-align: center;
+}

@@ -5,6 +5,7 @@ import { PasswordHealthIndicator } from './PasswordRatingComponent'
 import AsyncPasswordCollector, { CollectionStats } from '../secrets/AsyncPasswordCollector'
 import { rateMultiplePasswords } from './PasswordRules'
 import PaginatedTable from '../explorer-app/common/PaginatedTable'
+import LoadingScreenView from '../explorer-app/common/LoadingScreenView'
 
 interface PasswordHealthOverviewState {
     collector: AsyncPasswordCollector
@@ -21,19 +22,22 @@ class PasswordHealthOverview extends React.Component<any, PasswordHealthOverview
     }
 
     public async componentDidMount() {
-        this.state.collector.start()
+        const { collector } = this.state
+        collector.start()
         
         const statsChecker = setInterval(() => {
-            this.setState({ ...this.state, stats: this.state.collector.getCurrentStats() })
+            const stats = this.state.collector.getCurrentStats()
+            this.setState({ ...this.state, stats })
         }, 100)
         this.setState({ ...this.state, statsChecker })
     }
 
     public async componentWillUnmount() {
-        this.state.collector.stopAndReset()
+        const { collector, statsChecker } = this.state
+        collector.stopAndReset()
 
-        if (this.state.statsChecker) {
-            clearInterval(this.state.statsChecker)
+        if (statsChecker) {
+            clearInterval(statsChecker)
         }
     }
 
@@ -50,7 +54,7 @@ class PasswordHealthOverview extends React.Component<any, PasswordHealthOverview
         const { stats } = this.state
 
         if (stats) {
-            if (stats.inProgress) {
+            if (stats.inProgress && stats.passwordsCollected > 0) {
                 const progressPercentage = Math.round((stats.passwordsCollected / stats.totalPasswords) * 100)
 
                 return (
@@ -63,8 +67,9 @@ class PasswordHealthOverview extends React.Component<any, PasswordHealthOverview
                 )
             }
 
-            if (!stats.inProgress && !stats.error) {
+            if (!stats.inProgress && stats.passwordsCollected > 0 && stats.passwordsCollected === stats.totalPasswords && !stats.error) {
                 const overallPasswordHealth = rateMultiplePasswords(stats.passwords)
+                const improvablePasswords = overallPasswordHealth.ratedPasswordSecrets.filter(rated => rated.health && rated.health < 100)
 
                 return (
                     <>
@@ -76,7 +81,8 @@ class PasswordHealthOverview extends React.Component<any, PasswordHealthOverview
                                         <PasswordHealthIndicator health={ overallPasswordHealth.health } />
                                     </div>
                                     <div className='col s10'>
-                                        This is the average health for your passwords. Soon you can get sumarised recommendations here!
+                                        This is the average health for your passwords.
+                                        { improvablePasswords.length > 0 ? ` There are ${improvablePasswords.length} suggestions available.` : '' }
                                     </div>
                                 </div>
                                 </div>
@@ -91,14 +97,12 @@ class PasswordHealthOverview extends React.Component<any, PasswordHealthOverview
                                 { fieldName: 'rulesToImprove', label: 'Rules to improve' }
                             ] }
                             rows={
-                                overallPasswordHealth.ratedPasswordSecrets
-                                    .filter(rated => rated.health && rated.health < 100)
-                                    .map(rated => ({
-                                        id: rated.name,
-                                        name: <a onClick={ this.onSecretClick(rated.name) }>{ rated.name }</a>,
-                                        health: `${rated.health}`,
-                                        rulesToImprove: `${rated.failedRulesCount}`
-                                    }))
+                                improvablePasswords.map(rated => ({
+                                    id: rated.name,
+                                    name: <a onClick={ this.onSecretClick(rated.name) }>{ rated.name }</a>,
+                                    health: `${rated.health}`,
+                                    rulesToImprove: `${rated.failedRulesCount}`
+                                }))
                             }
                         />
                     </>
@@ -110,7 +114,7 @@ class PasswordHealthOverview extends React.Component<any, PasswordHealthOverview
             }
         }
 
-        return <m.Preloader size='big'/>
+        return <LoadingScreenView />
     }
 
     private onSecretClick = (secretName: string) => {
