@@ -65,7 +65,7 @@ const hideMainWindow = () => {
 }
 
 const setGlobalShortcut = (shortcut: string) => {
-    globalShortcut.unregisterAll()
+    globalShortcut.unregister(shortcut)
     globalShortcut.register(shortcut, () => {
         if (searchWindow) {
             if (searchWindow.isFocused()) {

@@ -22,22 +22,24 @@ export default class MainContent extends React.Component {
                             path='/'
                             exact
                             render={ () => (
-                                <div>
+                                <>
                                     <MainNavigation />
                                     <Home />
-                                </div>
+                                </>
                             ) }
                         />
                         <Route
                             path='/secrets/:encodedSecretName/view'
-                            render={ (props: { match: match<{ encodedSecretName: string }> }) => {
+                            component={ (props: { match: match<{ encodedSecretName: string }> }) => {
                                 const chosenSecretName = atob(props.match.params.encodedSecretName)
 
                                 return (
-                                    <div>
+                                    <>
                                         <MainNavigation />
-                                        <SecretDetails secretName={ chosenSecretName } />
-                                    </div>
+                                        <SecretDetails
+                                            secretName={ chosenSecretName }
+                                        />
+                                    </>
                                 )
                             } }
                         />
@@ -45,20 +47,20 @@ export default class MainContent extends React.Component {
                             path='/settings'
                             exact
                             render={ () => (
-                                <div>
+                                <>
                                     <GoBackNavigation />
                                     <Settings />
-                                </div>
+                                </>
                             ) }
                         />
                         <Route
                             path='/password-health'
                             exact
                             render={ () => (
-                                <div>
+                                <>
                                     <GoBackNavigation />
                                     <PasswordHealthOverview />
-                                </div>
+                                </>
                             ) }
                         />
                     </m.Col>
