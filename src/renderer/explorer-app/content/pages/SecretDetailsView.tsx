@@ -49,28 +49,30 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
         return (
             loading ? 
                 <LoadingScreenView /> :
-                <>
-                    <h4>Secret</h4>
-                    <m.Card
-                        title={ secretName }
-                        actions={ [
-                            <a key='copy-clipboard' className='link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>
-                        ] }
-                    >
-                        { secretValue }
-                    </m.Card>
+                (
+                    <>
+                        <h4>Secret</h4>
+                        <m.Card
+                            title={ secretName }
+                            actions={ [
+                                <a key='copy-clipboard' className='link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>
+                            ] }
+                        >
+                            { secretValue }
+                        </m.Card>
 
-                    {
-                        isPassword && passwordRating &&
-                            <>
-                                <h4 className='m-top'>Password Strength</h4>
-                                <PasswordRatingComponent passwordRating={ passwordRating } />
-                            </>
-                    }
+                        {
+                            isPassword && passwordRating &&
+                                <>
+                                    <h4 className='m-top'>Password Strength</h4>
+                                    <PasswordRatingComponent passwordRating={ passwordRating } />
+                                </>
+                        }
 
-                    <h4 className='m-top'>History</h4>
-                    { this.renderHistoryTable() }
-                </>
+                        <h4 className='m-top'>History</h4>
+                        { this.renderHistoryTable() }
+                    </>
+                )
         )
     }
 

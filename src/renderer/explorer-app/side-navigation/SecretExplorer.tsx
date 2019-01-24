@@ -3,24 +3,25 @@ import * as m from 'react-materialize'
 import { History } from 'history'
 import { withRouter } from 'react-router'
 import * as KeyboardEventHandler from 'react-keyboard-event-handler'
-
 import SecretTreeViewer from './SecretTreeViewer'
 
 interface SecretExplorerProps {
-    searchValue: string
-    onSearchChange: (event: any, searchValue: string) => void
-    onCancelSearch: (event: any, searchValue: string) => void
     history?: History
 }
 
-class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
+class SecretExplorer extends React.Component<SecretExplorerProps, { searchValue: string }> {
+    constructor(props: SecretExplorerProps) {
+        super(props)
+        this.state = { searchValue: '' }
+    }
+
     render() {
-        const { searchValue, onSearchChange, onCancelSearch } = this.props
+        const { searchValue } = this.state
 
         return (
             <div className='secret-explorer'>
-                <KeyboardEventHandler handleKeys={ [ 'esc' ] } handleFocusableElements onKeyEvent={ onCancelSearch } />
-                <m.Input className='search-bar' value={ searchValue } placeholder='Search...' onChange={ onSearchChange } />
+                <KeyboardEventHandler handleKeys={ [ 'esc' ] } handleFocusableElements onKeyEvent={ this.onCancelSearch } />
+                <m.Input className='search-bar' value={ searchValue } placeholder='Search...' onChange={ this.onSearchChange } />
                 <SecretTreeViewer searchValue={ searchValue } onSecretClick={ this.onSecretClick } />
             </div>
         )
@@ -28,6 +29,14 @@ class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
 
     private onSecretClick = (secretName: string) => {
         this.props.history!.replace(`/secrets/${btoa(secretName)}/view`)
+    }
+
+    private onSearchChange = (event: any, searchValue: string) => {
+        this.setState({ searchValue })
+    }
+
+    private onCancelSearch = () => {
+        this.setState({ searchValue: '' })
     }
 }
 

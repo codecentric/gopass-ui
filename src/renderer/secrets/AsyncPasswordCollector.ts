@@ -62,7 +62,7 @@ export default class AsyncPasswordCollector {
     private collectPasswordsAfterAnother = async (passwordSecretNames: string[]) => {
         this.passwords = []
 
-        for (let name of passwordSecretNames) {
+        for (const name of passwordSecretNames) {
             if (this.inProgress) {
                 const value = await Gopass.show(name)
                 
