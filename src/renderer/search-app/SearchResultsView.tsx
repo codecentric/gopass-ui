@@ -54,7 +54,7 @@ export default class SearchResultsView extends React.Component<SearchResultsProp
         }
 
         return (
-            <div>
+            <>
                 <KeyboardEventHandler
                     handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter', 'esc' ] }
                     handleFocusableElements
@@ -85,7 +85,7 @@ export default class SearchResultsView extends React.Component<SearchResultsProp
                         )
                     } ) }
                 </m.Collection>
-            </div>
+            </>
         )
     }
 

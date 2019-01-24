@@ -4,7 +4,7 @@ import * as dateformat from 'dateformat'
 
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import PaginatedTable from '../../common/PaginatedTable'
-import { deriveSecretIcon, passwordSecretRegex } from '../../side-navigation/SecretIcons'
+import { passwordSecretRegex } from '../../side-navigation/SecretIcons'
 import { ratePassword, PasswordRatingResult } from '../../../password-health/PasswordRules'
 import PasswordRatingComponent from '../../../password-health/PasswordRatingComponent'
 import LoadingScreenView from '../../common/LoadingScreenView'
@@ -52,7 +52,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                 <>
                     <h4>Secret</h4>
                     <m.Card
-                        title={ <>{ secretName } <m.Icon>{ deriveSecretIcon(secretName) }</m.Icon></> }
+                        title={ secretName }
                         actions={ [
                             <a key='copy-clipboard' className='link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>
                         ] }
