@@ -12,7 +12,6 @@ before_install:
   - sudo apt-get install alien # we need rpm and rpmbuild
 
 script:
-- npm install --production
 - npm audit
 - npm test
 - npm run release
