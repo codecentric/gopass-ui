@@ -13,8 +13,9 @@ cache:
 script:
 - npm install --production
 - npm audit
-- npm test:unit
+- npm test
 - npm run release
+
 before_cache:
 - rm -rf $HOME/.cache/electron-builder/wine
 
