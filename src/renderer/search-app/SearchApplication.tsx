@@ -16,7 +16,7 @@ export default class SearchApplication extends React.Component<any, { searchValu
     }
 
     public componentDidMount() {
-        const element = document.getElementById('serach')
+        const element = document.getElementById('search')
 
         if (element) {
             element.focus()
@@ -30,12 +30,12 @@ export default class SearchApplication extends React.Component<any, { searchValu
                 <Notification dismissTimeout={ 1500 } />
                 <m.Row>
                     <m.Col s={ 12 }>
-                        <m.Input id='serach' placeholder='Search...' onChange={ this.onChangeSearch } onKeyDown={ this.preventNavigationKeys } s={ 12 } />
+                        <m.Input id='search' placeholder='Search...' onChange={ this.onChangeSearch } onKeyDown={ this.preventNavigationKeys } s={ 12 } />
                     </m.Col>
                 </m.Row>
                 <m.Row>
                     <m.Col s={ 12 }>
-                        <SearchResults />
+                        <SearchResults search={ /* TODO: fix this! it should be handled via redux state because SearchResults uses redux already */ this.state.searchValue } />
                     </m.Col>
                 </m.Row>
             </div>
