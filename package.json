@@ -71,8 +71,8 @@
     "url": "git+ssh://git@github.com:codecentric/gopass-ui.git"
   },
   "author": {
-    "name": "Matthias Rütten & Jonas Verhoelen",
-    "email": "jonas.verhoelen+gopassui@codecentric.de",
+    "name": "codecentric AG",
+    "email": "info@codecentric.de",
     "url": "https://www.codecentric.de"
   },
   "contributors": [
