@@ -1,6 +1,6 @@
 # Gopass UI
 
-![alt text](docs/gopass-ui-logo.png "Gopass UI logo")
+<img src="docs/gopass-ui-logo.png" alt="Gopass UI logo" style="max-width: 800px">
 
 ## What is Gopass and Gopass UI?
 
@@ -8,9 +8,9 @@
 
 The repository you're currently looking at contains `Gopass UI`, an Electron based UI wrapper for your `gopass` on the command line. It makes your life easier by providing a rich graphical user interface to search and manage your secrets. It looks like this:
 
-![alt text](docs/screenshot.png "Gopass UI screenshot")
+<img src="docs/demo-720p.gif" alt="GIF demonstrating core features of Gopass UI" title="Gopass UI demo" style="max-width: 800px" />
 
-In addition there is a globally usable search window that can be opened with `cmd+shift+p`.
+In addition there is a globally usable search window that can be opened with `(cmd || ctrl) + shift + p`.
 
 ## How can I use it?
 
