@@ -5,6 +5,6 @@ const baseConfig = require('./webpack.main.config')
 
 module.exports = merge.smart(baseConfig, {
     plugins: [
-        new UglifyJsPlugin()
+        //new UglifyJsPlugin()
     ]
 })

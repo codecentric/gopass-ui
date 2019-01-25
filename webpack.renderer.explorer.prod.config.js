@@ -5,6 +5,6 @@ const baseConfig = require('./webpack.renderer.explorer.config')
 
 module.exports = merge.smart(baseConfig, {
     plugins: [
-        new UglifyJsPlugin()
+        //new UglifyJsPlugin()
     ]
 })
