@@ -35,7 +35,7 @@ export default class SearchApplication extends React.Component<any, { searchValu
                 </m.Row>
                 <m.Row>
                     <m.Col s={ 12 }>
-                        <SearchResults search={ this.state.searchValue } />
+                        <SearchResults />
                     </m.Col>
                 </m.Row>
             </div>
