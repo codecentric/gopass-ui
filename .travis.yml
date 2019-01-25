@@ -1,14 +1,15 @@
 language: node_js
 node_js: "10"
-env:
-- ELECTRON_CACHE=$HOME/.cache/electron
-- ELECTRON_BUILDER_CACHE=$HOME/.cache/electron-builder
 
 cache:
   directories:
-  - node_modules
-  - $HOME/.cache/electron
-  - $HOME/.cache/electron-builder
+    - node_modules
+    - $HOME/.cache/electron
+    - $HOME/.cache/electron-builder
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install alien # we need rpm and rpmbuild
 
 script:
 - npm install --production
