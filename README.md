@@ -1,4 +1,4 @@
-# Gopass UI
+# Gopass UI [![Build Status](https://travis-ci.org/codecentric/gopass-ui.svg?branch=master)](https://travis-ci.org/codecentric/gopass-ui) [![Latest release](https://img.shields.io/github/release/codecentric/gopass-ui.svg)](https://github.com/codecentric/gopass-ui/releases/latest) [![Snyk vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/codecentric/gopass-ui.svg)](https://github.com/codecentric/gopass-ui/releases/latest)
 
 <img src="docs/gopass-ui-logo.png" alt="Gopass UI logo" style="max-width: 800px">
 
