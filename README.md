@@ -14,8 +14,10 @@ In addition there is a globally usable search window that can be opened with `(c
 
 ## How can I use it?
 
-Just [download](https://github.com/codecentric/gopass-ui/releases) the packaged application from this repository and install it according to your operating system. 
-Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and running already.
+Just [download the latest packaged application](https://github.com/codecentric/gopass-ui/releases/latest) from our releases and install it.
+
+Currently we support binaries for MacOS, Windows and Linux (Deb, Rpm).
+Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and running already. We also recommend you to use a dialog-based PIN-entry-tool for typing in your GPG passphrase like [pinentry-mac for MacOS](https://formulae.brew.sh/formula/pinentry-mac) instead of using the default terminal-based.
 
 ## Issues
 
