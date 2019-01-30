@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import { withRouter } from 'react-router'
-import { PasswordHealthIndicator } from './PasswordRatingComponent'
-import AsyncPasswordCollector, { CollectionStats } from '../secrets/AsyncPasswordCollector'
-import { rateMultiplePasswords } from './PasswordRules'
-import PaginatedTable from '../explorer-app/common/PaginatedTable'
-import LoadingScreenView from '../explorer-app/common/LoadingScreenView'
+import { PasswordHealthIndicator } from '../../../password-health/PasswordRatingComponent'
+import AsyncPasswordCollector, { CollectionStats } from '../../../secrets/AsyncPasswordCollector'
+import { rateMultiplePasswords } from '../../../password-health/PasswordRules'
+import PaginatedTable from '../../common/PaginatedTable'
+import LoadingScreenView from '../../common/LoadingScreenView'
 
 interface PasswordHealthOverviewState {
     collector: AsyncPasswordCollector

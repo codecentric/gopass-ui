@@ -16,6 +16,7 @@ class MainNavigationView extends React.Component<MainNavigationViewProps> {
         return (
             <div style={ { paddingTop: '0.75rem' } }>
                 <ActionButton icon='home' onClick={ () => history!.replace('/') } />
+                <ActionButton icon='add' onClick={ () => history!.replace('/add-secret') } />
                 <ActionButton icon='refresh' onClick={ this.props.refreshGopassStores } />
                 <ActionButton icon='settings' onClick={ () => history!.replace('/settings') } />
                 <ActionButton icon='security' onClick={ () => history!.replace('/password-health') } />

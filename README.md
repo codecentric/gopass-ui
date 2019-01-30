@@ -23,9 +23,13 @@ Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and 
 
 Please report any issues and problems to us. We are very keen about your feedback and appreciate any help.
 
+## Development
+
+See how to get started with development [here](docs/development.md).
+
 ## Contribution
 
-You'd like to help us? No problem. See how to [get started with development](docs/development.md). We are looking forward to your pull requests and issues. 
+You'd like to help us? No problem. We are looking forward to your pull requests, issues and participation in discussion.
 
 | [<img alt="Jonas Verhoelen" src="https://avatars1.githubusercontent.com/u/6791360?v=4&s=200" width="200">](https://github.com/jverhoelen) | [<img alt="Matthias Rütten" src="https://avatars1.githubusercontent.com/u/2926623?v=4&s=200" width="200">](https://github.com/ruettenm) |
 :---: | :---:

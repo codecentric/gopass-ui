@@ -31,7 +31,7 @@ class SecretExplorer extends React.Component<SecretExplorerProps, { searchValue:
         this.props.history!.replace(`/secrets/${btoa(secretName)}/view`)
     }
 
-    private onSearchChange = (event: any, searchValue: string) => {
+    private onSearchChange = (_: any, searchValue: string) => {
         this.setState({ searchValue })
     }
 

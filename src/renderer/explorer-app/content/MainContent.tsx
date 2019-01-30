@@ -8,7 +8,8 @@ import Home from './pages/Home'
 import MainNavigation from './navigation/MainNavigation'
 import GoBackNavigation from './navigation/GoBackNavigation'
 import Notification from '../../notifications/Notification'
-import PasswordHealthOverview from '../../password-health/PasswordHealthOverview'
+import PasswordHealthOverview from './pages/PasswordHealthOverview'
+import AddSecretPage from './pages/AddSecretPage';
 
 /* tslint:disable:jsx-no-lambda */
 export default class MainContent extends React.Component {
@@ -60,6 +61,16 @@ export default class MainContent extends React.Component {
                                 <>
                                     <GoBackNavigation />
                                     <PasswordHealthOverview />
+                                </>
+                            ) }
+                        />
+                        <Route
+                            path='/add-secret'
+                            exact
+                            render={ () => (
+                                <>
+                                    <GoBackNavigation />
+                                    <AddSecretPage />
                                 </>
                             ) }
                         />
