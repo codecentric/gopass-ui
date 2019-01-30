@@ -47,7 +47,11 @@ export default class Gopass {
         return flatSecrets.split(lineSplitRegex).filter(isDefined)
     }
 
-    private static execute(command: string, args?: string[]): Promise<string> {
+    public static async addSecret(name: string, value: string): Promise<void> {
+        await Gopass.execute('insert', [ name ], value)
+    }
+
+    private static execute(command: string, args?: string[], pipeTextInto?: string): Promise<string> {
         executionId++
 
         const result = new Promise<string>((resolve, reject) => {
@@ -60,7 +64,7 @@ export default class Gopass {
             })
         })
 
-        ipcRenderer.send('gopass', { executionId, command, args })
+        ipcRenderer.send('gopass', { executionId, command, args, pipeTextInto })
 
         return result
     }

@@ -19,6 +19,7 @@ interface SecretDetailsState {
 
 interface SecretDetailsViewProps {
     secretName: string
+    freshlyAdded: boolean
     copySecretToClipboard?: (secretName: string) => void
 }
 
@@ -43,6 +44,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
     }
 
     render() {
+        // TODO: make use of this.props.freshlyAdded and display a success message
         const { secretName } = this.props
         const { secretValue, isPassword, passwordRating, loading } = this.state
 

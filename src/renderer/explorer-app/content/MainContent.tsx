@@ -9,7 +9,7 @@ import MainNavigation from './navigation/MainNavigation'
 import GoBackNavigation from './navigation/GoBackNavigation'
 import Notification from '../../notifications/Notification'
 import PasswordHealthOverview from './pages/PasswordHealthOverview'
-import AddSecretPage from './pages/AddSecretPage';
+import AddSecretPage from './pages/AddSecretPage'
 
 /* tslint:disable:jsx-no-lambda */
 export default class MainContent extends React.Component {
@@ -31,14 +31,16 @@ export default class MainContent extends React.Component {
                         />
                         <Route
                             path='/secrets/:encodedSecretName/view'
-                            component={ (props: { match: match<{ encodedSecretName: string }> }) => {
+                            component={ (props: { match: match<{ encodedSecretName: string }>, location: { search?: string } }) => {
                                 const chosenSecretName = atob(props.match.params.encodedSecretName)
+                                const freshlyAdded = props.location.search ? props.location.search === '?added' : false
 
                                 return (
                                     <>
                                         <MainNavigation />
                                         <SecretDetails
                                             secretName={ chosenSecretName }
+                                            freshlyAdded={ freshlyAdded }
                                         />
                                     </>
                                 )
