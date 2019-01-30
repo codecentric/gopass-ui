@@ -44,8 +44,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
     }
 
     render() {
-        // TODO: make use of this.props.freshlyAdded and display a success message
-        const { secretName } = this.props
+        const { secretName, freshlyAdded } = this.props
         const { secretValue, isPassword, passwordRating, loading } = this.state
 
         return (
@@ -53,7 +52,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                 <LoadingScreenView /> :
                 (
                     <>
-                        <h4>Secret</h4>
+                        <h4>Secret { freshlyAdded && <m.Icon small>fiber_new</m.Icon> }</h4>
                         <m.Card
                             title={ secretName }
                             actions={ [
@@ -79,21 +78,20 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
     }
 
     private renderHistoryTable() {
-        const rows = this.state.historyEntries.map(entry => {
-            return {
-                ...entry,
-                id: entry.hash,
-                timestamp: dateformat(new Date(entry.timestamp), 'yyyy-mm-dd HH:MM')
-            }
-        })
+        const rows = this.state.historyEntries.map(entry => ({
+            ...entry,
+            id: entry.hash,
+            timestamp: dateformat(new Date(entry.timestamp), 'yyyy-mm-dd HH:MM')
+        }))
+        const columns = [
+            { fieldName: 'timestamp', label: 'Time' },
+            { fieldName: 'author', label: 'Author' },
+            { fieldName: 'message', label: 'Message' }
+        ]
 
         return (
             <PaginatedTable
-                columns={ [
-                    { fieldName: 'timestamp', label: 'Time' },
-                    { fieldName: 'author', label: 'Author' },
-                    { fieldName: 'message', label: 'Message' }
-                ] }
+                columns={ columns }
                 rows={ rows }
             />
         )
