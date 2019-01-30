@@ -5,7 +5,7 @@ import MainContent from './content/MainContent'
 import './ExplorerApplication.css'
 
 export default class ExplorerApplication extends React.Component<{}, {}> {
-    render() {
+    public render() {
         return (
             <div className='wrapper'>
                 <SecretExplorer />

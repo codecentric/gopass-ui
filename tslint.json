@@ -1,32 +1,133 @@
 {
-    "defaultSeverity": "error",
-    "extends": [
-        "tslint-config-airbnb",
-        "tslint-react",
-        "tslint-config-prettier"
-    ],
-    "jsRules": {},
-    "rules": {
-        "max-line-length": [true, 160],
-        "trailing-comma": false,
-        "ter-indent": [
+    "extends": "tslint:latest",
+    "jsRules": {
+        "quotemark": [
             true,
-            4,
+            "single",
+            "avoid-escape"
+        ],
+        "object-literal-sort-keys": false,
+        "arrow-parens": false,
+        "one-variable-per-declaration": [
+            true,
+            "ignore-for-loop"
+        ],
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "trailing-comma": [
+            true,
             {
-                "SwitchCase": 1
+                "multiline": "never",
+                "singleline": "never"
             }
         ],
-        "variable-name": false,
-        "jsx-alignment": true,
-        "semicolon": [true, "never"],
-        "jsx-equals-spacing": [true, "never"],
-        "jsx-no-string-ref": true,
-        "quotemark": [true, "single"],
-        "jsx-self-close": true,
-        "jsx-wrap-multiline": true,
-        "import-name": false,
-        "jsx-boolean-value": false,
-        "strict-boolean-expressions": false
+        "object-literal-key-quotes": [
+            true,
+            "as-needed"
+        ],
+        "prefer-const": true,
+        "no-magic-numbers": false,
+        "only-arrow-functions": [
+            true,
+            "allow-declarations",
+            "allow-named-functions"
+        ],
+        "curly": true,
+        "no-console": [
+            true,
+            "log",
+            "error"
+        ],
+        "no-empty": true,
+        "no-invalid-this": [
+            true,
+            "check-function-in-method"
+        ],
+        "no-shadowed-variable": true,
+        "radix": true,
+        "switch-default": true,
+        "cyclomatic-complexity": [
+            true,
+            10
+        ],
+        "max-line-length": [
+            true,
+            160
+        ]
     },
-    "rulesDirectory": []
+    "rules": {
+        "no-implicit-dependencies": false,
+        "no-submodule-imports": false,
+        "quotemark": [
+            true,
+            "single",
+            "avoid-escape"
+        ],
+        "object-literal-sort-keys": false,
+        "arrow-parens": false,
+        "one-variable-per-declaration": [
+            true,
+            "ignore-for-loop"
+        ],
+        "semicolon": [
+            true,
+            "never"
+        ],
+        "interface-name": [
+            true,
+            "never-prefix"
+        ],
+        "trailing-comma": [
+            true,
+            {
+                "multiline": "never",
+                "singleline": "never"
+            }
+        ],
+        "object-literal-key-quotes": [
+            true,
+            "as-needed"
+        ],
+        "member-ordering": [
+            true,
+            {
+                "order": "fields-first"
+            }
+        ],
+        "ordered-imports": false,
+        "prefer-const": true,
+        "no-magic-numbers": false,
+        "only-arrow-functions": [
+            true,
+            "allow-declarations",
+            "allow-named-functions"
+        ],
+        "curly": true,
+        "no-console": [
+            true,
+            "log",
+            "error"
+        ],
+        "no-empty": true,
+        "no-empty-interface": false,
+        "no-invalid-this": [
+            true,
+            "check-function-in-method"
+        ],
+        "no-shadowed-variable": true,
+        "no-unused-expression": false,
+        "no-object-literal-type-assertion": false,
+        "radix": true,
+        "switch-default": true,
+        "cyclomatic-complexity": [
+            true,
+            10
+        ],
+        "max-line-length": [
+            true,
+            160
+        ]
+    }
 }

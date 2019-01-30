@@ -56,4 +56,3 @@ export default class LoadingScreenView extends React.Component<LoadingScreenView
         )
     }
 }
-

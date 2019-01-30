@@ -43,12 +43,12 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
         await this.createState(props.secretName)
     }
 
-    render() {
+    public render() {
         const { secretName, freshlyAdded } = this.props
         const { secretValue, isPassword, passwordRating, loading } = this.state
 
         return (
-            loading ? 
+            loading ?
                 <LoadingScreenView /> :
                 (
                     <>

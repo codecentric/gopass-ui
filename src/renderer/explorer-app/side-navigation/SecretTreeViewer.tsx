@@ -25,24 +25,24 @@ export default class SecretTreeViewer extends React.Component<SecretTreeViewerPr
         }
     }
 
-    async componentDidMount() {
+    public async componentDidMount() {
         const secretNames = await Gopass.getAllSecretNames()
         const filteredSecretNames = SecretsFilterService.filterBySearch(secretNames, this.props.searchValue)
         const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames)
         this.setState({ ...this.state, tree })
     }
 
-    async componentWillReceiveProps(props: SecretTreeViewerProps) {
+    public async componentWillReceiveProps(props: SecretTreeViewerProps) {
         if (props.searchValue !== this.props.searchValue) {
             await this.componentDidMount()
         }
     }
 
-    render() {
+    public render() {
         return <TreeComponent tree={this.state.tree} onLeafClick={this.onSecretClick} />
     }
 
-    onSecretClick = async (secretName: string) => {
+    private onSecretClick = async (secretName: string) => {
         this.props.onSecretClick(secretName, await Gopass.show(secretName))
     }
 }

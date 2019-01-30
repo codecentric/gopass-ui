@@ -7,14 +7,14 @@ export default class Settings extends React.Component {
         this.state = {}
     }
 
-    render() {
+    public render() {
         return (
-            <div>
+            <>
                 <h4>Settings</h4>
                 <m.CardPanel>
                     [ ... ]
                 </m.CardPanel>
-            </div>
+            </>
         )
     }
 }

@@ -7,7 +7,7 @@ const DEFAULT_TIMEOUT = 3000
 export interface NotificationViewProps {
     notification?: Notification
     dismissTimeout?: number
-    hideNotification?: Function
+    hideNotification?: () => void
 }
 
 export default class NotificationView extends React.Component<NotificationViewProps> {
@@ -51,7 +51,7 @@ export default class NotificationView extends React.Component<NotificationViewPr
     }
 
     private setAutoTimeout(dismissTimeout: number) {
-        console.log('SET TIMEOUT FOR', this.props.dismissTimeout)
+        console.info('SET TIMEOUT FOR', this.props.dismissTimeout)
         this.timeoutId = window.setTimeout(() => this.props.hideNotification!(), dismissTimeout)
     }
 }

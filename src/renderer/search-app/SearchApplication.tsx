@@ -36,7 +36,10 @@ export default class SearchApplication extends React.Component<any, { searchValu
                 <m.Row>
                     <m.Col s={ 12 }>
                         <SearchResults
-                            { ...{ search: this.state.searchValue } /* TODO: fix this! it should be handled via redux state because SearchResults uses redux already */ }
+                            {
+                                /* TODO: fix this! it should be handled via redux state because SearchResults uses redux already */
+                                ...{ search: this.state.searchValue }
+                            }
                         />
                     </m.Col>
                 </m.Row>

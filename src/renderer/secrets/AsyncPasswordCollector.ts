@@ -65,7 +65,7 @@ export default class AsyncPasswordCollector {
         for (const name of passwordSecretNames) {
             if (this.inProgress) {
                 const value = await Gopass.show(name)
-                
+
                 this.passwords.push({ name, value })
                 this.passwordsCollected++
             } else {

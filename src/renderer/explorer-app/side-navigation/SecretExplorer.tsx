@@ -15,7 +15,7 @@ class SecretExplorer extends React.Component<SecretExplorerProps, { searchValue:
         this.state = { searchValue: '' }
     }
 
-    render() {
+    public render() {
         const { searchValue } = this.state
 
         return (

@@ -52,6 +52,7 @@ export default class Gopass {
     }
 
     private static execute(command: string, args?: string[], pipeTextInto?: string): Promise<string> {
+        // tslint:disable-next-line
         executionId++
 
         const result = new Promise<string>((resolve, reject) => {

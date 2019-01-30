@@ -26,7 +26,7 @@ export const globalStyle = {
             },
             toggle: {
                 base: {
-                    display: 'none',
+                    display: 'none'
                 },
                 wrapper: {
                     position: 'absolute',

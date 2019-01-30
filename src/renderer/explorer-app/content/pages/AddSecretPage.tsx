@@ -62,7 +62,7 @@ class AddSecretPage extends React.Component<{ history: History }, AddSecretPageS
             await Gopass.addSecret(name, value)
             history.replace(`/secrets/${btoa(name)}/view?added`)
         } catch (e) {
-            console.log('Error during adding a secret', e)
+            console.info('Error during adding a secret', e)
         }
     }
 }

@@ -18,7 +18,7 @@ export default class Home extends React.Component<any, { tags: GithubTag[] }> {
 
     public render() {
         const { tags } = this.state
-        const lastTag = tags[ tags.length - 1]
+        const lastTag = tags[tags.length - 1]
         const lastTagName = lastTag ? lastTag.ref.slice(10, lastTag.ref.length) : ''
 
         return (
@@ -26,9 +26,13 @@ export default class Home extends React.Component<any, { tags: GithubTag[] }> {
                 <h4>Welcome to Gopass UI</h4>
                 <m.CardPanel>
                     Choose a secret from the navigation or use the actions at the top.
-                    {
-                        lastTag && <> Make sure you got the latest version of Gopass UI so you don't miss any update: <a onClick={ this.openLatestReleasePage }>{ `${lastTagName} on Github` }</a></>
-                    }
+                    {lastTag && (
+                        <>
+                            {' '}
+                            Make sure you got the latest version of Gopass UI so you don't miss any update:{' '}
+                            <a onClick={this.openLatestReleasePage}>{`${lastTagName} on Github`}</a>
+                        </>
+                    )}
                 </m.CardPanel>
 
                 <h4 className='m-top'>Global search window</h4>
@@ -39,7 +43,10 @@ export default class Home extends React.Component<any, { tags: GithubTag[] }> {
 
                 <h4 className='m-top'>Issues</h4>
                 <m.CardPanel>
-                    Please report any issues and problems to us on <a className='link' onClick={ this.openIssuesPage }>Github</a>. We are very keen about your feedback and appreciate any help.
+                    Please report any issues and problems to us on{' '}
+                    <a className='link' onClick={ this.openIssuesPage }>
+                        Github
+                    </a>. We are very keen about your feedback and appreciate any help.
                 </m.CardPanel>
             </>
         )

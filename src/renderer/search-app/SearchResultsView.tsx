@@ -83,7 +83,7 @@ export default class SearchResultsView extends React.Component<SearchResultsProp
                                 )}
                             </m.CollectionItem>
                         )
-                    } ) }
+                    }) }
                 </m.Collection>
             </>
         )
@@ -139,6 +139,8 @@ export default class SearchResultsView extends React.Component<SearchResultsProp
 
             case 'esc':
                 ipcRenderer.send('hideSearchWindow')
+                break
+            default:
                 break
         }
     }

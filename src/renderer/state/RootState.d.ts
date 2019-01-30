@@ -1,4 +1,4 @@
-import { NotificationState } from "../notifications/notificationReducer"
+import { NotificationState } from '../notifications/notificationReducer'
 
 export interface RootState {
     notification: NotificationState

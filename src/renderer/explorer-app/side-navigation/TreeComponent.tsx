@@ -42,7 +42,20 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
         this.onToggle = this.onToggle.bind(this)
     }
 
-    onToggle(node: any, toggled: boolean) {
+    public render() {
+        return (
+            <>
+                <t.Treebeard
+                    data={ this.props.tree }
+                    decorators={ t.decorators }
+                    onToggle={ this.onToggle }
+                    style={ globalStyle }
+                />
+            </>
+        )
+    }
+
+    private onToggle(node: any, toggled: boolean) {
         if ((!node.children || node.children.length === 0) && !!node.entryId) {
             this.props.onLeafClick(node.entryId)
         }
@@ -60,18 +73,5 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
         if (node.children && node.children.length === 1) {
             this.onToggle(node.children[0], true)
         }
-    }
-
-    render() {
-        return (
-            <div>
-                <t.Treebeard
-                    data={ this.props.tree }
-                    decorators={ t.decorators }
-                    onToggle={ this.onToggle }
-                    style={ globalStyle }
-                />
-            </div>
-        )
     }
 }

@@ -11,6 +11,7 @@ before_install:
 
 script:
 - npm audit
+- npm run lint
 - npm test
 - npm run release
 
