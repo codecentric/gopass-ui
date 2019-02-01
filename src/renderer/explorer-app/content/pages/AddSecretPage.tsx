@@ -28,18 +28,18 @@ class AddSecretPage extends React.Component<{ history: History }, AddSecretPageS
 
         return (
             <>
-                <h4>New Secret</h4>
+                <h4>New { nameIndicatesPassword ? 'Password' : 'Secret' }</h4>
 
                 <m.CardPanel>
                     Adds new secrets to your Gopass stores. After clicking the Add-button, your new secret will be pushed to remote directly.
                 </m.CardPanel>
 
                 <m.Row>
-                    <m.Input s={12} error={!name} value={name} onChange={this.changeName} label={ nameLabel } />
-                    <m.Input s={12} error={!value} value={value} onChange={this.changeValue} label={ valueLabel } />
+                    <m.Input s={12} value={name} onChange={this.changeName} label={ nameLabel } />
+                    <m.Input s={12} value={value} onChange={this.changeValue} label={ valueLabel } />
                     <m.Col s={12}>
-                        <m.Button onClick={this.shuffleRandomValue} waves='light'>{ shuffleButtonLabel }</m.Button>
-                        <m.Button disabled={ !name || !value } onClick={this.addSecret} waves='light'>Add secret</m.Button>
+                        <m.Button style={{ marginRight: '10px' }} onClick={this.shuffleRandomValue} waves='light'>{ shuffleButtonLabel }</m.Button>
+                        <m.Button disabled={ !name || !value } onClick={this.addSecret} waves='light'>Save</m.Button>
                     </m.Col>
                 </m.Row>
             </>
