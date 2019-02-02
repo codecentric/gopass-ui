@@ -34,6 +34,9 @@ const contextMenu = Menu.buildFromTemplate([
         }
     },
     {
+        type: 'separator'
+    },
+    {
         label: 'Quit',
         click: () => {
             app.quit()
