@@ -38,6 +38,10 @@
     cursor: pointer
 }
 
+span.code {
+    font-family: Consolas, monospace
+}
+
 .card-panel pre {
     margin-bottom: 0px;
 }

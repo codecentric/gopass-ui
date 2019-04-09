@@ -22,7 +22,7 @@ ReactDOM.render(
     <AppContainer>
         <Provider store={store}>
             <Router>
-                <Route component={ ExplorerApplication }/>
+                <ExplorerApplication />
             </Router>
         </Provider>
     </AppContainer>,

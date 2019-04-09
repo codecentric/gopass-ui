@@ -16,7 +16,6 @@ const mapDispatchToProps = (dispatch: Dispatch): SearchResultsProps => ({
             .catch(() => {
                 dispatch(showNotification({ status: 'ERROR', message: 'Oops, something went wrong. Please try again.' }))
             })
-
     }
 })
 
