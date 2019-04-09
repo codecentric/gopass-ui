@@ -23,16 +23,26 @@ export default class Home extends React.Component<any, { tags: GithubTag[] }> {
 
         return (
             <>
-                <h4>Welcome to Gopass UI</h4>
+                <h3>Welcome to Gopass UI</h3>
+                <h4>Setup</h4>
+                <m.CardPanel>
+                    You have to meet the following requirements to use our application:
+                    <ul>
+                        <li>* sure, you need gopass up and running 🙂</li>
+                        <li>* MAC: you should use the <span className="code">pinentry-mac</span> tool to enter your passphrase</li>
+                    </ul>
+                    <m.Button onClick={this.testEnvironment} waves='light'>Test you environment</m.Button>
+                </m.CardPanel>
+
                 <m.CardPanel>
                     Choose a secret from the navigation or use the actions at the top.
-                    {lastTag && (
+                    { lastTag && (
                         <>
                             {' '}
                             Make sure you got the latest version of Gopass UI so you don't miss any update:{' '}
                             <a onClick={this.openLatestReleasePage}>{`${lastTagName} on Github`}</a>
                         </>
-                    )}
+                    ) }
                 </m.CardPanel>
 
                 <h4 className='m-top'>Global search window</h4>
@@ -43,13 +53,15 @@ export default class Home extends React.Component<any, { tags: GithubTag[] }> {
 
                 <h4 className='m-top'>Issues</h4>
                 <m.CardPanel>
-                    Please report any issues and problems to us on{' '}
-                    <a className='link' onClick={ this.openIssuesPage }>
-                        Github
-                    </a>. We are very keen about your feedback and appreciate any help.
+                    Please report any issues and problems to us on <a className='link' onClick={ this.openIssuesPage }>Github</a>.
+                    We are very keen about your feedback and appreciate any help.
                 </m.CardPanel>
             </>
         )
+    }
+
+    private testEnvironment = () => {
+        // DO SOMETHING
     }
 
     private openLatestReleasePage = () => {
