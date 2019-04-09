@@ -19,13 +19,14 @@ const notificationReducer = (state: NotificationState = INITIAL_STATE, action: A
     switch (action.type) {
         case SHOW_NOTIFICATION:
             return {
+                ...state,
                 notification: action.payload
             }
         case HIDE_NOTIFICATION:
             return {
+                ...state,
                 notification: undefined
             }
-
         default:
             return state
     }

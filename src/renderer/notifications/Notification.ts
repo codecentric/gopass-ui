@@ -1,11 +1,11 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { RootState } from '../state/RootState'
+import { AppState } from '../state/AppState'
 import NotificationView, { NotificationViewProps } from './NotificationView'
 import { hideNotification } from './notificationActions'
 
-const mapStateToProps = (state: RootState): NotificationViewProps => ({
+const mapStateToProps = (state: AppState): NotificationViewProps => ({
     notification: state.notification.notification
 })
 

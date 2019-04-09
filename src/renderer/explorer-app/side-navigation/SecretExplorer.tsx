@@ -1,43 +1,41 @@
 import * as React from 'react'
+import { Dispatch } from 'redux'
 import * as m from 'react-materialize'
-import { History } from 'history'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import * as KeyboardEventHandler from 'react-keyboard-event-handler'
+
 import SecretTreeViewer from './SecretTreeViewer'
+import { AppState } from '../../state/AppState'
+import { setSearch, setSearchAndReload } from '../../secrets/secretsActions'
 
 interface SecretExplorerProps {
-    history?: History
+    searchValue: string
+    onSearchChange: (event: any, secretName: string) => void
+    onCancelSearch: () => void
 }
 
-class SecretExplorer extends React.Component<SecretExplorerProps, { searchValue: string }> {
-    constructor(props: SecretExplorerProps) {
-        super(props)
-        this.state = { searchValue: '' }
-    }
-
+class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
     public render() {
-        const { searchValue } = this.state
+        const { searchValue, onSearchChange, onCancelSearch } = this.props
 
         return (
             <div className='secret-explorer'>
-                <KeyboardEventHandler handleKeys={ [ 'esc' ] } handleFocusableElements onKeyEvent={ this.onCancelSearch } />
-                <m.Input className='search-bar' value={ searchValue } placeholder='Search...' onChange={ this.onSearchChange } />
-                <SecretTreeViewer searchValue={ searchValue } onSecretClick={ this.onSecretClick } />
+                <KeyboardEventHandler handleKeys={ [ 'esc' ] } handleFocusableElements onKeyEvent={ onCancelSearch } />
+                <m.Input className='search-bar' value={ searchValue } placeholder='Search...' onChange={ onSearchChange } />
+                <SecretTreeViewer />
             </div>
         )
     }
-
-    private onSecretClick = (secretName: string) => {
-        this.props.history!.replace(`/secrets/${btoa(secretName)}/view`)
-    }
-
-    private onSearchChange = (_: any, searchValue: string) => {
-        this.setState({ searchValue })
-    }
-
-    private onCancelSearch = () => {
-        this.setState({ searchValue: '' })
-    }
 }
 
-export default withRouter(SecretExplorer as any) as any
+const mapStateToProps = (state: AppState) => ({
+    searchValue: state.secrets.searchValue
+})
+
+const mapDispatchToProps = (dispatch: Dispatch): any => ({
+    onSearchChange: (_: any, newSearchValue: string) => dispatch(setSearchAndReload(newSearchValue) as any),
+    onCancelSearch: () => dispatch(setSearchAndReload('') as any)
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SecretExplorer) as any) as any
