@@ -60,6 +60,10 @@ export default class Gopass {
         await Gopass.execute('insert', [ name ], value)
     }
 
+    public static async editSecret(name: string, newValue: string): Promise<void> {
+        await Gopass.addSecret(name, newValue)
+    }
+
     private static execute(command: string, args?: string[], pipeTextInto?: string): Promise<string> {
         // tslint:disable-next-line
         executionId++

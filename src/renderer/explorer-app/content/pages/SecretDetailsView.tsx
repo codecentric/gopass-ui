@@ -1,6 +1,8 @@
 import * as React from 'react'
+import { withRouter } from 'react-router'
 import * as m from 'react-materialize'
 import * as dateformat from 'dateformat'
+import { History } from 'history'
 
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import PaginatedTable from '../../common/PaginatedTable'
@@ -15,11 +17,14 @@ interface SecretDetailsState {
     isPassword: boolean
     passwordRating: PasswordRatingResult | undefined
     loading: boolean
+    edit?: {
+        newValue: string
+    }
 }
 
 interface SecretDetailsViewProps {
     secretName: string
-    freshlyAdded: boolean
+    freshlyAdded?: boolean
     copySecretToClipboard?: (secretName: string) => void
 }
 
@@ -31,8 +36,11 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
             historyEntries: [],
             passwordRating: undefined,
             isPassword: false,
-            loading: true
+            loading: true,
+            edit: undefined
         }
+
+        this.onEditedValueChange = this.onEditedValueChange.bind(this)
     }
 
     public async componentDidMount() {
@@ -45,7 +53,18 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
 
     public render() {
         const { secretName, freshlyAdded } = this.props
-        const { secretValue, isPassword, passwordRating, loading } = this.state
+        const { secretValue, isPassword, passwordRating, loading, edit } = this.state
+        const cardActions = [
+            <a key='copy-clipboard' className='link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>,
+            !!edit ? (
+                <span key='edit-secret-mode-actions'>
+                    <a key='discard-changes' className='link' onClick={ () => this.discardEditedSecretValue() }>Discard</a>
+                    <a key='save-secret' className='link' onClick={ () => this.saveEditedSecretValue() }>Save changes</a>
+                </span>
+            ) : (
+                <a key='edit-secret' className='link' onClick={ () => this.editSecret() }>Edit</a>
+            )
+        ]
 
         return (
             loading ?
@@ -55,19 +74,21 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                         <h4>Secret { freshlyAdded && <m.Icon small>fiber_new</m.Icon> }</h4>
                         <m.Card
                             title={ secretName }
-                            actions={ [
-                                <a key='copy-clipboard' className='link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>
-                            ] }
+                            actions={ cardActions }
                         >
-                            { secretValue }
+                            <input
+                                style={{color: '#212121'}}
+                                value={ edit ? edit.newValue : secretValue }
+                                disabled={ !edit }
+                                onChange={ this.onEditedValueChange }
+                                ref={input => input && input.focus()}
+                            />
                         </m.Card>
 
-                        {
-                            isPassword && passwordRating &&
-                                <>
-                                    <h4 className='m-top'>Password Strength</h4>
-                                    <PasswordRatingComponent passwordRating={ passwordRating } />
-                                </>
+                        { isPassword && passwordRating && <>
+                                <h4 className='m-top'>Password Strength</h4>
+                                <PasswordRatingComponent passwordRating={ passwordRating } />
+                            </>
                         }
 
                         <h4 className='m-top'>History</h4>
@@ -75,6 +96,37 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                     </>
                 )
         )
+    }
+
+    private editSecret = () => this.setState({
+        ...this.state,
+        edit: {
+            newValue: this.state.secretValue
+        }
+    })
+
+    private onEditedValueChange = (event: any) => this.setState({
+        ...this.state,
+        edit: {
+            newValue: event.target.value
+        }
+    })
+
+    private discardEditedSecretValue = () => this.setState({
+        ...this.state,
+        edit: undefined
+    })
+
+    private saveEditedSecretValue = async () => {
+        const newValueToSave = this.state.edit!.newValue
+        const { secretName } = this.props
+        await Gopass.editSecret(secretName, newValueToSave)
+
+        this.setState({
+            ...this.state,
+            secretValue: newValueToSave,
+            edit: undefined
+        })
     }
 
     private renderHistoryTable() {
