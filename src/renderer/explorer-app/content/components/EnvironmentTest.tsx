@@ -45,6 +45,7 @@ export function EnvironmentTest() {
             return <RunningContent/>
         case 'OK':
             return <OkContent/>
+        default:
         case 'ERROR':
             return <ErrorContent errorDetails={errorDetails} reset={reset}/>
     }
