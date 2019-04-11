@@ -2,8 +2,9 @@ import { app, BrowserWindow, globalShortcut, Menu, Tray, ipcMain, Event } from '
 import * as path from 'path'
 import * as fixPath from 'fix-path'
 import * as url from 'url'
-import { DEFAULT_SETTINGS, GopassUiHistorySettings } from '../shared/settings'
 import * as electronSettings from 'electron-settings'
+
+import { DEFAULT_SYSTEM_SETTINGS, DEFAULT_USER_SETTINGS, SystemSettings, UserSettings } from '../shared/settings'
 import GopassExecutor from './GopassExecutor'
 
 fixPath()
@@ -164,12 +165,20 @@ const createMainWindow = () => {
     })
 }
 
-const getSettings = (): GopassUiHistorySettings => {
-    return electronSettings.get('settings') as any || DEFAULT_SETTINGS
+const getSystemSettings = (): UserSettings => {
+    return electronSettings.get('system_settings') as any || DEFAULT_SYSTEM_SETTINGS
+}
+
+const getUserSettings = (): UserSettings => {
+    return electronSettings.get('user_settings') as any || DEFAULT_USER_SETTINGS
 }
 
 const listenEvents = () => {
     ipcMain.on('gopass', GopassExecutor.handleEvent)
+
+    ipcMain.on('getUserSettings', (event: Event) => {
+        event.returnValue = getUserSettings()
+    })
 
     ipcMain.on('hideSearchWindow', () => {
         if (searchWindow) {
@@ -177,16 +186,20 @@ const listenEvents = () => {
         }
     })
 
-    ipcMain.on('getSettings', (event: Event) => {
-        event.returnValue = getSettings()
+    ipcMain.on('getSystemSettings', (event: Event) => {
+        event.returnValue = getSystemSettings()
     })
 
-    ipcMain.on('setSettings', (_: Event, value: GopassUiHistorySettings) => {
-        setGlobalShortcut(value.searchShortcut)
-        updateTray(value.showTray)
-        updateStartOnLoginConfiguration(value.startOnLogin)
+    ipcMain.on('setUserSettings', (_: Event, data: UserSettings) => {
+        setGlobalShortcut(data.searchShortcut)
+        updateTray(data.showTray)
+        updateStartOnLoginConfiguration(data.startOnLogin)
 
-        electronSettings.set('settings', value as any)
+        electronSettings.set('user_settings', data as any)
+    })
+
+    ipcMain.on('setSystemSettings', (_: Event, data: SystemSettings) => {
+        electronSettings.set('system_settings', data as any)
     })
 }
 
@@ -202,7 +215,7 @@ const setup = async () => {
         await installExtensions()
     }
 
-    const settings = getSettings()
+    const settings = getUserSettings()
 
     createMainWindow()
     createSearchWindow()

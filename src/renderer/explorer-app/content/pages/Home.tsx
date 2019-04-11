@@ -1,9 +1,21 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import { shell } from 'electron'
-import { timeout, TimeoutError } from 'promise-timeout'
+
 import GithubService, { GithubTag } from '../../GithubService'
-import Gopass from '../../../secrets/Gopass'
+import { EnvironmentTest } from '../components/EnvironmentTest'
+import Settings from '../../../Settings'
+
+function OptionalSetupInstructions() {
+    const { environmentTestSuccessful } = Settings.getSystemSettings()
+
+    return environmentTestSuccessful ? null : <>
+        <h4>Setup</h4>
+        <m.CardPanel>
+            <EnvironmentTest />
+        </m.CardPanel>
+    </>
+}
 
 export default class Home extends React.Component<any, { tags: GithubTag[] }> {
     constructor(props: any) {
@@ -26,15 +38,7 @@ export default class Home extends React.Component<any, { tags: GithubTag[] }> {
         return (
             <>
                 <h3>Welcome to Gopass UI</h3>
-                <h4>Setup</h4>
-                <m.CardPanel>
-                    You have to meet the following requirements to use our application:
-                    <ul>
-                        <li>* sure, you need gopass up and running 🙂</li>
-                        <li>* MAC: you should use the <span className='code'>pinentry-mac</span> tool to enter your passphrase</li>
-                    </ul>
-                    <m.Button onClick={this.testEnvironment} waves='light'>Test your environment</m.Button>
-                </m.CardPanel>
+                <OptionalSetupInstructions />
 
                 <m.CardPanel>
                     Choose a secret from the navigation or use the actions at the top.
@@ -60,43 +64,6 @@ export default class Home extends React.Component<any, { tags: GithubTag[] }> {
                 </m.CardPanel>
             </>
         )
-    }
-
-    private testEnvironment = async () => {
-        const firstEntry = await this.getFirstEntry()
-
-        if (firstEntry) {
-            const result = await this.decryptEntry(firstEntry)
-
-            console.info('TEST RESULT', result)
-        }
-    }
-
-    private async decryptEntry(entry: string) {
-        const timeoutInSeconds = 3
-        try {
-            await timeout(Gopass.show(entry), timeoutInSeconds * 1000)
-
-            return true
-        } catch (err) {
-            if (err instanceof TimeoutError) {
-                console.error(`ERROR: Could not decrypt entry ${entry} within ${timeoutInSeconds} seconds.`)
-            } else {
-                console.error(`Something else went wrong: ${err.message}`)
-            }
-        }
-
-        return false
-    }
-
-    private async getFirstEntry() {
-        try {
-            return await timeout(Gopass.getFirstEntry(), 1500)
-        } catch (err) {
-            if (err instanceof TimeoutError) {
-                console.error('ERROR: no connection to gopass at all. Did you install it?')
-            }
-        }
     }
 
     private openLatestReleasePage = () => {

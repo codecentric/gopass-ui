@@ -2,7 +2,7 @@ declare module 'promise-timeout' {
     namespace promiseTimeout {
         class TimeoutError extends Error {}
 
-        function timeout(promise: Promise<any>, timeoutMillis: number): Promise<any>
+        function timeout<T>(promise: Promise<T>, timeoutMillis: number): Promise<T>
     }
 
     export = promiseTimeout
