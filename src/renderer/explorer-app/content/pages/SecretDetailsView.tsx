@@ -1,15 +1,13 @@
 import * as React from 'react'
-import { withRouter } from 'react-router'
 import * as m from 'react-materialize'
 import * as dateformat from 'dateformat'
-import { History } from 'history'
 
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
-import PaginatedTable from '../../common/PaginatedTable'
-import { passwordSecretRegex } from '../../side-navigation/SecretIcons'
+import PaginatedTable from '../../../components/PaginatedTable'
+import { passwordSecretRegex } from '../../../secrets/SecretIcons'
 import { ratePassword, PasswordRatingResult } from '../../../password-health/PasswordRules'
 import PasswordRatingComponent from '../../../password-health/PasswordRatingComponent'
-import LoadingScreenView from '../../common/LoadingScreenView'
+import LoadingScreenView from '../../../components/loading-screen/LoadingScreenView'
 
 interface SecretDetailsState {
     secretValue: string

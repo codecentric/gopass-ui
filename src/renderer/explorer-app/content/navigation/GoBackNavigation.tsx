@@ -2,7 +2,7 @@ import * as React from 'react'
 import { withRouter } from 'react-router'
 import { History } from 'history'
 
-import ActionButton from '../../common/ActionButton'
+import ActionButton from '../../../components/ActionButton'
 
 class GoBackNavigation extends React.Component<{ history: History }, any> {
     public render() {

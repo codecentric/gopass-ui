@@ -1,4 +1,4 @@
-import { Tree } from '../explorer-app/side-navigation/TreeComponent'
+import { Tree } from '../components/tree/TreeComponent'
 import SecretsDirectoryService from './SecretsDirectoryService'
 import SecretsFilterService from './SecretsFilterService'
 import { LoadSecretsTree, LOAD_SECRETS_TREE, SET_SEARCH, SetSearch } from './secretsActions'

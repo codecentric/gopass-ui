@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as t from 'react-treebeard'
 import * as m from 'react-materialize'
-import { globalStyle } from './TreebeardStyle'
-import { deriveSecretIcon } from './SecretIcons'
+import { globalStyle } from './TreeStyle'
+import { deriveSecretIcon } from '../../secrets/SecretIcons'
 
 export interface Tree {
     name: string
@@ -36,11 +36,7 @@ t.decorators.Header = ({ style, node }: any) => {
 }
 
 export default class TreeComponent extends React.Component<TreeComponentProps, any> {
-    constructor(props: TreeComponentProps) {
-        super(props)
-        this.state = {}
-        this.onToggle = this.onToggle.bind(this)
-    }
+    public state: any = {}
 
     public render() {
         return (
@@ -55,7 +51,7 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
         )
     }
 
-    private onToggle(node: any, toggled: boolean) {
+    private onToggle = (node: any, toggled: boolean) => {
         if ((!node.children || node.children.length === 0) && !!node.entryId) {
             this.props.onLeafClick(node.entryId)
         }

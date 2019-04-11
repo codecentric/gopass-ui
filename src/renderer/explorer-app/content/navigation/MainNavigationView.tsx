@@ -2,7 +2,7 @@ import * as React from 'react'
 import { History } from 'history'
 import { withRouter } from 'react-router'
 
-import ActionButton from '../../common/ActionButton'
+import ActionButton from '../../../components/ActionButton'
 
 interface MainNavigationViewProps {
     history?: History

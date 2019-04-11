@@ -1,8 +1,11 @@
+const white = '#FFFFFF'
+const none = 'none'
+
 export const globalStyle = {
     tree: {
         base: {
-            listStyle: 'none',
-            backgroundColor: '#FFFFFF',
+            listStyle: none,
+            backgroundColor: white,
             margin: 0,
             padding: 0,
             color: '#000000',
@@ -22,11 +25,11 @@ export const globalStyle = {
                 display: 'block'
             },
             activeLink: {
-                background: '#FFFFFF'
+                background: white
             },
             toggle: {
                 base: {
-                    display: 'none'
+                    display: none
                 },
                 wrapper: {
                     position: 'absolute',
@@ -38,7 +41,7 @@ export const globalStyle = {
                 height: 0,
                 width: 0,
                 arrow: {
-                    fill: '#FFFFFF',
+                    fill: white,
                     strokeWidth: 0
                 }
             },
@@ -51,7 +54,7 @@ export const globalStyle = {
                 }
             },
             subtree: {
-                listStyle: 'none',
+                listStyle: none,
                 paddingLeft: '60px'
             },
             loading: {

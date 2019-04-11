@@ -1,19 +1,20 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
+import { History } from 'history'
 import { withRouter } from 'react-router'
 import { PasswordHealthIndicator } from '../../../password-health/PasswordRatingComponent'
-import AsyncPasswordCollector, { CollectionStats } from '../../../secrets/AsyncPasswordCollector'
+import AsyncPasswordCollector, { CollectionStatus } from '../../../secrets/AsyncPasswordCollector'
 import { rateMultiplePasswords } from '../../../password-health/PasswordRules'
-import PaginatedTable from '../../common/PaginatedTable'
-import LoadingScreenView from '../../common/LoadingScreenView'
+import PaginatedTable from '../../../components/PaginatedTable'
+import LoadingScreenView from '../../../components/loading-screen/LoadingScreenView'
 
 interface PasswordHealthOverviewState {
     collector: AsyncPasswordCollector
     statsChecker?: any
-    stats?: CollectionStats
+    status?: CollectionStatus
 }
 
-class PasswordHealthOverview extends React.Component<any, PasswordHealthOverviewState> {
+class PasswordHealthOverview extends React.Component<{ history: History }, PasswordHealthOverviewState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -26,8 +27,8 @@ class PasswordHealthOverview extends React.Component<any, PasswordHealthOverview
         collector.start()
 
         const statsChecker = setInterval(() => {
-            const stats = this.state.collector.getCurrentStats()
-            this.setState({ ...this.state, stats })
+            const status = this.state.collector.getCurrentStatus
+            this.setState({ ...this.state, status })
         }, 100)
         this.setState({ ...this.state, statsChecker })
     }
@@ -42,17 +43,17 @@ class PasswordHealthOverview extends React.Component<any, PasswordHealthOverview
     }
 
     public render() {
-        const { stats } = this.state
+        const { status } = this.state
 
         return (
             <>
                 <h4>Password Health</h4>
-                { stats ? this.renderStats(stats) : <LoadingScreenView /> }
+                { status ? this.renderStats(status) : <LoadingScreenView /> }
             </>
         )
     }
 
-    private renderStats(stats: CollectionStats) {
+    private renderStats(stats: CollectionStatus) {
         if (stats.inProgress && stats.passwordsCollected > 0) {
             const progressPercentage = Math.round((stats.passwordsCollected / stats.totalPasswords) * 100)
 
@@ -114,7 +115,7 @@ class PasswordHealthOverview extends React.Component<any, PasswordHealthOverview
     }
 
     private onSecretClick = (secretName: string) => {
-        return () => this.props.history!.replace(`/secrets/${btoa(secretName)}/view`)
+        return () => this.props.history.replace(`/secrets/${btoa(secretName)}/view`)
     }
 }
 

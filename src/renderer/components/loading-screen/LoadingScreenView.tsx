@@ -6,10 +6,6 @@ export interface LoadingScreenViewProps {
     waitingTexts?: string[]
 }
 
-export interface LoadingScreenViewState {
-    waitingTextIndex: number
-}
-
 const defaultWaitingTexts = [
     'Loading, please wait...',
     'Still doing something...',
@@ -19,7 +15,7 @@ const defaultWaitingTexts = [
     'Maybe there is a persistent problem. Sorry for that!'
 ]
 
-export default class LoadingScreenView extends React.Component<LoadingScreenViewProps, LoadingScreenViewState> {
+export default class LoadingScreenView extends React.Component<LoadingScreenViewProps, { waitingTextIndex: number }> {
     constructor(props: LoadingScreenViewProps) {
         super(props)
         this.state = {

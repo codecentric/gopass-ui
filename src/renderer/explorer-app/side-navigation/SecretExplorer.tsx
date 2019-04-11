@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import * as KeyboardEventHandler from 'react-keyboard-event-handler'
 
-import SecretTreeViewer from './SecretTreeViewer'
+import SecretTreeViewer from './SecretTree'
 import { AppState } from '../../state/AppState'
 import { setSearch, setSearchAndReload } from '../../secrets/secretsActions'
 

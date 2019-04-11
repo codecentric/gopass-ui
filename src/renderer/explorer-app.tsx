@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { HashRouter as Router, Route } from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom'
 import { AppContainer } from 'react-hot-loader'
 
 import ExplorerApplication from './explorer-app/ExplorerApplication'
