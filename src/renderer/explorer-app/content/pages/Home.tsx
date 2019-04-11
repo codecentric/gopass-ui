@@ -4,7 +4,7 @@ import * as m from 'react-materialize'
 import { EnvironmentTest } from '../components/EnvironmentTest'
 import Settings from '../../../Settings'
 import { LatestVersionInfo } from '../components/LastVersionInfo'
-import { ExternalLink } from '../components/ExternalLink'
+import { ExternalLink } from '../../../components/ExternalLink'
 
 function OptionalSetupInstructions() {
     const { environmentTestSuccessful } = Settings.getSystemSettings()
