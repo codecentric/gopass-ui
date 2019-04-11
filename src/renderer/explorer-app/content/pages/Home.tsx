@@ -1,10 +1,10 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { shell } from 'electron'
 
-import GithubService, { GithubTag } from '../../GithubService'
 import { EnvironmentTest } from '../components/EnvironmentTest'
 import Settings from '../../../Settings'
+import { LatestVersionInfo } from '../components/LastVersionInfo'
+import { ExternalLink } from '../components/ExternalLink'
 
 function OptionalSetupInstructions() {
     const { environmentTestSuccessful } = Settings.getSystemSettings()
@@ -12,65 +12,31 @@ function OptionalSetupInstructions() {
     return environmentTestSuccessful ? null : <>
         <h4>Environment Test</h4>
         <m.CardPanel>
-            <EnvironmentTest />
+            <EnvironmentTest/>
         </m.CardPanel>
     </>
 }
 
-export default class Home extends React.Component<any, { tags: GithubTag[] }> {
-    constructor(props: any) {
-        super(props)
-        this.state = {
-            tags: []
-        }
-    }
+export default function Home() {
+    return <>
+        <h3>Welcome to Gopass UI</h3>
+        <OptionalSetupInstructions/>
 
-    public async componentDidMount() {
-        const tags = await GithubService.getTagsOfRepository('codecentric', 'gopass-ui')
-        this.setState({ tags })
-    }
+        <m.CardPanel>
+            Choose a secret from the navigation or use the actions at the top.
+            <LatestVersionInfo/>
+        </m.CardPanel>
 
-    public render() {
-        const { tags } = this.state
-        const lastTag = tags[tags.length - 1]
-        const lastTagName = lastTag ? lastTag.ref.slice(10, lastTag.ref.length) : ''
+        <h4 className='m-top'>Global search window</h4>
+        <m.CardPanel>
+            The shortcut for the global search window for quick secret clipboard-copying is:
+            <pre>(cmd || ctrl) + shift + p</pre>
+        </m.CardPanel>
 
-        return (
-            <>
-                <h3>Welcome to Gopass UI</h3>
-                <OptionalSetupInstructions />
-
-                <m.CardPanel>
-                    Choose a secret from the navigation or use the actions at the top.
-                    { lastTag && (
-                        <>
-                            {' '}
-                            Make sure you got the latest version of Gopass UI so you don't miss any update:{' '}
-                            <a onClick={this.openLatestReleasePage}>{`${lastTagName} on Github`}</a>
-                        </>
-                    ) }
-                </m.CardPanel>
-
-                <h4 className='m-top'>Global search window</h4>
-                <m.CardPanel>
-                    The shortcut for the global search window for quick secret clipboard-copying is:
-                    <pre>(cmd || ctrl) + shift + p</pre>
-                </m.CardPanel>
-
-                <h4 className='m-top'>Issues</h4>
-                <m.CardPanel>
-                    Please report any issues and problems to us on <a className='link' onClick={ this.openIssuesPage }>Github</a>.
-                    We are very keen about your feedback and appreciate any help.
-                </m.CardPanel>
-            </>
-        )
-    }
-
-    private openLatestReleasePage = () => {
-        shell.openExternal('https://github.com/codecentric/gopass-ui/releases/latest')
-    }
-
-    private openIssuesPage = () => {
-        shell.openExternal('https://github.com/codecentric/gopass-ui/issues')
-    }
+        <h4 className='m-top'>Issues</h4>
+        <m.CardPanel>
+            Please report any issues and problems to us on <ExternalLink url='https://github.com/codecentric/gopass-ui/issues'>Github</ExternalLink>.<br/>
+            We are very keen about your feedback and appreciate any help.
+        </m.CardPanel>
+    </>
 }
