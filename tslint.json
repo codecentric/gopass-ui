@@ -107,8 +107,7 @@
         "curly": true,
         "no-console": [
             true,
-            "log",
-            "error"
+            "log"
         ],
         "no-empty": true,
         "no-empty-interface": false,

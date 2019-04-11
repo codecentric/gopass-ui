@@ -39,8 +39,6 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
             loading: true,
             edit: undefined
         }
-
-        this.onEditedValueChange = this.onEditedValueChange.bind(this)
     }
 
     public async componentDidMount() {
@@ -120,7 +118,10 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
     private saveEditedSecretValue = async () => {
         const newValueToSave = this.state.edit!.newValue
         const { secretName } = this.props
-        await Gopass.editSecret(secretName, newValueToSave)
+
+        if (newValueToSave !== this.state.secretValue) {
+            await Gopass.editSecret(secretName, newValueToSave)
+        }
 
         this.setState({
             ...this.state,
