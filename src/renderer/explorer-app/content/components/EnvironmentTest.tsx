@@ -55,7 +55,7 @@ function PendingContent(props: { executeTest: () => void }) {
         You have to meet the following requirements to use our application:
         <ul>
             <li>* sure, you need gopass up and running 🙂</li>
-            <li>* MAC: you should use the <span className="code">pinentry-mac</span> tool to enter your passphrase</li>
+            <li>* MAC: you should use the <span className='code'>pinentry-mac</span> tool to enter your passphrase</li>
         </ul>
         <m.Button onClick={props.executeTest} waves='light'>Test your environment</m.Button>
     </>
@@ -69,7 +69,6 @@ function RunningContent() {
         <strong>The tests are running...</strong>
     </div>
 }
-
 
 function ErrorContent(props: { errorDetails: ErrorDetails, reset: () => void }) {
     return <div style={{ textAlign: 'center' }}>
