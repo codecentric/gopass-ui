@@ -37,15 +37,6 @@ export default class Gopass {
             })
     }
 
-    public static async getFirstEntry(): Promise<string | undefined> {
-        const flatSecrets = await Gopass.execute('list', ['--flat'])
-        const secretArray =  flatSecrets.split(lineSplitRegex)
-
-        if (secretArray.length > 0) {
-            return secretArray[0]
-        }
-    }
-
     public static async sync(): Promise<void> {
         await Gopass.execute('sync')
     }
