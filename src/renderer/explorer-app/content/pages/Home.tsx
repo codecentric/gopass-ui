@@ -10,7 +10,7 @@ function OptionalSetupInstructions() {
     const { environmentTestSuccessful } = Settings.getSystemSettings()
 
     return environmentTestSuccessful ? null : <>
-        <h4>Setup</h4>
+        <h4>Environment Test</h4>
         <m.CardPanel>
             <EnvironmentTest />
         </m.CardPanel>

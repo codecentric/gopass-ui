@@ -3,7 +3,7 @@ import * as m from 'react-materialize'
 import { Route, match } from 'react-router-dom'
 
 import SecretDetails from './pages/SecretDetails'
-import Settings from './pages/Settings'
+import SettingsPage from './pages/SettingsPage'
 import Home from './pages/Home'
 import MainNavigation from './navigation/MainNavigation'
 import GoBackNavigation from './navigation/GoBackNavigation'
@@ -52,7 +52,7 @@ export default class MainContent extends React.Component {
                             render={ () => (
                                 <>
                                     <GoBackNavigation />
-                                    <Settings />
+                                    <SettingsPage />
                                 </>
                             ) }
                         />
