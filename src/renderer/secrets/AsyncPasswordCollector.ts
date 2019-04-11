@@ -1,5 +1,5 @@
 import Gopass from './Gopass'
-import { passwordSecretRegex } from './SecretIcons'
+import { passwordSecretRegex } from './deriveIconFromSecretName'
 
 export interface PasswordSecret {
     name: string

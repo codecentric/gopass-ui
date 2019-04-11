@@ -3,7 +3,7 @@ import * as m from 'react-materialize'
 import { History } from 'history'
 import { withRouter } from 'react-router'
 import Gopass from '../../../secrets/Gopass'
-import { passwordSecretRegex } from '../../../secrets/SecretIcons'
+import { passwordSecretRegex } from '../../../secrets/deriveIconFromSecretName'
 
 interface AddSecretPageState {
     name?: string

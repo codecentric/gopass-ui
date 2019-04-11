@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as t from 'react-treebeard'
 import * as m from 'react-materialize'
 import { globalStyle } from './TreeStyle'
-import { deriveSecretIcon } from '../../secrets/SecretIcons'
+import { deriveIconFromSecretName } from '../../secrets/deriveIconFromSecretName'
 
 export interface Tree {
     name: string
@@ -21,7 +21,7 @@ t.decorators.Header = ({ style, node }: any) => {
     let iconType = node.toggled ? 'chevron_right' : 'folder'
 
     if (!node.children && node.entryId) {
-        iconType = deriveSecretIcon(node.name)
+        iconType = deriveIconFromSecretName(node.name)
     }
 
     return (

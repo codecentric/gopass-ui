@@ -4,7 +4,7 @@ import * as dateformat from 'dateformat'
 
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import PaginatedTable from '../../../components/PaginatedTable'
-import { passwordSecretRegex } from '../../../secrets/SecretIcons'
+import { passwordSecretRegex } from '../../../secrets/deriveIconFromSecretName'
 import { ratePassword, PasswordRatingResult } from '../../../password-health/PasswordRules'
 import PasswordRatingComponent from '../../../password-health/PasswordRatingComponent'
 import LoadingScreenView from '../../../components/loading-screen/LoadingScreenView'
