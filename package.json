@@ -120,7 +120,7 @@
     "image-webpack-loader": "^4.6.0",
     "jest": "^24.7.1",
     "lint-staged": "^8.1.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.11.0",
     "pagination-calculator": "^1.0.0",
     "prettier": "^1.9.2",
     "react-hot-loader": "^4.6.3",
