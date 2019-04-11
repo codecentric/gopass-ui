@@ -1,13 +1,4 @@
-import { PasswordSecret } from '../secrets/AsyncPasswordCollector'
-
-export interface PasswordRuleMeta {
-    name: string
-    description: string
-}
-
-export interface PasswordRule extends PasswordRuleMeta {
-    matcher: (password: string) => boolean
-}
+import { PasswordRule } from './PasswordRule'
 
 const minimumLengthRule: PasswordRule = {
     matcher: (password: string) => password.length >= 10,
@@ -45,45 +36,11 @@ const noRepetitiveCharactersRule: PasswordRule = {
     description: 'Passwords are better if characters are not repeated often (sequence of three or more).'
 }
 
-const allRules: PasswordRule[] = [ minimumLengthRule, lowerCaseRule, upperCaseRule, specialCharRule, numbersRule, noRepetitiveCharactersRule ]
-
-export interface PasswordRatingResult {
-    totalRulesCount: number
-    failedRules: PasswordRuleMeta[]
-    health: number
-}
-
-const ruleToMeta = (rule: PasswordRule): PasswordRuleMeta => ({ name: rule.name, description: rule.description })
-export const ratePassword = (password: string): PasswordRatingResult => {
-    const totalRulesCount = allRules.length
-    const failedRules = allRules.filter(rule => !rule.matcher(password)).map(ruleToMeta)
-
-    return {
-        totalRulesCount,
-        failedRules,
-        health: Math.round(100 - (failedRules.length / totalRulesCount) * 100)
-    }
-}
-
-export interface PasswordHealthSummary {
-    health: number
-    ratedPasswordSecrets: PasswordSecret[]
-}
-
-export const rateMultiplePasswords = (passwords: PasswordSecret[]): PasswordHealthSummary => {
-    const pwHealths = passwords.map((passwordSecret: PasswordSecret) => {
-        const pwRating = ratePassword(passwordSecret.value)
-        return {
-            health: pwRating.health,
-            failedRulesCount: pwRating.failedRules.length,
-            value: '***',
-            name: passwordSecret.name
-        }
-    }).sort((a, b) => a.health - b.health)
-    const pwHealthSum: number = pwHealths.map(h => h.health).reduce((a: number, b: number) => a + b, 0)
-
-    return {
-        health: Math.round(pwHealthSum / pwHealths.length),
-        ratedPasswordSecrets: pwHealths
-    }
-}
+export const allPasswordRules: PasswordRule[] = [
+    minimumLengthRule,
+    lowerCaseRule,
+    upperCaseRule,
+    specialCharRule,
+    numbersRule,
+    noRepetitiveCharactersRule
+]

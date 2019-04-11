@@ -4,7 +4,7 @@ import { History } from 'history'
 import { withRouter } from 'react-router'
 import { PasswordHealthIndicator } from '../../../password-health/PasswordRatingComponent'
 import AsyncPasswordCollector, { CollectionStatus } from '../../../secrets/AsyncPasswordCollector'
-import { rateMultiplePasswords } from '../../../password-health/PasswordRules'
+import { PasswordRater } from '../../../password-health/PasswordRater'
 import PaginatedTable from '../../../components/PaginatedTable'
 import LoadingScreenView from '../../../components/loading-screen/LoadingScreenView'
 
@@ -68,7 +68,7 @@ class PasswordHealthOverview extends React.Component<{ history: History }, Passw
         }
 
         if (!stats.inProgress && stats.passwordsCollected > 0 && stats.passwordsCollected === stats.totalPasswords && !stats.error) {
-            const overallPasswordHealth = rateMultiplePasswords(stats.passwords)
+            const overallPasswordHealth = PasswordRater.rateMultiplePasswords(stats.passwords)
             const improvablePasswords = overallPasswordHealth.ratedPasswordSecrets.filter(rated => rated.health && rated.health < 100)
 
             return (

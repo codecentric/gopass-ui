@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { PasswordRatingResult, PasswordRuleMeta } from './PasswordRules'
+import { PasswordRatingResult } from './PasswordRater'
+import { PasswordRuleMeta } from './PasswordRule'
 import './PasswordRatingComponent.css'
 
 export interface PasswordRatingComponentProps {

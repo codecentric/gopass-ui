@@ -5,7 +5,7 @@ import * as dateformat from 'dateformat'
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import PaginatedTable from '../../../components/PaginatedTable'
 import { passwordSecretRegex } from '../../../secrets/deriveIconFromSecretName'
-import { ratePassword, PasswordRatingResult } from '../../../password-health/PasswordRules'
+import { PasswordRater, PasswordRatingResult } from '../../../password-health/PasswordRater'
 import PasswordRatingComponent from '../../../password-health/PasswordRatingComponent'
 import LoadingScreenView from '../../../components/loading-screen/LoadingScreenView'
 
@@ -159,7 +159,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
             secretValue,
             historyEntries,
             isPassword,
-            passwordRating: isPassword ? ratePassword(secretValue) : undefined,
+            passwordRating: isPassword ? PasswordRater.ratePassword(secretValue) : undefined,
             loading: false
         })
     }
