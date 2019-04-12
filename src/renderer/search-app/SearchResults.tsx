@@ -2,56 +2,51 @@ import * as React from 'react'
 import { ipcRenderer } from 'electron'
 import * as m from 'react-materialize'
 import * as KeyboardEventHandler from 'react-keyboard-event-handler'
-import * as replace from 'string-replace-to-array'
 
 import Gopass from '../secrets/Gopass'
-import { useNotificationContext } from '../notifications/NotificationProvider'
 import { useCopySecretToClipboard } from '../hooks/useCopySecretToClipboard'
+import { CollectionItems } from './CollectionItems'
 
 const NUMBER_OF_SEARCH_RESULTS = 15
 
 export interface SearchResultsProps {
-    search?: string
+    search: string
 }
 
 export default function SearchResults(props: SearchResultsProps) {
-    const [ secretNames, setSecretNames ] = React.useState<string[]>([])
+    const [ allSecretNames, setAllSecretNames ] = React.useState<string[]>([])
     const [ filteredSecretNames, setFilteredSecretNames ] = React.useState<string[]>([])
-    const [ searchValues, setSearchValues ] = React.useState<string[]>([])
     const [ selectedItemIndex, setSelectedItemIndex ] = React.useState(0)
+    const [ highlightRegExp, setHighlightRegExp ] = React.useState<RegExp | undefined>()
 
     const copySecretToClipboard = useCopySecretToClipboard()
 
     const updateFilteredSecrets = (search?: string) => {
         if (search) {
-            const newSearchValues = search.split(' ').map(searchValue => searchValue.trim())
+            const searchValues = search.split(' ').map(searchValue => searchValue.trim())
 
-            setSearchValues(newSearchValues)
-            setFilteredSecretNames(secretNames.filter(filterMatchingSecrets(newSearchValues)).slice(0, NUMBER_OF_SEARCH_RESULTS))
+            setFilteredSecretNames(allSecretNames.filter(filterMatchingSecrets(searchValues)).slice(0, NUMBER_OF_SEARCH_RESULTS))
+            setHighlightRegExp(new RegExp(`(${searchValues.join('|')})`, 'g'))
         } else {
-            setSearchValues([])
-            setFilteredSecretNames(secretNames.slice(0, NUMBER_OF_SEARCH_RESULTS))
+            setFilteredSecretNames(allSecretNames.slice(0, NUMBER_OF_SEARCH_RESULTS))
+            setHighlightRegExp(undefined)
         }
         setSelectedItemIndex(0)
     }
 
     React.useEffect(() => {
         Gopass.getAllSecretNames().then(newSecretNames => {
-            setSecretNames(newSecretNames)
+            setAllSecretNames(newSecretNames)
         })
     }, [])
 
     React.useEffect(() => {
         updateFilteredSecrets()
-    }, [ secretNames ])
+    }, [ allSecretNames ])
 
     React.useEffect(() => {
         updateFilteredSecrets(props.search)
     }, [ props.search ])
-
-    const onSelectCollectionItem = (secretKey: string) => () => {
-        copySecretToClipboard(secretKey)
-    }
 
     const onKeyEvent = (key: string, event: any) => {
         switch (key) {
@@ -83,57 +78,30 @@ export default function SearchResults(props: SearchResultsProps) {
             case 'esc':
                 ipcRenderer.send('hideSearchWindow')
                 break
-            default:
-                break
         }
     }
 
-    const highlightRegExp = searchValues.length > 0 ? new RegExp(`(${searchValues.join('|')})`, 'g') : undefined
-
-    const getHighlightedSegment = (segment: string) => {
-        if (!highlightRegExp) {
-            return segment
-        }
-
-        return replace(segment, highlightRegExp, (_: any, match: string, offset: number) => {
-            return <mark key={`highlight-${segment}-${offset}`}>{match}</mark>
-        })
+    const onSelectCollectionItem = (secretKey: string) => () => {
+        copySecretToClipboard(secretKey)
     }
 
     return <>
         <KeyboardEventHandler
-            handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter', 'esc' ] }
+            handleKeys={[ 'up', 'shift+tab', 'down', 'tab', 'enter', 'esc' ]}
             handleFocusableElements
-            onKeyEvent={ onKeyEvent }
+            onKeyEvent={onKeyEvent}
         />
         <m.Collection>
-            { filteredSecretNames.map((secretName, i) => {
-                const splittedSecretName = secretName.split('/')
-                const isSelected = i === selectedItemIndex ? 'selected' : undefined
-
-                return (
-                    <m.CollectionItem key={ `secret-${i}` } className={ isSelected } onClick={ onSelectCollectionItem(secretName) }>
-                        {splittedSecretName.reduce(
-                            (result: string[], segment, currentIndex) => {
-                                const extendedResult = result.concat(
-                                    getHighlightedSegment(segment)
-                                )
-
-                                if (currentIndex < splittedSecretName.length - 1) {
-                                    extendedResult.push(' > ')
-                                }
-
-                                return extendedResult
-                            },
-                            [ ]
-                        )}
-                    </m.CollectionItem>
-                )
-            }) }
+            <CollectionItems
+                filteredSecretNames={ filteredSecretNames }
+                selectedItemIndex={ selectedItemIndex }
+                highlightRegExp={ highlightRegExp }
+                onItemClick={ onSelectCollectionItem }
+            />
         </m.Collection>
     </>
 }
 
 function filterMatchingSecrets(searchValues: string[]) {
-    return (secretName: string) => searchValues.every(searchValue => secretName.includes(searchValue))
+    return (secretName: string) => searchValues.every(searchValue => secretName.toLowerCase().includes(searchValue.toLowerCase()))
 }
