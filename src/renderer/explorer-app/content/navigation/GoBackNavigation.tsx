@@ -2,7 +2,7 @@ import * as React from 'react'
 import { withRouter } from 'react-router'
 import { History } from 'history'
 
-import ActionButton from '../../../components/ActionButton'
+import { RoundActionBtn } from '../../../components/RoundActionBtn'
 
 class GoBackNavigation extends React.Component<{ history: History }, any> {
     public render() {
@@ -10,7 +10,7 @@ class GoBackNavigation extends React.Component<{ history: History }, any> {
 
         return (
             <div style={ { paddingTop: '0.75rem' } }>
-                <ActionButton icon='arrow_back' onClick={ onClick } />
+                <RoundActionBtn icon='arrow_back' onClick={ onClick } />
             </div>
         )
     }

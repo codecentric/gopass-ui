@@ -23,7 +23,7 @@ export interface PaginatedTableState {
 }
 
 export default class PaginatedTable extends React.Component<PaginatedTableProps, PaginatedTableState> {
-    constructor(props: any) {
+    constructor(props: PaginatedTableProps) {
         super(props)
         this.state = {
             page: 1,

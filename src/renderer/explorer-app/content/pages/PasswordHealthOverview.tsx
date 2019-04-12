@@ -2,11 +2,11 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 import { History } from 'history'
 import { withRouter } from 'react-router'
-import { PasswordHealthIndicator } from '../../../password-health/PasswordRatingComponent'
 import AsyncPasswordCollector, { CollectionStatus } from '../../../secrets/AsyncPasswordCollector'
 import { PasswordRater } from '../../../password-health/PasswordRater'
 import PaginatedTable from '../../../components/PaginatedTable'
 import LoadingScreenView from '../../../components/loading-screen/LoadingScreenView'
+import { PasswordHealthIndicator } from '../../../password-health/PasswordHealthIndicator'
 
 interface PasswordHealthOverviewState {
     collector: AsyncPasswordCollector
@@ -115,7 +115,7 @@ class PasswordHealthOverview extends React.Component<{ history: History }, Passw
     }
 
     private onSecretClick = (secretName: string) => {
-        return () => this.props.history.replace(`/secrets/${btoa(secretName)}/view`)
+        return () => this.props.history.replace(`/secret/${btoa(secretName)}`)
     }
 }
 

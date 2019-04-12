@@ -1,8 +1,8 @@
-export interface PasswordRuleMeta {
+export interface PasswordHealthRuleInfo {
     name: string
     description: string
 }
 
-export interface PasswordRule extends PasswordRuleMeta {
+export interface PasswordHealthRule extends PasswordHealthRuleInfo {
     matcher: (password: string) => boolean
 }

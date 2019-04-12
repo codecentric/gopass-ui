@@ -2,7 +2,7 @@ import * as React from 'react'
 import { History } from 'history'
 import { withRouter } from 'react-router'
 
-import ActionButton from '../../../components/ActionButton'
+import { RoundActionBtn } from '../../../components/RoundActionBtn'
 
 interface MainNavigationViewProps {
     history?: History
@@ -15,11 +15,11 @@ class MainNavigationView extends React.Component<MainNavigationViewProps> {
 
         return (
             <div style={ { paddingTop: '0.75rem' } }>
-                <ActionButton icon='home' onClick={ () => history!.replace('/') } />
-                <ActionButton icon='add' onClick={ () => history!.replace('/add-secret') } />
-                <ActionButton icon='refresh' onClick={ this.props.refreshGopassStores } />
-                <ActionButton icon='settings' onClick={ () => history!.replace('/settings') } />
-                <ActionButton icon='security' onClick={ () => history!.replace('/password-health') } />
+                <RoundActionBtn icon='home' onClick={ () => history!.replace('/') } />
+                <RoundActionBtn icon='add' onClick={ () => history!.replace('/add-secret') } />
+                <RoundActionBtn icon='refresh' onClick={ this.props.refreshGopassStores } />
+                <RoundActionBtn icon='settings' onClick={ () => history!.replace('/settings') } />
+                <RoundActionBtn icon='security' onClick={ () => history!.replace('/password-health') } />
             </div>
         )
     }

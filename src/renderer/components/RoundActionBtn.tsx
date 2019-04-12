@@ -1,12 +1,12 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 
-export interface ActionButtonProps {
+export interface RoundActionBtnProps {
     icon: string
     onClick?: () => void
 }
 
-const ActionButton = ({ icon, onClick }: ActionButtonProps) => (
+export const RoundActionBtn = ({ icon, onClick }: RoundActionBtnProps) => (
     <m.Button
         floating
         large
@@ -17,5 +17,3 @@ const ActionButton = ({ icon, onClick }: ActionButtonProps) => (
         style={ { marginRight: '0.75rem' } }
     />
 )
-
-export default ActionButton

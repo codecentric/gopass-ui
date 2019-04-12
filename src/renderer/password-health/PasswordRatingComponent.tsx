@@ -1,25 +1,15 @@
 import * as React from 'react'
+import * as m from 'react-materialize'
 import { PasswordRatingResult } from './PasswordRater'
-import { PasswordRuleMeta } from './PasswordRule'
+import { PasswordHealthRuleInfo } from './PasswordRule'
 import './PasswordRatingComponent.css'
+import { PasswordHealthIndicator } from './PasswordHealthIndicator'
 
 export interface PasswordRatingComponentProps {
     passwordRating: PasswordRatingResult
 }
 
-const passwordStrengthColorExtractor = (health: number): string => {
-    let colorStrengthIndicator = 'red'
-    if (health >= 50) {
-        colorStrengthIndicator = 'yellow'
-    }
-    if (health >= 70) {
-        colorStrengthIndicator = 'green'
-    }
-
-    return colorStrengthIndicator
-}
-
-export const FailedRulesList = ({ failedRules }: { failedRules: PasswordRuleMeta[] }) => (
+export const FailedRulesList = ({ failedRules }: { failedRules: PasswordHealthRuleInfo[] }) => (
     <>
         {
             failedRules.length > 0 ? (
@@ -27,7 +17,7 @@ export const FailedRulesList = ({ failedRules }: { failedRules: PasswordRuleMeta
                     <p>You could improve <strong>{failedRules.length}</strong> characteristica of this password.</p>
                     <ol className='failed-rules-list'>
                         {
-                            failedRules.map((failedRule: PasswordRuleMeta, index: number)  => (
+                            failedRules.map((failedRule: PasswordHealthRuleInfo, index: number)  => (
                                 <li key={ index }>
                                     <strong>{failedRule.name}:</strong> {failedRule.description}
                                 </li>
@@ -41,31 +31,21 @@ export const FailedRulesList = ({ failedRules }: { failedRules: PasswordRuleMeta
     </>
 )
 
-export const PasswordHealthIndicator = ({ health }: { health: number }) => (
-    <div className={ `password-strength-sum ${passwordStrengthColorExtractor(health)}` }>
-        <span>{ health }</span>
-    </div>
-)
-
-export default class PasswordRatingComponent extends React.Component<PasswordRatingComponentProps, any> {
-    public render() {
-        const { health, failedRules } = this.props.passwordRating
-
-        return (
-            <div className='row'>
-                <div className='col s12'>
-                    <div className='card-panel z-depth-1'>
-                        <div className='row valign-wrapper'>
-                            <div className='col s2'>
-                                <PasswordHealthIndicator health={ health } />
-                            </div>
-                            <div className='col s10'>
-                                <FailedRulesList failedRules={ failedRules }/>
-                            </div>
-                        </div>
+const PasswordRatingComponent = ({ passwordRating: { health, failedRules } }: PasswordRatingComponentProps) => (
+    <m.Row>
+        <m.Col s={ 12 }>
+            <div className='card-panel z-depth-1'>
+                <div className='row valign-wrapper'>
+                    <div className='col s2'>
+                        <PasswordHealthIndicator health={health}/>
+                    </div>
+                    <div className='col s10'>
+                        <FailedRulesList failedRules={failedRules}/>
                     </div>
                 </div>
             </div>
-        )
-    }
-}
+        </m.Col>
+    </m.Row>
+)
+
+export default PasswordRatingComponent

@@ -24,7 +24,7 @@ class SecretTree extends React.Component<SecretTreeProps, {}> {
     }
 
     private onSecretClick = async (name: string) => {
-        this.props.history.push(`/secrets/${btoa(name)}/view`)
+        this.props.history.push(`/secret/${btoa(name)}`)
     }
 }
 
