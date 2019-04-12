@@ -2,7 +2,6 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 import { match, Route } from 'react-router-dom'
 
-import SecretDetails from './pages/SecretDetails'
 import SettingsPage from './pages/SettingsPage'
 import HomePage from './pages/HomePage'
 import MainNavigation from './components/MainNavigation'
@@ -10,6 +9,7 @@ import GoBackNavigation from '../components/GoBackNavigationBtn'
 import Notification from '../notifications/Notification'
 import PasswordHealthOverview from './pages/PasswordHealthPage'
 import AddSecretPage from './pages/AddSecretPage'
+import SecretDetailsPage from './pages/SecretDetailsPage'
 
 const MainContentRoutes = () => <>
     <Route
@@ -25,15 +25,15 @@ const MainContentRoutes = () => <>
     <Route
         path='/secret/:encodedSecretName'
         component={(props: { match: match<{ encodedSecretName: string }>, location: { search?: string } }) => {
-            const chosenSecretName = atob(props.match.params.encodedSecretName)
-            const freshlyAdded = props.location.search ? props.location.search === '?added' : false
+            const secretName = atob(props.match.params.encodedSecretName)
+            const isAdded = props.location.search ? props.location.search === '?added' : false
 
             return (
                 <>
                     <MainNavigation/>
-                    <SecretDetails
-                        secretName={chosenSecretName}
-                        freshlyAdded={freshlyAdded}
+                    <SecretDetailsPage
+                        secretName={secretName}
+                        isAdded={isAdded}
                     />
                 </>
             )

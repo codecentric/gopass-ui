@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import * as dateformat from 'dateformat'
+import { Dispatch } from 'redux'
+import { connect } from 'react-redux'
 
 import Gopass, { HistoryEntry } from '../../secrets/Gopass'
 import PaginatedTable from '../../components/PaginatedTable'
@@ -8,8 +10,9 @@ import { passwordSecretRegex } from '../../secrets/deriveIconFromSecretName'
 import { PasswordRater, PasswordRatingResult } from '../../password-health/PasswordRater'
 import PasswordRatingComponent from '../../password-health/PasswordRatingComponent'
 import LoadingScreenView from '../../components/loading-screen/LoadingScreenView'
+import { showNotification } from '../../notifications/notificationActions'
 
-interface SecretDetailsState {
+interface SecretDetailsPageState {
     secretValue: string
     historyEntries: HistoryEntry[]
     isPassword: boolean
@@ -20,14 +23,14 @@ interface SecretDetailsState {
     }
 }
 
-interface SecretDetailsViewProps {
+interface SecretDetailsPageProps {
     secretName: string
-    freshlyAdded?: boolean
+    isAdded?: boolean
     copySecretToClipboard?: (secretName: string) => void
 }
 
-export default class SecretDetailsView extends React.Component<SecretDetailsViewProps, SecretDetailsState> {
-    constructor(props: SecretDetailsViewProps) {
+class SecretDetailsPage extends React.Component<SecretDetailsPageProps, SecretDetailsPageState> {
+    constructor(props: SecretDetailsPageProps) {
         super(props)
         this.state = {
             secretValue: '',
@@ -43,12 +46,12 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
         await this.createState(this.props.secretName)
     }
 
-    public async componentWillReceiveProps(props: SecretDetailsViewProps) {
+    public async componentWillReceiveProps(props: SecretDetailsPageProps) {
         await this.createState(props.secretName)
     }
 
     public render() {
-        const { secretName, freshlyAdded } = this.props
+        const { secretName, isAdded } = this.props
         const { secretValue, isPassword, passwordRating, loading, edit } = this.state
         const cardActions = [
             <a key='copy-clipboard' className='link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>,
@@ -67,7 +70,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
                 <LoadingScreenView /> :
                 (
                     <>
-                        <h4>Secret { freshlyAdded && <m.Icon small>fiber_new</m.Icon> }</h4>
+                        <h4>Secret { isAdded && <m.Icon small>fiber_new</m.Icon> }</h4>
                         <m.Card
                             title={ secretName }
                             actions={ cardActions }
@@ -148,3 +151,18 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
         })
     }
 }
+
+const mapDispatchToProps = (dispatch: Dispatch): any => ({
+    copySecretToClipboard: (secretName: string) => {
+        Gopass.copy(secretName)
+            .then(() => {
+                dispatch(showNotification({ status: 'OK', message: 'Secret has been copied to your clipboard.' }))
+            })
+            .catch(() => {
+                dispatch(showNotification({ status: 'ERROR', message: 'Oops, something went wrong. Please try again.' }))
+            })
+
+    }
+})
+
+export default connect(undefined, mapDispatchToProps)(SecretDetailsPage)

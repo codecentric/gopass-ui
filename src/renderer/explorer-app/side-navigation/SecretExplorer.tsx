@@ -26,13 +26,9 @@ class SecretExplorer extends React.Component<RouteComponentProps, { searchValue:
         this.props.history.replace(`/secret/${btoa(secretName)}`)
     }
 
-    private onSearchChange = (_: any, searchValue: string) => {
-        this.setState({ searchValue })
-    }
+    private onSearchChange = (_: any, searchValue: string) => this.setState({ searchValue })
 
-    private onCancelSearch = () => {
-        this.setState({ searchValue: '' })
-    }
+    private onCancelSearch = () => this.setState({ searchValue: '' })
 }
 
 export default withRouter(SecretExplorer)
