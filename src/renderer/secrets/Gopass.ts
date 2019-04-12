@@ -55,6 +55,10 @@ export default class Gopass {
         await Gopass.addSecret(name, newValue)
     }
 
+    public static async deleteSecret(name: string): Promise<void> {
+        await Gopass.execute('rm', [ '--force', name ])
+    }
+
     private static execute(command: string, args?: string[], pipeTextInto?: string): Promise<string> {
         // tslint:disable-next-line
         executionId++

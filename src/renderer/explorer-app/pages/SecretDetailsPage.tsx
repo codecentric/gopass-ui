@@ -3,6 +3,7 @@ import * as m from 'react-materialize'
 import * as dateformat from 'dateformat'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { withRouter, RouteComponentProps } from 'react-router'
 
 import Gopass, { HistoryEntry } from '../../secrets/Gopass'
 import PaginatedTable from '../../components/PaginatedTable'
@@ -21,9 +22,10 @@ interface SecretDetailsPageState {
     edit?: {
         newValue: string
     }
+    queryDeletion: boolean
 }
 
-interface SecretDetailsPageProps {
+interface SecretDetailsPageProps extends RouteComponentProps {
     secretName: string
     isAdded?: boolean
     copySecretToClipboard?: (secretName: string) => void
@@ -38,7 +40,8 @@ class SecretDetailsPage extends React.Component<SecretDetailsPageProps, SecretDe
             passwordRating: undefined,
             isPassword: false,
             loading: true,
-            edit: undefined
+            edit: undefined,
+            queryDeletion: false
         }
     }
 
@@ -52,16 +55,25 @@ class SecretDetailsPage extends React.Component<SecretDetailsPageProps, SecretDe
 
     public render() {
         const { secretName, isAdded } = this.props
-        const { secretValue, isPassword, passwordRating, loading, edit } = this.state
+        const { secretValue, isPassword, passwordRating, loading, edit, queryDeletion } = this.state
+
         const cardActions = [
             <a key='copy-clipboard' className='link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>,
             !!edit ? (
                 <span key='edit-secret-mode-actions'>
-                    <a key='discard-changes' className='link' onClick={ () => this.discardEditedSecretValue() }>Discard</a>
-                    <a key='save-secret' className='link' onClick={ () => this.saveEditedSecretValue() }>Save changes</a>
+                    <a className='link' onClick={ () => this.discardEditedSecretValue() }>Discard</a>
+                    <a className='link' onClick={ () => this.saveEditedSecretValue() }>Save changes</a>
                 </span>
             ) : (
-                <a key='edit-secret' className='link' onClick={ () => this.editSecret() }>Edit</a>
+                <span key='view-secret-mode-actions'>
+                    <a className='link' onClick={ () => this.editSecret() }>Edit</a>
+                    {
+                        queryDeletion ? <>
+                                <a className='link' onClick={ () => this.denySecretDeletion() }>NO, keep it!</a>
+                                <a className='link' onClick={ () => this.confirmSecretDeletion() }>Sure!</a>
+                            </> : <a className='link' onClick={ () => this.querySecretDeletion() }>Delete</a>
+                    }
+                </span>
             )
         ]
 
@@ -98,6 +110,12 @@ class SecretDetailsPage extends React.Component<SecretDetailsPageProps, SecretDe
     }
 
     private editSecret = () => this.setState({ edit: { newValue: this.state.secretValue } })
+    private querySecretDeletion = () => this.setState({ queryDeletion: true })
+    private confirmSecretDeletion = async () => {
+        await Gopass.deleteSecret(this.props.secretName)
+        this.props.history.replace('/')
+    }
+    private denySecretDeletion = () => this.setState({ queryDeletion: false })
     private onEditedValueChange = (event: any) => this.setState({ edit: { newValue: event.target.value } })
     private discardEditedSecretValue = () => this.setState({ edit: undefined })
 
@@ -165,4 +183,4 @@ const mapDispatchToProps = (dispatch: Dispatch): any => ({
     }
 })
 
-export default connect(undefined, mapDispatchToProps)(SecretDetailsPage)
+export default withRouter(connect(undefined, mapDispatchToProps)(SecretDetailsPage))
