@@ -1,16 +1,51 @@
 import * as React from 'react'
-import { withRouter, RouteComponentProps } from 'react-router'
+import Gopass from '../../secrets/Gopass'
+import SecretsDirectoryService from '../../secrets/SecretsDirectoryService'
+import SecretsFilterService from '../../secrets/SecretsFilterService'
 import TreeComponent, { Tree } from '../../components/tree/TreeComponent'
 
-export interface SecretTreeProps extends RouteComponentProps {
-    tree: Tree
+export interface SecretTreeViewerProps {
+    onSecretClick: (name: string) => void
+    searchValue: string
 }
 
-const SecretTree = ({ tree, history }: SecretTreeProps) => (
-    <TreeComponent
-        tree={ tree }
-        onLeafClick={ (name: string) => history.replace(`/secret/${btoa(name)}`) }
-    />
-)
+export default class SecretTreeViewer extends React.Component<SecretTreeViewerProps, { tree: Tree, secretNames: string[] }> {
+    constructor(props: any) {
+        super(props)
+        this.state = {
+            tree: {
+                name: 'Stores',
+                toggled: true,
+                children: []
+            },
+            secretNames: []
+        }
+    }
 
-export default withRouter(SecretTree)
+    public async componentDidMount() {
+        const secretNames = await Gopass.getAllSecretNames()
+        this.setState({ secretNames })
+        await this.calculateAndSetTreeState()
+    }
+
+    public async componentWillReceiveProps(props: SecretTreeViewerProps) {
+        if (props.searchValue !== this.props.searchValue) {
+            await this.calculateAndSetTreeState()
+        }
+    }
+
+    public render() {
+        return (
+            <TreeComponent
+                tree={this.state.tree}
+                onLeafClick={this.props.onSecretClick}
+            />
+        )
+    }
+
+    private async calculateAndSetTreeState() {
+        const filteredSecretNames = SecretsFilterService.filterBySearch(this.state.secretNames, this.props.searchValue)
+        const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames)
+        this.setState({ ...this.state, tree })
+    }
+}
