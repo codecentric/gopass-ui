@@ -10,6 +10,7 @@ import Notification from '../notifications/Notification'
 import PasswordHealthOverview from './pages/PasswordHealthPage'
 import AddSecretPage from './pages/AddSecretPage'
 import SecretDetailsPage from './pages/SecretDetailsPage'
+import NotificationProvider from '../notifications/NotificationProvider'
 
 const MainContentRoutes = () => <>
     <Route
@@ -74,12 +75,14 @@ const MainContentRoutes = () => <>
 /* tslint:disable:jsx-no-lambda */
 const MainContent = () => (
     <div className='main-content'>
-        <Notification/>
-        <m.Row>
-            <m.Col s={12}>
-                <MainContentRoutes />
-            </m.Col>
-        </m.Row>
+        <NotificationProvider>
+            <Notification/>
+            <m.Row>
+                <m.Col s={12}>
+                    <MainContentRoutes/>
+                </m.Col>
+            </m.Row>
+        </NotificationProvider>
     </div>
 )
 
