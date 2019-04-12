@@ -9,14 +9,10 @@ import store from './state/store'
 
 import 'materialize-css/dist/css/materialize.css'
 import 'material-design-icons/iconfont/material-icons.css'
-import { loadInitialSecretsTree } from './secrets/secretsActions'
 
 // Create main element
 const mainElement = document.createElement('div')
 document.body.appendChild(mainElement)
-
-// Dispatch initial events
-store.dispatch(loadInitialSecretsTree() as any)
 
 ReactDOM.render(
     <AppContainer>

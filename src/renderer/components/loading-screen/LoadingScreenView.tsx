@@ -30,10 +30,7 @@ export default class LoadingScreenView extends React.Component<LoadingScreenView
             setInterval(() => {
                 const waitingTextIndex = waitingTexts.length > this.state.waitingTextIndex + 1 ? this.state.waitingTextIndex + 1 : 0
 
-                this.setState({
-                    ...this.state,
-                    waitingTextIndex
-                })
+                this.setState({ waitingTextIndex })
             }, 2000)
         }
     }

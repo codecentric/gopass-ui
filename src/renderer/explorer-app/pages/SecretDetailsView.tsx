@@ -94,24 +94,9 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
         )
     }
 
-    private editSecret = () => this.setState({
-        ...this.state,
-        edit: {
-            newValue: this.state.secretValue
-        }
-    })
-
-    private onEditedValueChange = (event: any) => this.setState({
-        ...this.state,
-        edit: {
-            newValue: event.target.value
-        }
-    })
-
-    private discardEditedSecretValue = () => this.setState({
-        ...this.state,
-        edit: undefined
-    })
+    private editSecret = () => this.setState({ edit: { newValue: this.state.secretValue } })
+    private onEditedValueChange = (event: any) => this.setState({ edit: { newValue: event.target.value } })
+    private discardEditedSecretValue = () => this.setState({ edit: undefined })
 
     private saveEditedSecretValue = async () => {
         const newValueToSave = this.state.edit!.newValue
@@ -122,7 +107,6 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
         }
 
         this.setState({
-            ...this.state,
             secretValue: newValueToSave,
             edit: undefined
         })

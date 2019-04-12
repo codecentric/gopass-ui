@@ -86,7 +86,7 @@ export default class PaginatedTable extends React.Component<PaginatedTableProps,
     private changeToPage = (maxPageNumber: number) => {
         return (page: number) => {
             if (page <= maxPageNumber && page >= 1) {
-                this.setState({ ...this.state, page })
+                this.setState({ page })
             }
         }
     }

@@ -28,9 +28,9 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
 
         const statsChecker = setInterval(() => {
             const status = this.state.collector.getCurrentStatus
-            this.setState({ ...this.state, status })
+            this.setState({ status })
         }, 100)
-        this.setState({ ...this.state, statsChecker })
+        this.setState({ statsChecker })
     }
 
     public async componentWillUnmount() {

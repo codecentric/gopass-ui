@@ -1,7 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { History } from 'history'
-import { withRouter } from 'react-router'
+import { withRouter, RouteComponentProps } from 'react-router'
 import Gopass from '../../secrets/Gopass'
 import { passwordSecretRegex } from '../../secrets/deriveIconFromSecretName'
 
@@ -10,7 +9,7 @@ interface AddSecretPageState {
     value?: string
 }
 
-class AddSecretPage extends React.Component<{ history: History }, AddSecretPageState> {
+class AddSecretPage extends React.Component<RouteComponentProps, AddSecretPageState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -46,19 +45,8 @@ class AddSecretPage extends React.Component<{ history: History }, AddSecretPageS
         )
     }
 
-    private changeName = (_: any, name: string) => {
-        this.setState({
-            ...this.state,
-            name
-        })
-    }
-
-    private changeValue = (_: any, value: string) => {
-        this.setState({
-            ...this.state,
-            value
-        })
-    }
+    private changeName = (_: any, name: string) => this.setState({ name })
+    private changeValue = (_: any, value: string) => this.setState({ value })
 
     private generateRandomValue = () => {
         const randomSegment = () => Math.random().toString(36).slice(-8)
@@ -85,4 +73,4 @@ class AddSecretPage extends React.Component<{ history: History }, AddSecretPageS
     }
 }
 
-export default withRouter(AddSecretPage as any) as any
+export default withRouter(AddSecretPage)
