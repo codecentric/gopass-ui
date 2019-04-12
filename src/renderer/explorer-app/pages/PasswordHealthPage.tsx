@@ -2,19 +2,19 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 import { History } from 'history'
 import { withRouter } from 'react-router'
-import AsyncPasswordCollector, { CollectionStatus } from '../../../secrets/AsyncPasswordCollector'
-import { PasswordRater } from '../../../password-health/PasswordRater'
-import PaginatedTable from '../../../components/PaginatedTable'
-import LoadingScreenView from '../../../components/loading-screen/LoadingScreenView'
-import { PasswordHealthIndicator } from '../../../password-health/PasswordHealthIndicator'
+import AsyncPasswordCollector, { PasswordCollectionStatus } from '../../secrets/AsyncPasswordCollector'
+import { PasswordRater } from '../../password-health/PasswordRater'
+import PaginatedTable from '../../components/PaginatedTable'
+import LoadingScreenView from '../../components/loading-screen/LoadingScreenView'
+import { PasswordHealthIndicator } from '../../password-health/PasswordHealthIndicator'
 
-interface PasswordHealthOverviewState {
+interface PasswordHealthPageState {
     collector: AsyncPasswordCollector
     statsChecker?: any
-    status?: CollectionStatus
+    status?: PasswordCollectionStatus
 }
 
-class PasswordHealthOverview extends React.Component<{ history: History }, PasswordHealthOverviewState> {
+class PasswordHealthPage extends React.Component<{ history: History }, PasswordHealthPageState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -53,7 +53,7 @@ class PasswordHealthOverview extends React.Component<{ history: History }, Passw
         )
     }
 
-    private renderStats(stats: CollectionStatus) {
+    private renderStats(stats: PasswordCollectionStatus) {
         if (stats.inProgress && stats.passwordsCollected > 0) {
             const progressPercentage = Math.round((stats.passwordsCollected / stats.totalPasswords) * 100)
 
@@ -119,4 +119,4 @@ class PasswordHealthOverview extends React.Component<{ history: History }, Passw
     }
 }
 
-export default withRouter(PasswordHealthOverview as any) as any
+export default withRouter(PasswordHealthPage as any) as any

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import GithubService, { GithubTag } from '../../GithubService'
-import { ExternalLink } from '../../../components/ExternalLink'
+import GithubService, { GithubTag } from '../GithubService'
+import { ExternalLink } from '../../components/ExternalLink'
 
 export function LatestVersionInfo() {
     const [ tags, setTags ] = React.useState<GithubTag[]>([])

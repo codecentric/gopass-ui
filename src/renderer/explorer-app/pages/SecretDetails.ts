@@ -1,8 +1,8 @@
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 import SecretDetailsView from './SecretDetailsView'
-import { showNotification } from '../../../notifications/notificationActions'
-import Gopass from '../../../secrets/Gopass'
+import { showNotification } from '../../notifications/notificationActions'
+import Gopass from '../../secrets/Gopass'
 
 const mapDispatchToProps = (dispatch: Dispatch): any => ({
     copySecretToClipboard: (secretName: string) => {

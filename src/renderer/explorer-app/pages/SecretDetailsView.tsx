@@ -2,12 +2,12 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 import * as dateformat from 'dateformat'
 
-import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
-import PaginatedTable from '../../../components/PaginatedTable'
-import { passwordSecretRegex } from '../../../secrets/deriveIconFromSecretName'
-import { PasswordRater, PasswordRatingResult } from '../../../password-health/PasswordRater'
-import PasswordRatingComponent from '../../../password-health/PasswordRatingComponent'
-import LoadingScreenView from '../../../components/loading-screen/LoadingScreenView'
+import Gopass, { HistoryEntry } from '../../secrets/Gopass'
+import PaginatedTable from '../../components/PaginatedTable'
+import { passwordSecretRegex } from '../../secrets/deriveIconFromSecretName'
+import { PasswordRater, PasswordRatingResult } from '../../password-health/PasswordRater'
+import PasswordRatingComponent from '../../password-health/PasswordRatingComponent'
+import LoadingScreenView from '../../components/loading-screen/LoadingScreenView'
 
 interface SecretDetailsState {
     secretValue: string
@@ -43,7 +43,7 @@ export default class SecretDetailsView extends React.Component<SecretDetailsView
         await this.createState(this.props.secretName)
     }
 
-    public async componentWillReceiveProps(props: { secretName: string }) {
+    public async componentWillReceiveProps(props: SecretDetailsViewProps) {
         await this.createState(props.secretName)
     }
 

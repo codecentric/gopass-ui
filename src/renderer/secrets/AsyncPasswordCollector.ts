@@ -8,7 +8,7 @@ export interface PasswordSecret {
     failedRulesCount?: number
 }
 
-export interface CollectionStatus {
+export interface PasswordCollectionStatus {
     totalPasswords: number
     passwordsCollected: number
     inProgress: boolean
@@ -17,7 +17,7 @@ export interface CollectionStatus {
 }
 
 export default class AsyncPasswordCollector {
-    private status: CollectionStatus = {
+    private status: PasswordCollectionStatus = {
         totalPasswords: 0,
         passwordsCollected: 0,
         inProgress: false,
@@ -41,7 +41,7 @@ export default class AsyncPasswordCollector {
         await this.initializePasswordSecretNames(false)
     }
 
-    get getCurrentStatus(): CollectionStatus {
+    get getCurrentStatus(): PasswordCollectionStatus {
         return this.status
     }
 

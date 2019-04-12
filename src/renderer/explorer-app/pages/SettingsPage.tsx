@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 
 import { EnvironmentTest } from '../components/EnvironmentTest'
-import Settings from '../../../Settings'
+import Settings from '../../Settings'
 
 export default function SettingsPage() {
     const { environmentTestSuccessful } = Settings.getSystemSettings()

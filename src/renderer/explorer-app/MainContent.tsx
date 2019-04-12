@@ -4,11 +4,11 @@ import { match, Route } from 'react-router-dom'
 
 import SecretDetails from './pages/SecretDetails'
 import SettingsPage from './pages/SettingsPage'
-import Home from './pages/Home'
-import MainNavigation from './navigation/MainNavigation'
-import GoBackNavigation from './navigation/GoBackNavigation'
-import Notification from '../../notifications/Notification'
-import PasswordHealthOverview from './pages/PasswordHealthOverview'
+import HomePage from './pages/HomePage'
+import MainNavigation from './components/MainNavigation'
+import GoBackNavigation from '../components/GoBackNavigationBtn'
+import Notification from '../notifications/Notification'
+import PasswordHealthOverview from './pages/PasswordHealthPage'
 import AddSecretPage from './pages/AddSecretPage'
 
 const MainContentRoutes = () => <>
@@ -18,7 +18,7 @@ const MainContentRoutes = () => <>
         render={() => (
             <>
                 <MainNavigation/>
-                <Home/>
+                <HomePage/>
             </>
         )}
     />

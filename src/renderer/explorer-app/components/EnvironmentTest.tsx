@@ -3,8 +3,8 @@ import * as m from 'react-materialize'
 import { timeout } from 'promise-timeout'
 import { shell } from 'electron'
 
-import Gopass from '../../../secrets/Gopass'
-import Settings from '../../../Settings'
+import Gopass from '../../secrets/Gopass'
+import Settings from '../../Settings'
 
 type ErrorDetails = 'GOPASS_CONNECTION' | 'DECRYPTION' | undefined
 
