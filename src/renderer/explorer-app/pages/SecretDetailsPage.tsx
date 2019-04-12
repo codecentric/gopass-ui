@@ -1,8 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import * as dateformat from 'dateformat'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router'
 
 import Gopass, { HistoryEntry } from '../../secrets/Gopass'
@@ -11,7 +9,6 @@ import { passwordSecretRegex } from '../../secrets/deriveIconFromSecretName'
 import { PasswordRater, PasswordRatingResult } from '../../password-health/PasswordRater'
 import PasswordRatingComponent from '../../password-health/PasswordRatingComponent'
 import LoadingScreenView from '../../components/loading-screen/LoadingScreenView'
-import { showNotification } from '../../notifications/notificationActions'
 
 interface SecretDetailsPageState {
     secretValue: string
@@ -170,17 +167,18 @@ class SecretDetailsPage extends React.Component<SecretDetailsPageProps, SecretDe
     }
 }
 
-const mapDispatchToProps = (dispatch: Dispatch): any => ({
-    copySecretToClipboard: (secretName: string) => {
-        Gopass.copy(secretName)
-            .then(() => {
-                dispatch(showNotification({ status: 'OK', message: 'Secret has been copied to your clipboard.' }))
-            })
-            .catch(() => {
-                dispatch(showNotification({ status: 'ERROR', message: 'Oops, something went wrong. Please try again.' }))
-            })
+// TODO
+// const mapDispatchToProps = (dispatch: Dispatch): any => ({
+//     copySecretToClipboard: (secretName: string) => {
+//         Gopass.copy(secretName)
+//             .then(() => {
+//                 dispatch(showNotification({ status: 'OK', message: 'Secret has been copied to your clipboard.' }))
+//             })
+//             .catch(() => {
+//                 dispatch(showNotification({ status: 'ERROR', message: 'Oops, something went wrong. Please try again.' }))
+//             })
+//
+//     }
+// })
 
-    }
-})
-
-export default withRouter(connect(undefined, mapDispatchToProps)(SecretDetailsPage))
+export default withRouter(SecretDetailsPage)
