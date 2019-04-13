@@ -1,6 +1,6 @@
 # Gopass UI [![Build Status](https://travis-ci.org/codecentric/gopass-ui.svg?branch=master)](https://travis-ci.org/codecentric/gopass-ui) [![Latest release](https://img.shields.io/github/release/codecentric/gopass-ui.svg)](https://github.com/codecentric/gopass-ui/releases/latest) [![Snyk vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/codecentric/gopass-ui.svg)](https://snyk.io/test/github/codecentric/gopass-ui) [![David Dependencies Status](https://david-dm.org/codecentric/gopass-ui.svg)](https://david-dm.org/codecentric/gopass-ui)
 
-<img src="docs/gopass-ui-logo.png" alt="Gopass UI logo" style="max-width: 800px">
+<img src="docs/img/gopass-ui-logo.png" alt="Gopass UI logo" style="max-width: 800px">
 
 ## What is Gopass and Gopass UI?
 
@@ -8,7 +8,7 @@
 
 The repository you're currently looking at contains `Gopass UI`, an Electron based UI wrapper for your `gopass` on the command line. It makes your life easier by providing a rich graphical user interface to search and manage your secrets. It looks like this:
 
-<img src="docs/demo-720p.gif" alt="GIF demonstrating core features of Gopass UI" title="Gopass UI demo" style="max-width: 800px" />
+<img src="docs/img/demo-720p.gif" alt="GIF demonstrating core features of Gopass UI" title="Gopass UI demo" style="max-width: 800px" />
 
 In addition there is a globally usable search window that can be opened with `(cmd || ctrl) + shift + p`.
 
