@@ -23,10 +23,10 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
         return (
             <>
                 <t.Treebeard
-                    data={ this.props.tree }
-                    decorators={ { ...t.decorators, Header } }
-                    onToggle={ this.onToggle }
-                    style={ globalStyle }
+                    data={this.props.tree}
+                    decorators={{ ...t.decorators, Header }}
+                    onToggle={this.onToggle}
+                    style={globalStyle}
                 />
             </>
         )
@@ -48,7 +48,7 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
         this.setState({ cursor: node })
 
         if (node.children && node.children.length === 1) {
-            this.onToggle(node.children[0], true)
+            this.onToggle(node.children[ 0 ], true)
         }
     }
 }

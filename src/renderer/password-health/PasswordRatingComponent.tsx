@@ -13,27 +13,27 @@ export const FailedRulesList = ({ failedRules }: { failedRules: PasswordHealthRu
     <>
         {
             failedRules.length > 0 ? (
-                <>
-                    <p>You could improve <strong>{failedRules.length}</strong> characteristica of this password.</p>
-                    <ol className='failed-rules-list'>
-                        {
-                            failedRules.map((failedRule: PasswordHealthRuleInfo, index: number)  => (
-                                <li key={ index }>
-                                    <strong>{failedRule.name}:</strong> {failedRule.description}
-                                </li>
-                            ))
-                        }
-                    </ol>
-                </>
-            ) :
-            <p>Good job! This secret satisfies all basic criteria for a potentially good password.</p>
+                    <>
+                        <p>You could improve <strong>{failedRules.length}</strong> characteristica of this password.</p>
+                        <ol className='failed-rules-list'>
+                            {
+                                failedRules.map((failedRule: PasswordHealthRuleInfo, index: number) => (
+                                    <li key={index}>
+                                        <strong>{failedRule.name}:</strong> {failedRule.description}
+                                    </li>
+                                ))
+                            }
+                        </ol>
+                    </>
+                ) :
+                <p>Good job! This secret satisfies all basic criteria for a potentially good password.</p>
         }
     </>
 )
 
 const PasswordRatingComponent = ({ passwordRating: { health, failedRules } }: PasswordRatingComponentProps) => (
     <m.Row>
-        <m.Col s={ 12 }>
+        <m.Col s={12}>
             <div className='card-panel z-depth-1'>
                 <div className='row valign-wrapper'>
                     <div className='col s2'>

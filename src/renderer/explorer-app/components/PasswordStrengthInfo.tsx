@@ -9,7 +9,7 @@ interface PasswordStrengthInfoProps {
 export const PasswordStrengthInfo = ({ strength, labelContent }: PasswordStrengthInfoProps) => (
     <>
         <m.Col s={4}>
-            <label className='active'>{ labelContent }: { strength + ' %' }</label>
+            <label className='active'>{labelContent}: {strength + ' %'}</label>
             <m.ProgressBar
                 progress={strength}
             />

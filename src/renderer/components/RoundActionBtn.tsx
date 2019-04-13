@@ -12,8 +12,8 @@ export const RoundActionBtn = ({ icon, onClick }: RoundActionBtnProps) => (
         large
         className='red'
         waves='light'
-        icon={ icon }
-        onClick={ onClick }
-        style={ { marginRight: '0.75rem' } }
+        icon={icon}
+        onClick={onClick}
+        style={{ marginRight: '0.75rem' }}
     />
 )

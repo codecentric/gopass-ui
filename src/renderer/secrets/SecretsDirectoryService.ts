@@ -12,18 +12,18 @@ export default class SecretsDirectoryService {
      *  to: "{ metro: { service: { ncr: { cassandra: { password: {} } } } }  }"
      */
     private static secretPathsToDirectory(secretPaths: string[]): any {
-        const directory: { [key: string]: any } = {}
+        const directory: { [ key: string ]: any } = {}
 
         for (const secretPath of secretPaths) {
             const segments = secretPath.split('/')
 
             let tempDir = directory
             segments.forEach((segment: string, index: number) => {
-                if (!tempDir[segment]) {
-                    tempDir[segment] = (index + 1 === segments.length) ? secretPath : {}
+                if (!tempDir[ segment ]) {
+                    tempDir[ segment ] = (index + 1 === segments.length) ? secretPath : {}
                 }
 
-                tempDir = tempDir[segment]
+                tempDir = tempDir[ segment ]
             })
         }
 
@@ -57,12 +57,12 @@ export default class SecretsDirectoryService {
         }
 
         return keys.map(name => {
-            const children = SecretsDirectoryService.getChildren(directory[name], false, toggleAll)
+            const children = SecretsDirectoryService.getChildren(directory[ name ], false, toggleAll)
             return {
                 name,
                 children,
                 toggled: toggleAll ? true : toggled,
-                entryId: children && children.length > 0 ? undefined : directory[name]
+                entryId: children && children.length > 0 ? undefined : directory[ name ]
             }
         })
     }

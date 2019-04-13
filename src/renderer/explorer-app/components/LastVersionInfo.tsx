@@ -11,7 +11,7 @@ export function LatestVersionInfo() {
         })
     }, [ 'once' ])
 
-    const lastTag = tags[tags.length - 1]
+    const lastTag = tags[ tags.length - 1 ]
     const lastTagName = lastTag ? lastTag.ref.slice(10, lastTag.ref.length) : ''
 
     return lastTagName ? (

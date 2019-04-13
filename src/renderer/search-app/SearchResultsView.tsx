@@ -56,17 +56,17 @@ export default class SearchResultsView extends React.Component<SearchResultsProp
         return (
             <>
                 <KeyboardEventHandler
-                    handleKeys={ [ 'up', 'shift+tab', 'down', 'tab', 'enter', 'esc' ] }
+                    handleKeys={[ 'up', 'shift+tab', 'down', 'tab', 'enter', 'esc' ]}
                     handleFocusableElements
-                    onKeyEvent={ this.onKeyEvent }
+                    onKeyEvent={this.onKeyEvent}
                 />
                 <m.Collection>
-                    { this.state.filteredSecretNames.map((secretName, i) => {
+                    {this.state.filteredSecretNames.map((secretName, i) => {
                         const splittedSecretName = secretName.split('/')
                         const isSelected = i === this.state.selectedItemIndex ? 'selected' : undefined
 
                         return (
-                            <m.CollectionItem key={ `secret-${i}` } className={ isSelected } onClick={ onSelectCollectionItem(secretName) }>
+                            <m.CollectionItem key={`secret-${i}`} className={isSelected} onClick={onSelectCollectionItem(secretName)}>
                                 {splittedSecretName.reduce(
                                     (result: string[], segment, currentIndex) => {
                                         const extendedResult = result.concat(
@@ -79,11 +79,11 @@ export default class SearchResultsView extends React.Component<SearchResultsProp
 
                                         return extendedResult
                                     },
-                                    [ ]
+                                    []
                                 )}
                             </m.CollectionItem>
                         )
-                    }) }
+                    })}
                 </m.Collection>
             </>
         )
@@ -129,7 +129,7 @@ export default class SearchResultsView extends React.Component<SearchResultsProp
                 break
 
             case 'enter':
-                const secretKey = this.state.filteredSecretNames[this.state.selectedItemIndex]
+                const secretKey = this.state.filteredSecretNames[ this.state.selectedItemIndex ]
                 if (secretKey) {
                     this.props.copySecretToClipboard!(secretKey)
                 }

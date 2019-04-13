@@ -14,7 +14,7 @@ document.body.appendChild(mainElement)
 
 ReactDOM.render(
     <AppContainer>
-        <Provider store={ store }>
+        <Provider store={store}>
             <SearchApplication />
         </Provider>
     </AppContainer>,

@@ -77,7 +77,7 @@ const MainContent = () => (
         <Notification/>
         <m.Row>
             <m.Col s={12}>
-                <MainContentRoutes />
+                <MainContentRoutes/>
             </m.Col>
         </m.Row>
     </div>

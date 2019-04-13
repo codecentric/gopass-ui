@@ -10,12 +10,12 @@ export const TreeHeader = ({ style, node }: any) => {
     }
 
     return (
-        <div style={ style.base }>
+        <div style={style.base}>
             <m.Icon small>
-                { iconType }
+                {iconType}
             </m.Icon>
 
-            { node.name }
+            {node.name}
         </div>
     )
 }

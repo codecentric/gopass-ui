@@ -27,14 +27,14 @@ export default class SearchApplication extends React.Component<any, { searchValu
     public render() {
         return (
             <div>
-                <Notification dismissTimeout={ 1500 } />
+                <Notification dismissTimeout={1500}/>
                 <m.Row>
-                    <m.Col s={ 12 }>
-                        <m.Input id='search' placeholder='Search...' onChange={ this.onChangeSearch } onKeyDown={ this.preventNavigationKeys } s={ 12 } />
+                    <m.Col s={12}>
+                        <m.Input id='search' placeholder='Search...' onChange={this.onChangeSearch} onKeyDown={this.preventNavigationKeys} s={12}/>
                     </m.Col>
                 </m.Row>
                 <m.Row>
-                    <m.Col s={ 12 }>
+                    <m.Col s={12}>
                         <SearchResults
                             {
                                 /* TODO: fix this! it should be handled via redux state because SearchResults uses redux already */

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { withRouter, RouteComponentProps } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
 import Gopass from '../../secrets/Gopass'
 import { passwordSecretRegex } from '../../secrets/deriveIconFromSecretName'
 import { PasswordStrengthInfo } from '../components/PasswordStrengthInfo'
@@ -31,22 +31,22 @@ class AddSecretPage extends React.Component<RouteComponentProps, AddSecretPageSt
 
         return (
             <>
-                <h4>New { entity }</h4>
+                <h4>New {entity}</h4>
 
                 <m.CardPanel>
                     Adds new secrets to your Gopass stores. After clicking the Add-button, your new secret will be pushed to remote directly.
                 </m.CardPanel>
 
                 <m.Row>
-                    <m.Input s={12} value={name} onChange={this.changeName} label={ nameLabel } />
-                    <m.Input s={12} value={value} onChange={this.changeValue} label={ valueLabel } />
+                    <m.Input s={12} value={name} onChange={this.changeName} label={nameLabel}/>
+                    <m.Input s={12} value={value} onChange={this.changeValue} label={valueLabel}/>
                     <PasswordStrengthInfo
-                        strength={ currentPasswordValueRating.health }
-                        labelContent={ `${entity} value strength` }
+                        strength={currentPasswordValueRating.health}
+                        labelContent={`${entity} value strength`}
                     />
                     <m.Col s={12}>
-                        <m.Button style={{ marginRight: '10px' }} onClick={this.shuffleRandomValue} waves='light'>{ shuffleButtonLabel }</m.Button>
-                        <m.Button disabled={ !name || !value } onClick={this.addSecret} waves='light'>Save</m.Button>
+                        <m.Button style={{ marginRight: '10px' }} onClick={this.shuffleRandomValue} waves='light'>{shuffleButtonLabel}</m.Button>
+                        <m.Button disabled={!name || !value} onClick={this.addSecret} waves='light'>Save</m.Button>
                     </m.Col>
                 </m.Row>
             </>
