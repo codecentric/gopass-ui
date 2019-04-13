@@ -1,10 +1,11 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import SearchResults from './SearchResults'
 
-import './SearchApplication.css'
+import SearchResults from './SearchResults'
 import Notification from '../common/notifications/Notification'
 import NotificationProvider from '../common/notifications/NotificationProvider'
+
+import './SearchApplication.css'
 
 const NAVIGATION_KEYS = [ 'ArrowUp', 'ArrowDown', 'Enter', 'Tab' ]
 

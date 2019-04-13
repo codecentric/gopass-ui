@@ -1,14 +1,14 @@
 import * as React from 'react'
 
 const passwordStrengthColorExtractor = (health: number): string => {
-    let colorStrengthIndicator = 'red'
     if (health >= 50) {
-        colorStrengthIndicator = 'yellow'
+        return 'yellow'
     }
     if (health >= 70) {
-        colorStrengthIndicator = 'green'
+        return 'green'
     }
-    return colorStrengthIndicator
+
+    return 'red'
 }
 
 export const PasswordHealthIndicator = ({ health }: { health: number }) => (

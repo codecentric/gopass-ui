@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
+
 import './LoadingScreen.css'
 
 const WAITING_TEXTS = [
