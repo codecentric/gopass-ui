@@ -19,7 +19,8 @@
     "lint:fix": "tslint '{src,test,mocks}/**/*.{ts,tsx}' --project ./tsconfig.json --fix",
     "test": "jest '(\\/test\\/).*'",
     "test:integration": "jest '(\\/test\\/integration/).*'",
-    "release": "npm run build && electron-builder --publish onTag",
+    "release:check": "npm run lint && npm test",
+    "release": "npm run release:check && npm run build && electron-builder --publish onTag",
     "postinstall": "electron-builder install-app-deps"
   },
   "jest": {
