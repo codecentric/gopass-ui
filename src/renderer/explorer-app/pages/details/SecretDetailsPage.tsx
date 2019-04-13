@@ -4,7 +4,6 @@ import { withRouter, RouteComponentProps } from 'react-router'
 
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import { passwordSecretRegex } from '../../../secrets/deriveIconFromSecretName'
-import { PasswordRater, PasswordRatingResult } from '../../../password-health/PasswordRater'
 import PasswordRatingComponent from '../../../password-health/PasswordRatingComponent'
 import { LoadingScreen } from '../../../components/loading-screen/LoadingScreen'
 import { useCopySecretToClipboard } from '../../../hooks/useCopySecretToClipboard'
@@ -44,9 +43,9 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
     const denySecretDeletion = () => setQueryDeletion(false)
     const confirmSecretDeletion = () => Gopass.deleteSecret(secretName).then(() => history.replace('/'))
     const deletionModeButtons = queryDeletion ? <>
-        <a className='link' onClick={() => denySecretDeletion}>NO, keep it!</a>
-        <a className='link' onClick={() => confirmSecretDeletion}>Sure!</a>
-    </> : <a className='link' onClick={() => querySecretDeletion}>Delete</a>
+        <a className='link' onClick={denySecretDeletion}>NO, keep it!</a>
+        <a className='link' onClick={confirmSecretDeletion}>Sure!</a>
+    </> : <a className='link' onClick={querySecretDeletion}>Delete</a>
 
     const querySecretEditing = () => setEditedSecretValue(secretValue)
     const discardSecretEditing = () => setEditedSecretValue(undefined)
@@ -60,8 +59,8 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
         setEditedSecretValue(undefined)
     }
     const editModeButtons = <>
-        <a className='link' onClick={() => discardSecretEditing}>Discard</a>
-        <a className='link' onClick={() => saveEditedSecretValue}>Save changes</a>
+        <a className='link' onClick={discardSecretEditing}>Discard</a>
+        <a className='link' onClick={saveEditedSecretValue}>Save changes</a>
     </>
 
     const inEditMode = editedSecretValue !== undefined
@@ -69,7 +68,7 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
     const cardActions = [
         <a key='copy-clipboard' className='link' onClick={() => copySecretToClipboard(secretName)}>Copy to clipboard</a>,
         inEditMode ? <span key='edit-secret-mode-actions'>{ editModeButtons }</span> :
-            <span key='view-secret-mode-actions'><a className='link' onClick={() => querySecretEditing}>Edit</a>{deletionModeButtons}</span>
+            <span key='view-secret-mode-actions'><a className='link' onClick={querySecretEditing}>Edit</a>{deletionModeButtons}</span>
     ]
     return loading ? <><h4>Secret {isAdded && <m.Icon small>fiber_new</m.Icon>}</h4><LoadingScreen/></> : <>
         <h4>Secret {isAdded && <m.Icon small>fiber_new</m.Icon>}</h4>
