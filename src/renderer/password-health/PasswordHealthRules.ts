@@ -31,7 +31,7 @@ const numbersRule: PasswordHealthRule = {
 }
 
 const noRepetitiveCharactersRule: PasswordHealthRule = {
-    matcher: (password: string) => !/(.)\1{2,}/.test(password),
+    matcher: (password: string) => !!password && !/(.)\1{2,}/.test(password),
     name: 'No repetitive characters',
     description: 'Passwords are better if characters are not repeated often (sequence of three or more).'
 }

@@ -48,7 +48,7 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
         return (
             <>
                 <h4>Password Health</h4>
-                { status ? this.renderStats(status) : <LoadingScreenView /> }
+                {status ? this.renderStats(status) : <LoadingScreenView/>}
             </>
         )
     }
@@ -59,9 +59,9 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
 
             return (
                 <>
-                    <p>Your passwords are currently being collected and analysed, please wait until ready... { progressPercentage }%</p>
-                    <div style={{width: '60%', minWidth: '200px', marginTop: '30px'}}>
-                        <m.ProgressBar progress={ progressPercentage } />
+                    <p>Your passwords are currently being collected and analysed, please wait until ready... {progressPercentage}%</p>
+                    <div style={{ width: '60%', minWidth: '200px', marginTop: '30px' }}>
+                        <m.ProgressBar progress={progressPercentage}/>
                     </div>
                 </>
             )
@@ -76,30 +76,30 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
                     <div className='row'>
                         <div className='col s12'>
                             <div className='card-panel z-depth-1'>
-                            <div className='row valign-wrapper'>
-                                <div className='col s2'>
-                                    <PasswordHealthIndicator health={ overallPasswordHealth.health } />
+                                <div className='row valign-wrapper'>
+                                    <div className='col s2'>
+                                        <PasswordHealthIndicator health={overallPasswordHealth.health}/>
+                                    </div>
+                                    <div className='col s10'>
+                                        This is the average health for your passwords.
+                                        {improvablePasswords.length > 0 ? ` There are ${improvablePasswords.length} suggestions available.` : ''}
+                                    </div>
                                 </div>
-                                <div className='col s10'>
-                                    This is the average health for your passwords.
-                                    { improvablePasswords.length > 0 ? ` There are ${improvablePasswords.length} suggestions available.` : '' }
-                                </div>
-                            </div>
                             </div>
                         </div>
                     </div>
 
                     <h4 className='m-top'>Improvement Potential</h4>
                     <PaginatedTable
-                        columns={ [
+                        columns={[
                             { fieldName: 'name', label: 'Name' },
                             { fieldName: 'health', label: 'Health' },
                             { fieldName: 'rulesToImprove', label: 'Rules to improve' }
-                        ] }
+                        ]}
                         rows={
                             improvablePasswords.map(rated => ({
                                 id: rated.name,
-                                name: <a onClick={ this.onSecretClick(rated.name) }>{ rated.name }</a>,
+                                name: <a onClick={this.onSecretClick(rated.name)}>{rated.name}</a>,
                                 health: `${rated.health}`,
                                 rulesToImprove: `${rated.failedRulesCount}`
                             }))
@@ -110,7 +110,7 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
         }
 
         if (!stats.inProgress && stats.error) {
-            return <p>Something went wrong here: { stats.error.message }</p>
+            return <p>Something went wrong here: {stats.error.message}</p>
         }
     }
 

@@ -21,12 +21,12 @@ function MainNavigationComponent({ history }: MainNavigationViewProps) {
         })
     }
 
-    return <div style={ { paddingTop: '0.75rem' } }>
-        <RoundActionBtn icon='home' onClick={ () => history.replace('/') } />
-        <RoundActionBtn icon='add' onClick={ () => history.replace('/add-secret') } />
-        <RoundActionBtn icon='refresh' onClick={ refreshGopassStores } />
-        <RoundActionBtn icon='settings' onClick={ () => history.replace('/settings') } />
-        <RoundActionBtn icon='security' onClick={ () => history.replace('/password-health') } />
+    return <div style={{ paddingTop: '0.75rem' }}>
+        <RoundActionBtn icon='home' onClick={() => history.replace('/')}/>
+        <RoundActionBtn icon='add' onClick={() => history.replace('/add-secret')}/>
+        <RoundActionBtn icon='refresh' onClick={refreshGopassStores}/>
+        <RoundActionBtn icon='settings' onClick={() => history.replace('/settings')}/>
+        <RoundActionBtn icon='security' onClick={() => history.replace('/password-health')}/>
     </div>
 }
 

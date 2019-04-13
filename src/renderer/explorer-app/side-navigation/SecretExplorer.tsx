@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { withRouter, RouteComponentProps } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
 import * as KeyboardEventHandler from 'react-keyboard-event-handler'
 import SecretTree from './SecretTree'
 
@@ -15,9 +15,9 @@ class SecretExplorer extends React.Component<RouteComponentProps, { searchValue:
 
         return (
             <div className='secret-explorer'>
-                <KeyboardEventHandler handleKeys={ [ 'esc' ] } handleFocusableElements onKeyEvent={ this.onCancelSearch } />
-                <m.Input className='search-bar' value={ searchValue } placeholder='Search...' onChange={ this.onSearchChange } />
-                <SecretTree searchValue={ searchValue } onSecretClick={ this.onSecretClick } />
+                <KeyboardEventHandler handleKeys={[ 'esc' ]} handleFocusableElements onKeyEvent={this.onCancelSearch}/>
+                <m.Input className='search-bar' value={searchValue} placeholder='Search...' onChange={this.onSearchChange}/>
+                <SecretTree searchValue={searchValue} onSecretClick={this.onSecretClick}/>
             </div>
         )
     }

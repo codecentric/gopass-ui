@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { paginationCalculator} from 'pagination-calculator'
+import { paginationCalculator } from 'pagination-calculator'
 import { PageInformation } from 'pagination-calculator/dist/paginationCalculator'
 
 export interface TableColumn {
@@ -10,13 +10,15 @@ export interface TableColumn {
 
 export interface TableRow {
     id: string
-    [fieldName: string]: string | React.ReactNode
+
+    [ fieldName: string ]: string | React.ReactNode
 }
 
 export interface PaginatedTableProps {
     columns: TableColumn[]
     rows: TableRow[]
 }
+
 export interface PaginatedTableState {
     page: number
     pageSize: number
@@ -45,29 +47,29 @@ export default class PaginatedTable extends React.Component<PaginatedTableProps,
             <>
                 <m.Table>
                     <thead>
-                        <tr>
-                            {
-                                columns.map(column => (
-                                    <th key={ column.fieldName } data-field={ column.fieldName }>
-                                        { column.label }
-                                    </th>
-                                ))
-                            }
-                        </tr>
+                    <tr>
+                        {
+                            columns.map(column => (
+                                <th key={column.fieldName} data-field={column.fieldName}>
+                                    {column.label}
+                                </th>
+                            ))
+                        }
+                    </tr>
                     </thead>
 
                     <tbody>
-                        {
-                            pageRows.map(row => (
-                                <tr key={ row.id }>
-                                    { columns.map(column => (<td key={ `${row.id}-${column.fieldName}` }>{ row[column.fieldName] }</td>)) }
-                                </tr>
-                            ))
-                        }
+                    {
+                        pageRows.map(row => (
+                            <tr key={row.id}>
+                                {columns.map(column => (<td key={`${row.id}-${column.fieldName}`}>{row[ column.fieldName ]}</td>))}
+                            </tr>
+                        ))
+                    }
                     </tbody>
                 </m.Table>
 
-                { this.renderPagination(pagination) }
+                {this.renderPagination(pagination)}
             </>
         )
     }
@@ -75,10 +77,10 @@ export default class PaginatedTable extends React.Component<PaginatedTableProps,
     private renderPagination(pagination: PageInformation) {
         return (
             <m.Pagination
-                items={ pagination.pageCount }
-                activePage={ pagination.current }
-                maxButtons={ pagination.pageCount <= 8 ? pagination.pageCount : 8 }
-                onSelect={ this.changeToPage(pagination.pageCount) }
+                items={pagination.pageCount}
+                activePage={pagination.current}
+                maxButtons={pagination.pageCount <= 8 ? pagination.pageCount : 8}
+                onSelect={this.changeToPage(pagination.pageCount)}
             />
         )
     }

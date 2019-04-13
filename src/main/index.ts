@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, Menu, Tray, ipcMain, Event } from 'electron'
+import { app, BrowserWindow, Event, globalShortcut, ipcMain, Menu, Tray } from 'electron'
 import * as path from 'path'
 import * as fixPath from 'fix-path'
 import * as url from 'url'

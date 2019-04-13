@@ -12,7 +12,7 @@ const passwordStrengthColorExtractor = (health: number): string => {
 }
 
 export const PasswordHealthIndicator = ({ health }: { health: number }) => (
-    <div className={ `password-strength-sum ${passwordStrengthColorExtractor(health)}` }>
-        <span>{ health }</span>
+    <div className={`password-strength-sum ${passwordStrengthColorExtractor(health)}`}>
+        <span>{health}</span>
     </div>
 )

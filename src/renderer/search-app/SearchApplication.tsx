@@ -34,7 +34,7 @@ export function SearchApplication() {
         <Notification dismissTimeout={ 3000 } />
         <m.Row>
             <m.Col s={ 12 }>
-                <m.Input id='search' placeholder='Search...' onChange={ onChange } onKeyDown={ preventNavigationKeys } s={ 12 } />
+                <m.Input id='search' placeholder='Search...' onChange={ onChange} onKeyDown={preventNavigationKeys } s={ 12 } />
             </m.Col>
         </m.Row>
         <m.Row>

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import * as dateformat from 'dateformat'
-import { withRouter, RouteComponentProps } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
 
 import Gopass, { HistoryEntry } from '../../secrets/Gopass'
 import PaginatedTable from '../../components/PaginatedTable'
@@ -55,20 +55,20 @@ class SecretDetailsPage extends React.Component<SecretDetailsPageProps, SecretDe
         const { secretValue, isPassword, passwordRating, loading, edit, queryDeletion } = this.state
 
         const cardActions = [
-            <a key='copy-clipboard' className='link' onClick={ () => this.props.copySecretToClipboard!(secretName) }>Copy to clipboard</a>,
+            <a key='copy-clipboard' className='link' onClick={() => this.props.copySecretToClipboard!(secretName)}>Copy to clipboard</a>,
             !!edit ? (
                 <span key='edit-secret-mode-actions'>
-                    <a className='link' onClick={ () => this.discardEditedSecretValue() }>Discard</a>
-                    <a className='link' onClick={ () => this.saveEditedSecretValue() }>Save changes</a>
+                    <a className='link' onClick={() => this.discardEditedSecretValue()}>Discard</a>
+                    <a className='link' onClick={() => this.saveEditedSecretValue()}>Save changes</a>
                 </span>
             ) : (
                 <span key='view-secret-mode-actions'>
-                    <a className='link' onClick={ () => this.editSecret() }>Edit</a>
+                    <a className='link' onClick={() => this.editSecret()}>Edit</a>
                     {
                         queryDeletion ? <>
-                                <a className='link' onClick={ () => this.denySecretDeletion() }>NO, keep it!</a>
-                                <a className='link' onClick={ () => this.confirmSecretDeletion() }>Sure!</a>
-                            </> : <a className='link' onClick={ () => this.querySecretDeletion() }>Delete</a>
+                            <a className='link' onClick={() => this.denySecretDeletion()}>NO, keep it!</a>
+                            <a className='link' onClick={() => this.confirmSecretDeletion()}>Sure!</a>
+                        </> : <a className='link' onClick={() => this.querySecretDeletion()}>Delete</a>
                     }
                 </span>
             )
@@ -76,31 +76,31 @@ class SecretDetailsPage extends React.Component<SecretDetailsPageProps, SecretDe
 
         return (
             loading ?
-                <LoadingScreenView /> :
+                <LoadingScreenView/> :
                 (
                     <>
-                        <h4>Secret { isAdded && <m.Icon small>fiber_new</m.Icon> }</h4>
+                        <h4>Secret {isAdded && <m.Icon small>fiber_new</m.Icon>}</h4>
                         <m.Card
-                            title={ secretName }
-                            actions={ cardActions }
+                            title={secretName}
+                            actions={cardActions}
                         >
                             <input
-                                style={{color: '#212121'}}
-                                value={ edit ? edit.newValue : secretValue }
-                                disabled={ !edit }
-                                onChange={ this.onEditedValueChange }
+                                style={{ color: '#212121' }}
+                                value={edit ? edit.newValue : secretValue}
+                                disabled={!edit}
+                                onChange={this.onEditedValueChange}
                                 ref={input => input && input.focus()}
                             />
                         </m.Card>
 
-                        { isPassword && passwordRating && <>
-                                <h4 className='m-top'>Password Strength</h4>
-                                <PasswordRatingComponent passwordRating={ passwordRating } />
-                            </>
+                        {isPassword && passwordRating && <>
+                            <h4 className='m-top'>Password Strength</h4>
+                            <PasswordRatingComponent passwordRating={passwordRating}/>
+                        </>
                         }
 
                         <h4 className='m-top'>History</h4>
-                        { this.renderHistoryTable() }
+                        {this.renderHistoryTable()}
                     </>
                 )
         )
@@ -144,8 +144,8 @@ class SecretDetailsPage extends React.Component<SecretDetailsPageProps, SecretDe
 
         return (
             <PaginatedTable
-                columns={ columns }
-                rows={ rows }
+                columns={columns}
+                rows={rows}
             />
         )
     }

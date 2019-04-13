@@ -8,11 +8,11 @@ before_install:
   - sudo apt-get install alien # we need rpm and rpmbuild
 
 script:
-- npm audit || true
-- npm run lint
-- npm test
-- npm run release
+  - npm audit || true
+  - npm run lint
+  - npm test
+  - npm run release
 
 branches:
   except:
-  - "/^v\\d+\\.\\d+\\.\\d+$/" # matches branch names using semantic versioning (e.g. "v0.0.1")
+    - "/^v\\d+\\.\\d+\\.\\d+$/" # matches branch names using semantic versioning (e.g. "v0.0.1")

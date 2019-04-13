@@ -42,8 +42,8 @@ export default class LoadingScreenView extends React.Component<LoadingScreenView
         return (
             <div className='loading-screen-wrapper'>
                 <div className='loading-screen-message'>
-                    <p>{ waitingTexts[ waitingTextIndex ] }</p>
-                    <m.ProgressBar />
+                    <p>{waitingTexts[ waitingTextIndex ]}</p>
+                    <m.ProgressBar/>
                 </div>
             </div>
         )

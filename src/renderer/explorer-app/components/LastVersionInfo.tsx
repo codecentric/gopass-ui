@@ -11,12 +11,13 @@ export function LatestVersionInfo() {
         })
     }, [ 'once' ])
 
-    const lastTag = tags[tags.length - 1]
+    const lastTag = tags[ tags.length - 1 ]
     const lastTagName = lastTag ? lastTag.ref.slice(10, lastTag.ref.length) : ''
 
-    return lastTagName ? <>
-        <hr/>
-        Make sure you got the latest version of Gopass UI so you don't miss any update:&nbsp;
-        <ExternalLink url='https://github.com/codecentric/gopass-ui/releases/latest'>{`${lastTagName} on Github`}</ExternalLink>
-    </> : null
+    return lastTagName ? (
+        <>
+            Make sure you got the latest version of Gopass UI:&nbsp;
+            <ExternalLink url='https://github.com/codecentric/gopass-ui/releases/latest'>{`${lastTagName} on Github`}</ExternalLink>
+        </>
+    ) : null
 }

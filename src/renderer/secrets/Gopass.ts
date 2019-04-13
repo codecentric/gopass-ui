@@ -29,10 +29,10 @@ export default class Gopass {
                 const lineSplit = historyLine.split(' - ')
 
                 return {
-                    hash: lineSplit[0],
-                    author: lineSplit[1],
-                    timestamp: lineSplit[2],
-                    message: lineSplit[3]
+                    hash: lineSplit[ 0 ],
+                    author: lineSplit[ 1 ],
+                    timestamp: lineSplit[ 2 ],
+                    message: lineSplit[ 3 ]
                 }
             })
     }
@@ -42,7 +42,7 @@ export default class Gopass {
     }
 
     public static async getAllSecretNames(): Promise<string[]> {
-        const flatSecrets = await Gopass.execute('list', ['--flat'])
+        const flatSecrets = await Gopass.execute('list', [ '--flat' ])
 
         return flatSecrets.split(lineSplitRegex).filter(isDefined)
     }
