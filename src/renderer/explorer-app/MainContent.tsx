@@ -9,78 +9,82 @@ import GoBackNavigation from '../components/GoBackNavigationBtn'
 import Notification from '../notifications/Notification'
 import PasswordHealthOverview from './pages/PasswordHealthPage'
 import AddSecretPage from './pages/AddSecretPage'
-import SecretDetailsPage from './pages/SecretDetailsPage'
+import SecretDetailsPage from './pages/details/SecretDetailsPage'
+import NotificationProvider from '../notifications/NotificationProvider'
 
-const MainContentRoutes = () => <>
-    <Route
-        path='/'
-        exact
-        render={() => (
-            <>
-                <MainNavigation/>
-                <HomePage/>
-            </>
-        )}
-    />
-    <Route
-        path='/secret/:encodedSecretName'
-        component={(props: { match: match<{ encodedSecretName: string }>, location: { search?: string } }) => {
-            const secretName = atob(props.match.params.encodedSecretName)
-            const isAdded = props.location.search ? props.location.search === '?added' : false
-
-            return (
+function MainContentRoutes() {
+    return <>
+        <Route
+            path='/'
+            exact
+            render={() => (
                 <>
                     <MainNavigation/>
-                    <SecretDetailsPage
-                        secretName={secretName}
-                        isAdded={isAdded}
-                    />
+                    <HomePage/>
                 </>
-            )
-        }}
-    />
-    <Route
-        path='/settings'
-        exact
-        render={() => (
-            <>
-                <GoBackNavigation/>
-                <SettingsPage/>
-            </>
-        )}
-    />
-    <Route
-        path='/password-health'
-        exact
-        render={() => (
-            <>
-                <GoBackNavigation/>
-                <PasswordHealthOverview/>
-            </>
-        )}
-    />
-    <Route
-        path='/add-secret'
-        exact
-        render={() => (
-            <>
-                <GoBackNavigation/>
-                <AddSecretPage/>
-            </>
-        )}
-    />
-</>
+            )}
+        />
+        <Route
+            path='/secret/:encodedSecretName'
+            component={(props: { match: match<{ encodedSecretName: string }>, location: { search?: string } }) => {
+                const secretName = atob(props.match.params.encodedSecretName)
+                const isAdded = props.location.search ? props.location.search === '?added' : false
 
-/* tslint:disable:jsx-no-lambda */
-const MainContent = () => (
-    <div className='main-content'>
-        <Notification/>
-        <m.Row>
-            <m.Col s={12}>
-                <MainContentRoutes/>
-            </m.Col>
-        </m.Row>
+                return (
+                    <>
+                        <MainNavigation/>
+                        <SecretDetailsPage
+                            secretName={secretName}
+                            isAdded={isAdded}
+                        />
+                    </>
+                )
+            }}
+        />
+        <Route
+            path='/settings'
+            exact
+            render={() => (
+                <>
+                    <GoBackNavigation/>
+                    <SettingsPage/>
+                </>
+            )}
+        />
+        <Route
+            path='/password-health'
+            exact
+            render={() => (
+                <>
+                    <GoBackNavigation/>
+                    <PasswordHealthOverview/>
+                </>
+            )}
+        />
+        <Route
+            path='/add-secret'
+            exact
+            render={() => (
+                <>
+                    <GoBackNavigation/>
+                    <AddSecretPage/>
+                </>
+            )}
+        />
+    </>
+}
+
+function MainContent() {
+    return <div className='main-content'>
+        <NotificationProvider>
+            <Notification/>
+            <m.Row>
+                <m.Col s={12}>
+                    <MainContentRoutes/>
+                </m.Col>
+            </m.Row>
+        </NotificationProvider>
     </div>
-)
+}
 
 export default MainContent

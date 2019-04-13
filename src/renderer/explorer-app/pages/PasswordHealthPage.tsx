@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import AsyncPasswordCollector, { PasswordCollectionStatus } from '../../secrets/AsyncPasswordCollector'
 import { PasswordRater } from '../../password-health/PasswordRater'
 import PaginatedTable from '../../components/PaginatedTable'
-import LoadingScreenView from '../../components/loading-screen/LoadingScreenView'
+import { LoadingScreen } from '../../components/loading-screen/LoadingScreen'
 import { PasswordHealthIndicator } from '../../password-health/PasswordHealthIndicator'
 
 interface PasswordHealthPageState {
@@ -48,7 +48,7 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
         return (
             <>
                 <h4>Password Health</h4>
-                {status ? this.renderStats(status) : <LoadingScreenView/>}
+                {status ? this.renderStats(status) : <LoadingScreen />}
             </>
         )
     }

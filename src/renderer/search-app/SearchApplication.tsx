@@ -4,56 +4,43 @@ import SearchResults from './SearchResults'
 
 import './SearchApplication.css'
 import Notification from '../notifications/Notification'
+import NotificationProvider from '../notifications/NotificationProvider'
 
 const NAVIGATION_KEYS = [ 'ArrowUp', 'ArrowDown', 'Enter', 'Tab' ]
 
-export default class SearchApplication extends React.Component<any, { searchValue: string }> {
-    constructor(props: any) {
-        super(props)
-        this.state = {
-            searchValue: ''
-        }
+const preventNavigationKeys = (event: any) => {
+    if (NAVIGATION_KEYS.includes(event.key)) {
+        event.preventDefault()
     }
+}
 
-    public componentDidMount() {
+export function SearchApplication() {
+    const [ searchValue, setSearchValue ] = React.useState('')
+
+    React.useEffect(() => {
         const element = document.getElementById('search')
 
         if (element) {
             element.focus()
             element.click()
         }
+    }, [ ])
+
+    const onChange = (_: any, newValue: string) => {
+        setSearchValue(newValue)
     }
 
-    public render() {
-        return (
-            <div>
-                <Notification dismissTimeout={1500}/>
-                <m.Row>
-                    <m.Col s={12}>
-                        <m.Input id='search' placeholder='Search...' onChange={this.onChangeSearch} onKeyDown={this.preventNavigationKeys} s={12}/>
-                    </m.Col>
-                </m.Row>
-                <m.Row>
-                    <m.Col s={12}>
-                        <SearchResults
-                            {
-                                /* TODO: fix this! it should be handled via redux state because SearchResults uses redux already */
-                                ...{ search: this.state.searchValue }
-                            }
-                        />
-                    </m.Col>
-                </m.Row>
-            </div>
-        )
-    }
-
-    private preventNavigationKeys = (event: any) => {
-        if (NAVIGATION_KEYS.includes(event.key)) {
-            event.preventDefault()
-        }
-    }
-
-    private onChangeSearch = (_: any, searchValue: string) => {
-        this.setState({ searchValue })
-    }
+    return <NotificationProvider>
+        <Notification dismissTimeout={ 3000 } />
+        <m.Row>
+            <m.Col s={ 12 }>
+                <m.Input id='search' placeholder='Search...' onChange={ onChange} onKeyDown={preventNavigationKeys } s={ 12 } />
+            </m.Col>
+        </m.Row>
+        <m.Row>
+            <m.Col s={ 12 }>
+                <SearchResults search={ searchValue } />
+            </m.Col>
+        </m.Row>
+    </NotificationProvider>
 }

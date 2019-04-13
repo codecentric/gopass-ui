@@ -1,6 +1,6 @@
-import Gopass from '../../src/renderer/secrets/Gopass'
-
 describe.skip('Gopass', () => {
+    const Gopass = require('../../src/renderer/secrets/Gopass')
+
     it('should successfully return a password', () => {
         return expect(Gopass.show('metro/services/ncr/client/pp/username')).resolves.toBe('test')
     })
