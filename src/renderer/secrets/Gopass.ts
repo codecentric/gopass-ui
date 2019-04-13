@@ -48,7 +48,7 @@ export default class Gopass {
     }
 
     public static async addSecret(name: string, value: string): Promise<void> {
-        await Gopass.execute('insert', [ name ], value)
+        await Gopass.execute('insert', [name], value)
     }
 
     public static async editSecret(name: string, newValue: string): Promise<void> {
@@ -56,7 +56,7 @@ export default class Gopass {
     }
 
     public static async deleteSecret(name: string): Promise<void> {
-        await Gopass.execute('rm', [ '--force', name ])
+        await Gopass.execute('rm', ['--force', name])
     }
 
     private static execute(command: string, args?: string[], pipeTextInto?: string): Promise<string> {

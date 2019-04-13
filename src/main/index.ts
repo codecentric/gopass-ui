@@ -50,9 +50,7 @@ const installExtensions = async () => {
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS
     const extensions = ['REACT_DEVELOPER_TOOLS', 'REDUX_DEVTOOLS']
 
-    return Promise.all(
-        extensions.map(name => installer.default(installer[name], forceDownload))
-    ).catch(console.info)
+    return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload))).catch(console.info)
 }
 
 const hideMainWindow = () => {
@@ -166,11 +164,11 @@ const createMainWindow = () => {
 }
 
 const getSystemSettings = (): UserSettings => {
-    return electronSettings.get('system_settings') as any || DEFAULT_SYSTEM_SETTINGS
+    return (electronSettings.get('system_settings') as any) || DEFAULT_SYSTEM_SETTINGS
 }
 
 const getUserSettings = (): UserSettings => {
-    return electronSettings.get('user_settings') as any || DEFAULT_USER_SETTINGS
+    return (electronSettings.get('user_settings') as any) || DEFAULT_USER_SETTINGS
 }
 
 const listenEvents = () => {

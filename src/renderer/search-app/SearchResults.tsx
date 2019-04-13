@@ -78,6 +78,9 @@ export default function SearchResults(props: SearchResultsProps) {
             case 'esc':
                 ipcRenderer.send('hideSearchWindow')
                 break
+
+            default:
+                // do nothing
         }
     }
 

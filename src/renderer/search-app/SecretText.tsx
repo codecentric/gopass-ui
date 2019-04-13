@@ -16,7 +16,6 @@ const getHighlightedSegment = (segment: string, highlightRegExp?: RegExp) => {
     })
 }
 
-
 export function SecretText({ secretPath, highlightRegExp }: SecretTextProps) {
     return <>{ secretPath.reduce(
         (result: string[], segment, currentIndex) => {

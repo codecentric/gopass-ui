@@ -20,7 +20,7 @@ export default class SecretsDirectoryService {
             let tempDir = directory
             segments.forEach((segment: string, index: number) => {
                 if (!tempDir[segment]) {
-                    tempDir[segment] = (index + 1 === segments.length) ? secretPath : {}
+                    tempDir[segment] = index + 1 === segments.length ? secretPath : {}
                 }
 
                 tempDir = tempDir[segment]
