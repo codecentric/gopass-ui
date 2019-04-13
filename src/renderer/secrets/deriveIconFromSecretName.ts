@@ -4,6 +4,7 @@ export interface SecretIconMapping {
 }
 
 export const passwordSecretRegex: RegExp = /(password|secret|key$|passphrase|certificate)/
+
 const secretIconMappings: SecretIconMapping[] = [
     {
         regex: passwordSecretRegex,

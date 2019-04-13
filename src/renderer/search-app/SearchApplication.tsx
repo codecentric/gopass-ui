@@ -3,8 +3,8 @@ import * as m from 'react-materialize'
 import SearchResults from './SearchResults'
 
 import './SearchApplication.css'
-import Notification from '../notifications/Notification'
-import NotificationProvider from '../notifications/NotificationProvider'
+import Notification from '../common/notifications/Notification'
+import NotificationProvider from '../common/notifications/NotificationProvider'
 
 const NAVIGATION_KEYS = [ 'ArrowUp', 'ArrowDown', 'Enter', 'Tab' ]
 

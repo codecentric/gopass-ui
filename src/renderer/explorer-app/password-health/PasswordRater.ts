@@ -1,6 +1,6 @@
-import { PasswordSecret } from '../secrets/AsyncPasswordCollector'
 import { PasswordHealthRule, PasswordHealthRuleInfo } from './PasswordRule'
 import { allPasswordHealthRules } from './PasswordHealthRules'
+import { PasswordSecret } from '../../secrets/AsyncPasswordCollector'
 
 export interface PasswordRatingResult {
     totalRulesCount: number

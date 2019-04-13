@@ -3,10 +3,10 @@ import * as m from 'react-materialize'
 import { History } from 'history'
 import { withRouter } from 'react-router'
 import AsyncPasswordCollector, { PasswordCollectionStatus } from '../../secrets/AsyncPasswordCollector'
-import { PasswordRater } from '../../password-health/PasswordRater'
 import PaginatedTable from '../../components/PaginatedTable'
 import { LoadingScreen } from '../../components/loading-screen/LoadingScreen'
-import { PasswordHealthIndicator } from '../../password-health/PasswordHealthIndicator'
+import { PasswordHealthIndicator } from '../password-health/PasswordHealthIndicator'
+import { PasswordRater } from '../password-health/PasswordRater'
 
 interface PasswordHealthPageState {
     collector: AsyncPasswordCollector

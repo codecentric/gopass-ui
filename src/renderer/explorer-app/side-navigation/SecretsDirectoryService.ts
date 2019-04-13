@@ -1,4 +1,4 @@
-import { Tree } from '../components/tree/TreeComponent'
+import { Tree } from '../../components/tree/TreeComponent'
 
 export default class SecretsDirectoryService {
     public static secretPathsToTree(secretPaths: string[]): Tree {

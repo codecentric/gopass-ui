@@ -4,10 +4,10 @@ import { withRouter, RouteComponentProps } from 'react-router'
 
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import { passwordSecretRegex } from '../../../secrets/deriveIconFromSecretName'
-import PasswordRatingComponent from '../../../password-health/PasswordRatingComponent'
 import { LoadingScreen } from '../../../components/loading-screen/LoadingScreen'
-import { useCopySecretToClipboard } from '../../../hooks/useCopySecretToClipboard'
+import { useCopySecretToClipboard } from '../../../secrets/useCopySecretToClipboard'
 import { HistoryTable } from './HistoryTable'
+import PasswordRatingComponent from '../../password-health/PasswordRatingComponent'
 
 interface SecretDetailsPageProps extends RouteComponentProps {
     secretName: string

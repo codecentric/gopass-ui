@@ -2,8 +2,8 @@ import * as React from 'react'
 import { History } from 'history'
 import { withRouter } from 'react-router'
 
-import { RoundActionBtn } from '../../components/RoundActionBtn'
-import { useNotificationContext } from '../../notifications/NotificationProvider'
+import { RoundActionButton } from '../../components/RoundActionButton'
+import { useNotificationContext } from '../../common/notifications/NotificationProvider'
 import Gopass from '../../secrets/Gopass'
 
 interface MainNavigationViewProps {
@@ -22,11 +22,11 @@ function MainNavigationComponent({ history }: MainNavigationViewProps) {
     }
 
     return <div style={{ paddingTop: '0.75rem' }}>
-        <RoundActionBtn icon='home' onClick={() => history.replace('/')}/>
-        <RoundActionBtn icon='add' onClick={() => history.replace('/add-secret')}/>
-        <RoundActionBtn icon='refresh' onClick={refreshGopassStores}/>
-        <RoundActionBtn icon='settings' onClick={() => history.replace('/settings')}/>
-        <RoundActionBtn icon='security' onClick={() => history.replace('/password-health')}/>
+        <RoundActionButton icon='home' onClick={() => history.replace('/')}/>
+        <RoundActionButton icon='add' onClick={() => history.replace('/add-secret')}/>
+        <RoundActionButton icon='refresh' onClick={refreshGopassStores}/>
+        <RoundActionButton icon='settings' onClick={() => history.replace('/settings')}/>
+        <RoundActionButton icon='security' onClick={() => history.replace('/password-health')}/>
     </div>
 }
 

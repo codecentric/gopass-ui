@@ -4,7 +4,7 @@ import * as m from 'react-materialize'
 import * as KeyboardEventHandler from 'react-keyboard-event-handler'
 
 import Gopass from '../secrets/Gopass'
-import { useCopySecretToClipboard } from '../hooks/useCopySecretToClipboard'
+import { useCopySecretToClipboard } from '../secrets/useCopySecretToClipboard'
 import { CollectionItems } from './CollectionItems'
 
 const NUMBER_OF_SEARCH_RESULTS = 15

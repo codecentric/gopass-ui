@@ -2,9 +2,9 @@ import * as React from 'react'
 import * as m from 'react-materialize'
 
 import { EnvironmentTest } from '../components/EnvironmentTest'
-import Settings from '../../Settings'
 import { LatestVersionInfo } from '../components/LastVersionInfo'
 import { ExternalLink } from '../../components/ExternalLink'
+import { Settings } from '../../common/Settings'
 
 function OptionalSetupInstructions() {
     const { environmentTestSuccessful } = Settings.getSystemSettings()

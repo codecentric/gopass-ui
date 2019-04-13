@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import Gopass from '../../secrets/Gopass'
 import { passwordSecretRegex } from '../../secrets/deriveIconFromSecretName'
 import { PasswordStrengthInfo } from '../components/PasswordStrengthInfo'
-import { PasswordRater } from '../../password-health/PasswordRater'
+import { PasswordRater } from '../password-health/PasswordRater'
 
 interface AddSecretPageState {
     name?: string

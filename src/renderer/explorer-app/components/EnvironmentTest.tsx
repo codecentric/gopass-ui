@@ -4,8 +4,8 @@ import { timeout } from 'promise-timeout'
 import { shell } from 'electron'
 
 import Gopass from '../../secrets/Gopass'
-import Settings from '../../Settings'
 import { ExternalLink } from '../../components/ExternalLink'
+import { Settings } from '../../common/Settings'
 
 type ErrorDetails = 'GOPASS_CONNECTION' | 'DECRYPTION' | undefined
 

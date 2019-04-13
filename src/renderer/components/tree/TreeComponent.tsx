@@ -20,16 +20,12 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
     public state: any = {}
 
     public render() {
-        return (
-            <>
-                <t.Treebeard
-                    data={this.props.tree}
-                    decorators={{ ...t.decorators, Header }}
-                    onToggle={this.onToggle}
-                    style={globalStyle}
-                />
-            </>
-        )
+        return <t.Treebeard
+            data={this.props.tree}
+            decorators={{ ...t.decorators, Header }}
+            onToggle={this.onToggle}
+            style={globalStyle}
+        />
     }
 
     private onToggle = (node: any, toggled: boolean) => {

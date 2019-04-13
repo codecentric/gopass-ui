@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
+
 import { deriveIconFromSecretName } from '../../secrets/deriveIconFromSecretName'
 
 export const TreeHeader = ({ style, node }: any) => {

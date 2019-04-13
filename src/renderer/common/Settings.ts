@@ -1,8 +1,7 @@
 import { ipcRenderer } from 'electron'
+import { SystemSettings, UserSettings } from '../../shared/settings'
 
-import { SystemSettings, UserSettings } from '../shared/settings'
-
-export default class Settings {
+export class Settings {
     public static getUserSettings(): UserSettings {
         return ipcRenderer.sendSync('getUserSettings')
     }

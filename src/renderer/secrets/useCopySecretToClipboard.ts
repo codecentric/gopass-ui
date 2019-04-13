@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
 
 import Gopass from '../secrets/Gopass'
-import { useNotificationContext } from '../notifications/NotificationProvider'
+import { useNotificationContext } from '../common/notifications/NotificationProvider'
 
 export function useCopySecretToClipboard() {
     const notificationContext = useNotificationContext()

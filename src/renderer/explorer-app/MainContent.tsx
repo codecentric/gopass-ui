@@ -5,12 +5,12 @@ import { match, Route } from 'react-router-dom'
 import SettingsPage from './pages/SettingsPage'
 import HomePage from './pages/HomePage'
 import MainNavigation from './components/MainNavigation'
-import GoBackNavigation from '../components/GoBackNavigationBtn'
-import Notification from '../notifications/Notification'
+import GoBackNavigation from '../components/GoBackNavigationButton'
+import Notification from '../common/notifications/Notification'
+import NotificationProvider from '../common/notifications/NotificationProvider'
 import PasswordHealthOverview from './pages/PasswordHealthPage'
 import AddSecretPage from './pages/AddSecretPage'
 import SecretDetailsPage from './pages/details/SecretDetailsPage'
-import NotificationProvider from '../notifications/NotificationProvider'
 
 function MainContentRoutes() {
     return <>

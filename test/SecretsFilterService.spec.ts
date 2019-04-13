@@ -1,4 +1,4 @@
-import SecretsFilterService from '../src/renderer/secrets/SecretsFilterService'
+import SecretsFilterService from '../src/renderer/explorer-app/side-navigation/SecretsFilterService'
 
 const secretNames = [
     'codecentric/common/github/password',

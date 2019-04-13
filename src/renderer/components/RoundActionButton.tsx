@@ -6,7 +6,7 @@ export interface RoundActionBtnProps {
     onClick?: () => void
 }
 
-export const RoundActionBtn = ({ icon, onClick }: RoundActionBtnProps) => (
+export const RoundActionButton = ({ icon, onClick }: RoundActionBtnProps) => (
     <m.Button
         floating
         large
