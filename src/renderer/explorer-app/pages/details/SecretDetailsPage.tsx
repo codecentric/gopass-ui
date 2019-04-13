@@ -18,18 +18,18 @@ interface SecretDetailsPageProps extends RouteComponentProps {
 function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPageProps) {
     const [ secretValue, setSecretValue ] = React.useState('')
     const [ historyEntries, setHistoryEntries ] = React.useState<HistoryEntry[]>([])
-    const [ passwordRating, setPasswordRating ] = React.useState<PasswordRatingResult | undefined>()
-    const [ isPassword, setIsPassword ] = React.useState(false)
     const [ loading, setLoading ] = React.useState(true)
+    const [ isPassword, setIsPassword ] = React.useState(false)
     const [ editedSecretValue, setEditedSecretValue ] = React.useState()
     const [ queryDeletion, setQueryDeletion ] = React.useState(false)
 
     React.useEffect(() => {
+        setLoading(true)
+
         Promise.all([
             Gopass.show(secretName),
             Gopass.history(secretName)
         ]).then(([ newSecretValue, newHistoryEntries ]) => {
-            setIsPassword(passwordSecretRegex.test(secretName))
             setSecretValue(newSecretValue)
             setHistoryEntries(newHistoryEntries)
             setLoading(false)
@@ -37,8 +37,8 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
     }, [ secretName ])
 
     React.useEffect(() => {
-        setPasswordRating(isPassword ? PasswordRater.ratePassword(secretValue) : undefined)
-    }, [ isPassword ])
+        setIsPassword(passwordSecretRegex.test(secretName))
+    }, [ secretValue ])
 
     const querySecretDeletion = () => setQueryDeletion(true)
     const denySecretDeletion = () => setQueryDeletion(false)
@@ -71,8 +71,7 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
         inEditMode ? <span key='edit-secret-mode-actions'>{ editModeButtons }</span> :
             <span key='view-secret-mode-actions'><a className='link' onClick={() => querySecretEditing}>Edit</a>{deletionModeButtons}</span>
     ]
-
-    return loading ? <LoadingScreen/> : <>
+    return loading ? <><h4>Secret {isAdded && <m.Icon small>fiber_new</m.Icon>}</h4><LoadingScreen/></> : <>
         <h4>Secret {isAdded && <m.Icon small>fiber_new</m.Icon>}</h4>
         <m.Card title={secretName} actions={cardActions}>
             <input
@@ -84,11 +83,10 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
             />
         </m.Card>
 
-        {isPassword && passwordRating && <>
+        {isPassword && <>
             <h4 className='m-top'>Password Strength</h4>
-            <PasswordRatingComponent passwordRating={passwordRating}/>
-        </>
-        }
+            <PasswordRatingComponent secretValue={secretValue}/>
+        </>}
 
         <h4 className='m-top'>History</h4>
         <HistoryTable entries={historyEntries}/>

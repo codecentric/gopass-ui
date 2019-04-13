@@ -1,12 +1,12 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { PasswordRatingResult } from './PasswordRater'
+import { PasswordRater } from './PasswordRater'
 import { PasswordHealthRuleInfo } from './PasswordRule'
 import './PasswordRatingComponent.css'
 import { PasswordHealthIndicator } from './PasswordHealthIndicator'
 
 export interface PasswordRatingComponentProps {
-    passwordRating: PasswordRatingResult
+    secretValue: string
 }
 
 export const FailedRulesList = ({ failedRules }: { failedRules: PasswordHealthRuleInfo[] }) => (
@@ -31,21 +31,25 @@ export const FailedRulesList = ({ failedRules }: { failedRules: PasswordHealthRu
     </>
 )
 
-const PasswordRatingComponent = ({ passwordRating: { health, failedRules } }: PasswordRatingComponentProps) => (
-    <m.Row>
-        <m.Col s={12}>
-            <div className='card-panel z-depth-1'>
-                <div className='row valign-wrapper'>
-                    <div className='col s2'>
-                        <PasswordHealthIndicator health={health}/>
-                    </div>
-                    <div className='col s10'>
-                        <FailedRulesList failedRules={failedRules}/>
+const PasswordRatingComponent = ({ secretValue }: PasswordRatingComponentProps) => {
+    const { health, failedRules } = PasswordRater.ratePassword(secretValue)
+
+    return (
+        <m.Row>
+            <m.Col s={12}>
+                <div className='card-panel z-depth-1'>
+                    <div className='row valign-wrapper'>
+                        <div className='col s2'>
+                            <PasswordHealthIndicator health={health}/>
+                        </div>
+                        <div className='col s10'>
+                            <FailedRulesList failedRules={failedRules}/>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </m.Col>
-    </m.Row>
-)
+            </m.Col>
+        </m.Row>
+    )
+}
 
 export default PasswordRatingComponent
