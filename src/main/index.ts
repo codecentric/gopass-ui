@@ -1,70 +1,18 @@
 import { app, BrowserWindow, Event, globalShortcut, ipcMain, Menu, Tray } from 'electron'
 import * as path from 'path'
 import * as fixPath from 'fix-path'
-import * as url from 'url'
 import * as electronSettings from 'electron-settings'
 
-import { DEFAULT_SYSTEM_SETTINGS, DEFAULT_USER_SETTINGS, SystemSettings, UserSettings } from '../shared/settings'
+import { SystemSettings, UserSettings } from '../shared/settings'
 import GopassExecutor from './GopassExecutor'
+import { buildContextMenu, createMainWindow, createSearchWindow } from './AppWindows'
+import { getSystemSettings, getUserSettings, installExtensions } from './AppUtilities'
 
 fixPath()
 
 let mainWindow: BrowserWindow | null
 let searchWindow: BrowserWindow | null
 let tray: Tray
-
-const contextMenu = Menu.buildFromTemplate([
-    {
-        label: 'Explorer',
-        click: () => {
-            if (mainWindow) {
-                mainWindow.show()
-            } else {
-                createMainWindow()
-            }
-        }
-    },
-    {
-        label: 'Search',
-        click: () => {
-            if (searchWindow) {
-                searchWindow.show()
-            } else {
-                createSearchWindow(true)
-            }
-        }
-    },
-    {
-        type: 'separator'
-    },
-    {
-        label: 'Quit',
-        click: () => {
-            app.quit()
-        }
-    }
-])
-
-const installExtensions = async () => {
-    const installer = require('electron-devtools-installer')
-    const forceDownload = !!process.env.UPGRADE_EXTENSIONS
-    const extensions = ['REACT_DEVELOPER_TOOLS']
-
-    return Promise.all(extensions.map(name => installer.default(installer[name], forceDownload))).catch(console.info)
-}
-
-const hideMainWindow = () => {
-    if (mainWindow) {
-        if (app.hide) {
-            // Linux and MacOS
-            app.hide()
-        } else {
-            // for Windows
-            mainWindow.blur()
-            mainWindow.hide()
-        }
-    }
-}
 
 const setGlobalShortcut = (shortcut: string) => {
     globalShortcut.unregister(shortcut)
@@ -76,7 +24,7 @@ const setGlobalShortcut = (shortcut: string) => {
                 searchWindow.show()
             }
         } else {
-            createSearchWindow(true)
+            searchWindow = createSearchWindow(true)
         }
     })
 }
@@ -93,82 +41,13 @@ const updateTray = (showTray: boolean) => {
             }
 
             tray.setToolTip('Gopass UI')
-            tray.setContextMenu(contextMenu)
+            tray.setContextMenu(buildContextMenu(mainWindow, searchWindow))
         }
     } else {
         if (tray && !tray.isDestroyed()) {
             tray.destroy()
         }
     }
-}
-
-const createSearchWindow = (show = false) => {
-    searchWindow = new BrowserWindow({
-        show,
-        width: process.env.NODE_ENV !== 'production' ? 1200 : 600,
-        height: 600,
-        frame: false,
-        center: true,
-        skipTaskbar: true,
-        title: 'Gopass UI Search Window',
-        resizable: false
-    })
-
-    searchWindow.setMenu(null)
-
-    if (process.env.NODE_ENV !== 'production') {
-        searchWindow.loadURL('http://localhost:2004')
-
-        searchWindow.webContents.openDevTools()
-    } else {
-        searchWindow.loadURL(
-            url.format({
-                pathname: path.join(__dirname, 'search', 'index.html'),
-                protocol: 'file:',
-                slashes: true
-            })
-        )
-    }
-
-    searchWindow.on('closed', () => {
-        searchWindow = null
-    })
-}
-
-const createMainWindow = () => {
-    mainWindow = new BrowserWindow({
-        width: 1000,
-        height: 600,
-        center: true,
-        title: 'Gopass UI',
-        icon: path.join(__dirname, 'assets', 'icon.png')
-    })
-
-    if (process.env.NODE_ENV !== 'production') {
-        mainWindow.loadURL('http://localhost:2003')
-
-        mainWindow.webContents.openDevTools()
-    } else {
-        mainWindow.loadURL(
-            url.format({
-                pathname: path.join(__dirname, 'explorer', 'index.html'),
-                protocol: 'file:',
-                slashes: true
-            })
-        )
-    }
-
-    mainWindow.on('closed', () => {
-        mainWindow = null
-    })
-}
-
-const getSystemSettings = (): UserSettings => {
-    return (electronSettings.get('system_settings') as any) || DEFAULT_SYSTEM_SETTINGS
-}
-
-const getUserSettings = (): UserSettings => {
-    return (electronSettings.get('user_settings') as any) || DEFAULT_USER_SETTINGS
 }
 
 const listenEvents = () => {
@@ -215,8 +94,8 @@ const setup = async () => {
 
     const settings = getUserSettings()
 
-    createMainWindow()
-    createSearchWindow()
+    mainWindow = createMainWindow()
+    searchWindow = createSearchWindow(false)
 
     setGlobalShortcut(settings.searchShortcut)
     updateTray(settings.showTray)
@@ -235,9 +114,9 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
     if (mainWindow === null) {
-        createMainWindow()
+        mainWindow = createMainWindow()
     }
     if (searchWindow === null) {
-        createSearchWindow()
+        searchWindow = createSearchWindow(false)
     }
 })

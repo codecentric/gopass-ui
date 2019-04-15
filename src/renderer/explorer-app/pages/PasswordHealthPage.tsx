@@ -1,24 +1,23 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { History } from 'history'
-import { withRouter } from 'react-router'
-import AsyncPasswordCollector, { PasswordCollectionStatus } from '../../secrets/AsyncPasswordCollector'
+import { withRouter, RouteComponentProps } from 'react-router'
+import AsyncPasswordHealthCollector, { PasswordHealthCollectionStatus } from '../../secrets/AsyncPasswordHealthCollector'
 import PaginatedTable from '../../components/PaginatedTable'
 import { LoadingScreen } from '../../components/loading-screen/LoadingScreen'
 import { PasswordHealthIndicator } from '../password-health/PasswordHealthIndicator'
 import { PasswordRater } from '../password-health/PasswordRater'
 
 interface PasswordHealthPageState {
-    collector: AsyncPasswordCollector
-    statsChecker?: any
-    status?: PasswordCollectionStatus
+    collector: AsyncPasswordHealthCollector
+    statusChecker?: number
+    status?: PasswordHealthCollectionStatus
 }
 
-class PasswordHealthPage extends React.Component<{ history: History }, PasswordHealthPageState> {
+class PasswordHealthPage extends React.Component<RouteComponentProps, PasswordHealthPageState> {
     constructor(props: any) {
         super(props)
         this.state = {
-            collector: new AsyncPasswordCollector()
+            collector: new AsyncPasswordHealthCollector()
         }
     }
 
@@ -26,20 +25,18 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
         const { collector } = this.state
         collector.start()
 
-        const statsChecker = setInterval(() => {
-            const status = this.state.collector.getCurrentStatus
+        const statusChecker = window.setInterval(async () => {
+            const status = this.state.collector.getCurrentStatus()
             this.setState({ status })
+            if (!status.inProgress) {
+                await this.stopStatusChecker()
+            }
         }, 100)
-        this.setState({ statsChecker })
+        this.setState({ statusChecker })
     }
 
     public async componentWillUnmount() {
-        const { collector, statsChecker } = this.state
-        collector.stopAndReset()
-
-        if (statsChecker) {
-            clearInterval(statsChecker)
-        }
+        await this.stopStatusChecker()
     }
 
     public render() {
@@ -48,14 +45,23 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
         return (
             <>
                 <h4>Password Health</h4>
-                {status ? this.renderStats(status) : <LoadingScreen />}
+                {status ? this.renderStatus(status) : <LoadingScreen />}
             </>
         )
     }
 
-    private renderStats(stats: PasswordCollectionStatus) {
-        if (stats.inProgress && stats.passwordsCollected > 0) {
-            const progressPercentage = Math.round((stats.passwordsCollected / stats.totalPasswords) * 100)
+    private async stopStatusChecker() {
+        const { collector, statusChecker } = this.state
+        await collector.stopAndReset()
+
+        if (statusChecker) {
+            clearInterval(statusChecker)
+        }
+    }
+
+    private renderStatus(status: PasswordHealthCollectionStatus) {
+        if (status.inProgress && status.passwordsCollected > 0) {
+            const progressPercentage = Math.round((status.passwordsCollected / status.totalPasswords) * 100)
 
             return (
                 <>
@@ -67,8 +73,8 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
             )
         }
 
-        if (!stats.inProgress && stats.passwordsCollected > 0 && stats.passwordsCollected === stats.totalPasswords && !stats.error) {
-            const overallPasswordHealth = PasswordRater.rateMultiplePasswords(stats.passwords)
+        if (!status.inProgress && status.passwordsCollected > 0 && status.passwordsCollected === status.totalPasswords && !status.error) {
+            const overallPasswordHealth = PasswordRater.buildOverallPasswordHealthSummary(status.ratedPasswords)
             const improvablePasswords = overallPasswordHealth.ratedPasswordSecrets.filter(rated => rated.health && rated.health < 100)
 
             return (
@@ -109,8 +115,8 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
             )
         }
 
-        if (!stats.inProgress && stats.error) {
-            return <p>Something went wrong here: {stats.error.message}</p>
+        if (!status.inProgress && status.error) {
+            return <p>Something went wrong here: {status.error.message}</p>
         }
     }
 
@@ -119,4 +125,4 @@ class PasswordHealthPage extends React.Component<{ history: History }, PasswordH
     }
 }
 
-export default withRouter(PasswordHealthPage as any) as any
+export default withRouter(PasswordHealthPage)
