@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, app, globalShortcut } from 'electron'
+import { BrowserWindow, Menu, app, globalShortcut, session } from 'electron'
 import * as url from 'url'
 import * as path from 'path'
 
@@ -8,7 +8,10 @@ export const createMainWindow = (): BrowserWindow => {
         height: 600,
         center: true,
         title: 'Gopass UI',
-        icon: path.join(__dirname, 'assets', 'icon.png')
+        icon: path.join(__dirname, 'assets', 'icon.png'),
+        webPreferences: {
+            nodeIntegration: true
+        }
     })
 
     if (process.env.NODE_ENV !== 'production') {
@@ -41,7 +44,10 @@ export const createSearchWindow = (show: boolean): BrowserWindow => {
         center: true,
         skipTaskbar: true,
         title: 'Gopass UI Search Window',
-        resizable: false
+        resizable: false,
+        webPreferences: {
+            nodeIntegration: true
+        }
     })
 
     searchWindow.setMenu(null)
