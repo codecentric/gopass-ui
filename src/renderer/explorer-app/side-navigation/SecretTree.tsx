@@ -26,12 +26,13 @@ export default class SecretTreeViewer extends React.Component<SecretTreeViewerPr
     public async componentDidMount() {
         const secretNames = await Gopass.getAllSecretNames()
         this.setState({ secretNames })
-        await this.calculateAndSetTreeState()
+        await this.calculateAndSetTreeState(this.props.searchValue)
     }
 
-    public async componentWillReceiveProps(props: SecretTreeViewerProps) {
-        if (props.searchValue !== this.props.searchValue) {
-            await this.calculateAndSetTreeState()
+    public async componentWillReceiveProps(newProps: SecretTreeViewerProps) {
+
+        if (newProps.searchValue !== this.props.searchValue) {
+            await this.calculateAndSetTreeState(newProps.searchValue)
         }
     }
 
@@ -44,8 +45,8 @@ export default class SecretTreeViewer extends React.Component<SecretTreeViewerPr
         )
     }
 
-    private async calculateAndSetTreeState() {
-        const filteredSecretNames = SecretsFilterService.filterBySearch(this.state.secretNames, this.props.searchValue)
+    private async calculateAndSetTreeState(searchValue: string) {
+        const filteredSecretNames = SecretsFilterService.filterBySearch(this.state.secretNames, searchValue)
         const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames)
         this.setState({ ...this.state, tree })
     }
