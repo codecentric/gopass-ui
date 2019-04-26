@@ -1,6 +1,6 @@
 {
   "name": "gopass-ui",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Awesome UI for the gopass CLI – a password manager for your daily business",
   "main": "./dist/main.js",
   "scripts": {
