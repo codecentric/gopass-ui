@@ -57,7 +57,8 @@
     "linux": {
       "target": [
         "deb",
-        "rpm"
+        "rpm",
+        "pacman"
       ]
     },
     "win": {
