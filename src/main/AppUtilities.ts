@@ -1,6 +1,5 @@
 import * as electronSettings from 'electron-settings'
 import { DEFAULT_SYSTEM_SETTINGS, DEFAULT_USER_SETTINGS, SystemSettings, UserSettings } from '../shared/settings'
-import { Menu } from 'electron'
 
 export const installExtensions = async () => {
     const installer = require('electron-devtools-installer')

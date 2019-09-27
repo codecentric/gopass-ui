@@ -1,7 +1,8 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { RouteComponentProps, withRouter } from 'react-router'
 import * as KeyboardEventHandler from 'react-keyboard-event-handler'
+
+import { RouteComponentProps, withRouter } from 'react-router'
 import SecretTree from './SecretTree'
 
 class SecretExplorer extends React.Component<RouteComponentProps, { searchValue: string }> {
