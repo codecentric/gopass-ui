@@ -33,12 +33,6 @@ npm run start-renderer-search-dev
 
 This will start the application with hot-reloading so you can instantly start developing and see the changes in the open application.
 
-You can also run do the following to start everything in a single process:
-
-```bash
-npm run start-dev
-```
-
 ### Testing
 
 We use Jest for tests. Currently the project contains (too less) unit and integration tests. Unit tests should have no dependency to the local machine except the Node environment we're setting up. Integration tests can also involve system binaries like Gopass, GPG and so on – you got the point ;-)

@@ -19,7 +19,7 @@ For most platforms just [download the latest packaged application](https://githu
 Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and running already. We also recommend you to use a dialog-based PIN-entry-tool for typing in your GPG passphrase like [pinentry-mac for MacOS](https://formulae.brew.sh/formula/pinentry-mac) instead of using the default terminal-based.
 
 ### NOTICE  
-We'll only test the MacOS builds and are not able to support you with linux and windows releases. We are welcome to receive pull requests to tackle linux and windows issues. 
+We'll only test the MacOS builds and **are not able to support you with linux and windows releases**. We are welcome to receive pull requests to tackle linux and windows issues. 
 
 ## Issues
 
