@@ -18,7 +18,7 @@ export default class Gopass {
     }
 
     public static async show(key: string): Promise<string> {
-        return Gopass.execute(`show ${key}`)
+        return Gopass.execute(`show -f ${key}`)
     }
 
     public static async history(key: string): Promise<HistoryEntry[]> {
