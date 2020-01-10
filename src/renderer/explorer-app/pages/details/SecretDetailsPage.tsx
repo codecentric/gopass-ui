@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { withRouter, RouteComponentProps } from 'react-router'
+import { RouteComponentProps, withRouter } from 'react-router'
 
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import { passwordSecretRegex } from '../../../secrets/deriveIconFromSecretName'
@@ -70,16 +70,27 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
         inEditMode ? <span key='edit-secret-mode-actions'>{ editModeButtons }</span> :
             <span key='view-secret-mode-actions'><a className='link' onClick={querySecretEditing}>Edit</a>{deletionModeButtons}</span>
     ]
+    const valueToDisplay = inEditMode ? editedSecretValue : secretValue
+    const linesRequired = valueToDisplay.split('\n').length
+
     return loading ? <><h4>Secret {isAdded && <m.Icon small>fiber_new</m.Icon>}</h4><LoadingScreen/></> : <>
         <h4>Secret {isAdded && <m.Icon small>fiber_new</m.Icon>}</h4>
         <m.Card title={secretName} actions={cardActions}>
-            <input
-                style={{ color: '#212121' }}
-                value={inEditMode ? editedSecretValue : secretValue}
+            <textarea
+                style={{
+                    color: '#212121',
+                    fontSize: 16,
+                    borderBottom: '1px dotted rgba(0, 0, 0, 0.42)',
+                    height: 21 * linesRequired,
+                    borderTop: 'none',
+                    borderRight: 'none',
+                    borderLeft: 'none'
+                }}
+                value={valueToDisplay}
                 disabled={!inEditMode}
                 onChange={onNewSecretValueChange}
                 ref={input => input && input.focus()}
-            />
+             />
         </m.Card>
 
         {isPassword && <>

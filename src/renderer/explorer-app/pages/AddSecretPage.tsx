@@ -6,6 +6,8 @@ import { passwordSecretRegex } from '../../secrets/deriveIconFromSecretName'
 import { PasswordStrengthInfo } from '../components/PasswordStrengthInfo'
 import { PasswordRater } from '../password-health/PasswordRater'
 
+import './AddSecretPage.css'
+
 interface AddSecretPageState {
     name?: string
     value?: string
@@ -39,7 +41,10 @@ class AddSecretPage extends React.Component<RouteComponentProps, AddSecretPageSt
 
                 <m.Row>
                     <m.Input s={12} value={name} onChange={this.changeName} label={nameLabel}/>
-                    <m.Input s={12} value={value} onChange={this.changeValue} label={valueLabel}/>
+                    <div className='secret-value-field-row'>
+                        <label className='secret-value-label'>{valueLabel}</label>
+                        <textarea className='secret-value-textarea' placeholder={valueLabel} value={value} onChange={this.changeValue}/>
+                    </div>
                     <PasswordStrengthInfo
                         strength={currentPasswordValueRating.health}
                         labelContent={`${entity} value strength`}
@@ -54,9 +59,9 @@ class AddSecretPage extends React.Component<RouteComponentProps, AddSecretPageSt
     }
 
     private changeName = (_: any, name: string) => this.setState({ name })
-    private changeValue = (_: any, value: string) => this.setState({ value })
+    private changeValue = (event: any) => this.setState({ value: event.target.value })
 
-    private generateRandomValue = (length = 24) => {
+    private generateRandomValue = (length = 50) => {
         const chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890'
         let randomPassword = ''
 
@@ -68,9 +73,7 @@ class AddSecretPage extends React.Component<RouteComponentProps, AddSecretPageSt
         return randomPassword
     }
 
-    private shuffleRandomValue = () => {
-        this.changeValue({}, this.generateRandomValue())
-    }
+    private shuffleRandomValue = () => this.setState({ value: this.generateRandomValue() })
 
     private addSecret = async () => {
         const { name, value } = this.state
