@@ -8,8 +8,8 @@ export default class SecretsDirectoryService {
 
     /**
      * Convert
-     *  from: "metro/service/ncr/cassandra/password"
-     *  to: "{ metro: { service: { ncr: { cassandra: { password: {} } } } }  }"
+     *  from: "xyz/service/someServiceName/db/password"
+     *  to: "{ xyz: { service: { someServiceName: { db: { password: {} } } } }  }"
      */
     private static secretPathsToDirectory(secretPaths: string[]): any {
         const directory: { [key: string]: any } = {}
@@ -32,7 +32,7 @@ export default class SecretsDirectoryService {
 
     /**
      * Convert
-     *  from: "{ metro: { service: { ncr: { cassandra: { password: {} } } } }  }"
+     *  from: "{ xyz: { service: { someServiceName: { db: { password: {} } } } }  }"
      *  to Tree interface
      */
     private static directoryToTree(directory: any, totalEntries: number): Tree {

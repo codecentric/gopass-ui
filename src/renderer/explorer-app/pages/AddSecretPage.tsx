@@ -13,7 +13,7 @@ interface AddSecretPageState {
     value?: string
 }
 
-class AddSecretPage extends React.Component<RouteComponentProps, AddSecretPageState> {
+class AddSecretPage extends React.Component<RouteComponentProps & { onSecretSave: () => void }, AddSecretPageState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -79,10 +79,11 @@ class AddSecretPage extends React.Component<RouteComponentProps, AddSecretPageSt
         const { name, value } = this.state
 
         if (name && value) {
-            const { history } = this.props
+            const { history, onSecretSave } = this.props
 
             try {
                 await Gopass.addSecret(name, value)
+                onSecretSave()
                 history.replace(`/secret/${btoa(name)}?added`)
             } catch (e) {
                 console.info('Error during adding a secret', e)
