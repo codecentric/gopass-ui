@@ -6,11 +6,17 @@ import { RouteComponentProps, withRouter } from 'react-router'
 import SecretTree from './SecretTree'
 import { Tree } from '../../components/tree/TreeComponent'
 
-type SecretExplorerProps = RouteComponentProps & { tree: Tree, onSearchValueChange: (value: string) => void, searchValue: string }
+interface SecretExplorerProps extends RouteComponentProps {
+    tree: Tree
+    onSearchValueChange: (value: string) => void
+    searchValue: string
+    onSecretSelection: (secretName: string) => void
+    selectedSecretName?: string
+}
 
 class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
     public render() {
-        const { tree, searchValue, onSearchValueChange } = this.props
+        const { tree, searchValue, onSearchValueChange, onSecretSelection, selectedSecretName } = this.props
 
         return (
             <div className='secret-explorer'>
@@ -18,7 +24,10 @@ class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
                 <m.Input className='search-bar' value={searchValue} placeholder='Search...' onChange={(_: any, updatedSearchValue: string) => {
                     onSearchValueChange(updatedSearchValue)
                 }}/>
-                <SecretTree tree={tree} onSecretClick={this.navigateToSecretDetailView}/>
+                <SecretTree selectedSecretName={selectedSecretName} tree={tree} onSecretClick={secretName => {
+                    this.navigateToSecretDetailView(secretName)
+                    onSecretSelection(secretName)
+                }}/>
             </div>
         )
     }

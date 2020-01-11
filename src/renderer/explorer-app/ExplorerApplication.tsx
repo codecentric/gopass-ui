@@ -9,16 +9,25 @@ import Gopass from '../secrets/Gopass'
 import SecretsFilterService from './side-navigation/SecretsFilterService'
 import SecretsDirectoryService from './side-navigation/SecretsDirectoryService'
 
-export default class ExplorerApplication extends React.Component<{}, { tree: Tree, secretNames: string[], searchValue: string }> {
+interface ExplorerApplicationState {
+    tree: Tree
+    secretNames: string[]
+    searchValue: string
+    selectedSecretName?: string
+}
+
+export default class ExplorerApplication extends React.Component<{}, ExplorerApplicationState> {
     constructor(props: any) {
         super(props)
         this.state = {
             tree: {
                 name: 'Stores',
                 toggled: true,
-                children: []
+                children: [],
+                path: ''
             },
             searchValue: '',
+            selectedSecretName: undefined,
             secretNames: []
         }
     }
@@ -30,23 +39,30 @@ export default class ExplorerApplication extends React.Component<{}, { tree: Tre
     }
 
     public render() {
-        const { tree, searchValue } = this.state
+        const { tree, searchValue, selectedSecretName } = this.state
         return (
             <>
-                <SecretExplorer tree={tree} searchValue={searchValue} onSearchValueChange={async (newValue: string) => {
-                    if (newValue !== searchValue) {
-                        await this.calculateAndSetTreeState(newValue)
-                    }
-                    this.setState({ searchValue: newValue })
-                }} />
+                <SecretExplorer
+                    selectedSecretName={selectedSecretName}
+                    onSecretSelection={name => this.setState({ selectedSecretName: name })}
+                    tree={tree}
+                    searchValue={searchValue}
+                    onSearchValueChange={async (newValue: string) => {
+                        if (newValue !== searchValue) {
+                            await this.calculateAndSetTreeState(newValue)
+                        }
+                        this.setState({ searchValue: newValue })
+                    }}/>
                 <MainContent onTreeUpdate={() => this.componentDidMount()}/>
             </>
         )
     }
 
     private async calculateAndSetTreeState(searchValue: string) {
-        const filteredSecretNames = SecretsFilterService.filterBySearch(this.state.secretNames, searchValue)
-        const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames)
+        const { secretNames, selectedSecretName } = this.state
+
+        const filteredSecretNames = SecretsFilterService.filterBySearch(secretNames, searchValue)
+        const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames, selectedSecretName)
         this.setState({ ...this.state, tree })
     }
 }

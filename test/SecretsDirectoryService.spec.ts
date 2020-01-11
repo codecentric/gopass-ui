@@ -10,7 +10,7 @@ describe('SecretsDirectoryService', () => {
             'codecentric/common/gitlab/username',
             'codecentric/customers/some/notes'
         ]
-        const tree: Tree = SecretsDirectoryService.secretPathsToTree(secretPaths)
+        const tree: Tree = SecretsDirectoryService.secretPathsToTree(secretPaths, 'codecentric/common/gitlab/password')
 
         expect(tree).toEqual({
             children: [
@@ -22,18 +22,18 @@ describe('SecretsDirectoryService', () => {
                                     children: [
                                         {
                                             children: undefined,
-                                            entryId: 'codecentric/common/github/password',
+                                            path: 'codecentric/common/github/password',
                                             name: 'password',
                                             toggled: true
                                         },
                                         {
                                             children: undefined,
-                                            entryId: 'codecentric/common/github/username',
+                                            path: 'codecentric/common/github/username',
                                             name: 'username',
                                             toggled: true
                                         }
                                     ],
-                                    entryId: undefined,
+                                    path: 'codecentric/common/github',
                                     name: 'github',
                                     toggled: true
                                 },
@@ -41,23 +41,23 @@ describe('SecretsDirectoryService', () => {
                                     children: [
                                         {
                                             children: undefined,
-                                            entryId: 'codecentric/common/gitlab/password',
+                                            path: 'codecentric/common/gitlab/password',
                                             name: 'password',
                                             toggled: true
                                         },
                                         {
                                             children: undefined,
-                                            entryId: 'codecentric/common/gitlab/username',
+                                            path: 'codecentric/common/gitlab/username',
                                             name: 'username',
                                             toggled: true
                                         }
                                     ],
-                                    entryId: undefined,
+                                    path: 'codecentric/common/gitlab',
                                     name: 'gitlab',
                                     toggled: true
                                 }
                             ],
-                            entryId: undefined,
+                            path: 'codecentric/common',
                             name: 'common',
                             toggled: true
                         },
@@ -67,27 +67,28 @@ describe('SecretsDirectoryService', () => {
                                     children: [
                                         {
                                             children: undefined,
-                                            entryId: 'codecentric/customers/some/notes',
+                                            path: 'codecentric/customers/some/notes',
                                             name: 'notes',
                                             toggled: true
                                         }
                                     ],
-                                    entryId: undefined,
+                                    path: 'codecentric/customers/some',
                                     name: 'some',
                                     toggled: true
                                 }
                             ],
-                            entryId: undefined,
+                            path: 'codecentric/customers',
                             name: 'customers',
                             toggled: true
                         }
                     ],
-                    entryId: undefined,
+                    path: 'codecentric',
                     name: 'codecentric',
                     toggled: true
                 }
             ],
             name: 'Stores',
+            path: '',
             toggled: true
         })
     })

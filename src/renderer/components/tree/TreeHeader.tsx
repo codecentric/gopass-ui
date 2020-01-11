@@ -6,7 +6,7 @@ import { deriveIconFromSecretName } from '../../secrets/deriveIconFromSecretName
 export const TreeHeader = ({ style, node }: any) => {
     let iconType = node.toggled ? 'chevron_right' : 'folder'
 
-    if (!node.children && node.entryId) {
+    if (!node.children && node.path) {
         iconType = deriveIconFromSecretName(node.name)
     }
 
