@@ -15,7 +15,7 @@ const lowerCaseRule: PasswordHealthRule = {
 const upperCaseRule: PasswordHealthRule = {
     matcher: (password: string) => /(?=.*[A-Z])/.test(password),
     name: 'Uppercase letters',
-    description: 'Make sure to have a least one uppercase letter inside'
+    description: 'Make sure it contains at least one uppercase letter'
 }
 
 const specialCharRule: PasswordHealthRule = {
