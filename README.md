@@ -6,24 +6,25 @@
 
 > [Gopass](https://github.com/gopasspw/gopass) is a rewrite of the pass password manager in Go with the aim of making it cross-platform and adding additional features – (Taken from Github)
 
-The repository you're currently looking at contains `Gopass UI`, an Electron based UI wrapper for your `gopass` on the command line. It makes your life easier by providing a rich graphical user interface to search and manage your secrets. It looks like this:
+`Gopass UI` is wrapping `gopass` from your command line. It makes your life easier by providing a graphical user interface to search and manage your secrets. It looks like this:
 
 <img src="docs/img/demo-720p.gif" alt="GIF demonstrating core features of Gopass UI" title="Gopass UI demo" style="max-width: 800px" />
 
-In addition there is a globally usable search window that can be opened with `(cmd || ctrl) + shift + p`.
+In addition there is a search window that can be opened with `(cmd || ctrl) + shift + p`.
 
 ## How can I use it?
 
-For most platforms just [download the latest packaged application](https://github.com/codecentric/gopass-ui/releases/latest) from our releases and install it. We support binaries for MacOS, Windows and Linux (deb, RPM, Gentoo). For more details see [supported platforms and packages](docs/platforms-and-packages.md).
+For most platforms just [download the latest packaged application](https://github.com/codecentric/gopass-ui/releases/latest) from our releases and install it. We provide binaries for MacOS, Windows and Linux (deb, RPM, Gentoo). For more details see [supported platforms and packages](docs/platforms-and-packages.md).
 
-Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and running already. We also recommend you to use a dialog-based PIN-entry-tool for typing in your GPG passphrase like [pinentry-mac for MacOS](https://formulae.brew.sh/formula/pinentry-mac) instead of using the default terminal-based.
+Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and running. We also recommend to use a dialog-based PIN-entry-tool for typing in GPG passphrases like [pinentry-mac for MacOS](https://formulae.brew.sh/formula/pinentry-mac) instead of using the default terminal-based.
 
-### NOTICE  
-We'll only test the MacOS builds and **are not able to support you with linux and windows releases**. We are welcome to receive pull requests to tackle linux and windows issues. 
+### Platform notice
+
+We'll only test the MacOS builds and **are not able to offer support support for Linux and Windows releases**. We are happy to review your pull requests addressing any of such issues.  
 
 ## Issues
 
-Please report any issues and problems to us. We are very keen about your feedback and appreciate any help.
+Feel free to report any issue. We are very keen about your feedback and appreciate any help.
 
 ## Development
 
