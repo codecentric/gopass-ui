@@ -58,7 +58,7 @@ export default class ExplorerApplication extends React.Component<{}, ExplorerApp
         const { secretNames, tree: previousTree } = this.state
 
         const filteredSecretNames = SecretsFilterService.filterBySearch(secretNames, searchValue)
-        const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames, previousTree)
+        const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames, previousTree, filteredSecretNames.length <= 15)
         this.setState({ ...this.state, tree })
     }
 }

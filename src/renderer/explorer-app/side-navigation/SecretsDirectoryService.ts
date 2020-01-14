@@ -1,9 +1,9 @@
 import { Tree } from '../../components/tree/TreeComponent'
 
 export default class SecretsDirectoryService {
-    public static secretPathsToTree(secretPaths: string[], previousTree: Tree): Tree {
+    public static secretPathsToTree(secretPaths: string[], previousTree: Tree, openAllEntries: boolean): Tree {
         const directory = SecretsDirectoryService.secretPathsToDirectory(secretPaths)
-        return SecretsDirectoryService.directoryToTree(directory, previousTree, secretPaths.length)
+        return SecretsDirectoryService.directoryToTree(directory, previousTree, openAllEntries)
     }
 
     /**
@@ -48,8 +48,7 @@ export default class SecretsDirectoryService {
      *  from: "{ xyz: { service: { someServiceName: { db: { password: {} } } } }  }"
      *  to Tree interface
      */
-    private static directoryToTree(directory: any, previousTree: Tree, totalEntries: number): Tree {
-        const openAllEntries = totalEntries <= 15
+    private static directoryToTree(directory: any, previousTree: Tree, openAllEntries: boolean): Tree {
         const toggledPaths = SecretsDirectoryService.getToggledPathsFromTree(previousTree)
         const children = SecretsDirectoryService.getChildren(directory, toggledPaths, true, openAllEntries)
         const tree: Tree = {
