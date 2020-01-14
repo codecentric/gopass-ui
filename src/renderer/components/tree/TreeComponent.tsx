@@ -14,7 +14,6 @@ export interface Tree {
 export interface TreeComponentProps {
     tree: Tree
     onLeafClick: (leafId: string) => void
-    selectedPath?: string
 }
 
 interface TreeComponentState { selectedNode?: any }
@@ -28,33 +27,6 @@ export default class TreeComponent extends React.Component<TreeComponentProps, T
             onToggle={this.onToggle}
             style={globalStyle}
         />
-    }
-
-    public componentWillReceiveProps(nextProps: Readonly<TreeComponentProps>): void {
-        // maybe extendable with a check whether the nextProps.tree contains changes compared to props.tree
-        if (nextProps.selectedPath) {
-            const selectedNode = this.findSelectedNodeFromPath(nextProps.tree, nextProps.selectedPath)
-
-            if (selectedNode) {
-                selectedNode.active = false
-                this.state.selectedNode = selectedNode
-            }
-        }
-    }
-
-    private findSelectedNodeFromPath(tree: Tree, selectedPath: string): any {
-        if (tree.path === selectedPath) {
-            return tree
-        }
-
-        if (!!tree.children && tree.children.length > 0) {
-            for (const child of tree.children) {
-                const node = this.findSelectedNodeFromPath(child, selectedPath)
-                if (node) {
-                    return node
-                }
-            }
-        }
     }
 
     private onToggle = (node: any, toggled: boolean) => {

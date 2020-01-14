@@ -13,7 +13,6 @@ interface ExplorerApplicationState {
     tree: Tree
     secretNames: string[]
     searchValue: string
-    selectedSecretName?: string
 }
 
 export default class ExplorerApplication extends React.Component<{}, ExplorerApplicationState> {
@@ -27,7 +26,6 @@ export default class ExplorerApplication extends React.Component<{}, ExplorerApp
                 path: ''
             },
             searchValue: '',
-            selectedSecretName: undefined,
             secretNames: []
         }
     }
@@ -39,12 +37,10 @@ export default class ExplorerApplication extends React.Component<{}, ExplorerApp
     }
 
     public render() {
-        const { tree, searchValue, selectedSecretName } = this.state
+        const { tree, searchValue } = this.state
         return (
             <>
                 <SecretExplorer
-                    selectedSecretName={selectedSecretName}
-                    onSecretSelection={name => this.setState({ selectedSecretName: name })}
                     tree={tree}
                     searchValue={searchValue}
                     onSearchValueChange={async (newValue: string) => {
@@ -59,10 +55,10 @@ export default class ExplorerApplication extends React.Component<{}, ExplorerApp
     }
 
     private async calculateAndSetTreeState(searchValue: string) {
-        const { secretNames, selectedSecretName } = this.state
+        const { secretNames, tree: previousTree } = this.state
 
         const filteredSecretNames = SecretsFilterService.filterBySearch(secretNames, searchValue)
-        const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames, selectedSecretName)
+        const tree: Tree = SecretsDirectoryService.secretPathsToTree(filteredSecretNames, previousTree)
         this.setState({ ...this.state, tree })
     }
 }

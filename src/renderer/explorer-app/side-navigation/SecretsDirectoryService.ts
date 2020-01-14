@@ -1,9 +1,9 @@
 import { Tree } from '../../components/tree/TreeComponent'
 
 export default class SecretsDirectoryService {
-    public static secretPathsToTree(secretPaths: string[], selectedSecretName: string | undefined): Tree {
+    public static secretPathsToTree(secretPaths: string[], previousTree: Tree): Tree {
         const directory = SecretsDirectoryService.secretPathsToDirectory(secretPaths)
-        return SecretsDirectoryService.directoryToTree(directory, selectedSecretName, secretPaths.length)
+        return SecretsDirectoryService.directoryToTree(directory, previousTree, secretPaths.length)
     }
 
     /**
@@ -30,14 +30,28 @@ export default class SecretsDirectoryService {
         return directory
     }
 
+    private static getToggledPathsFromTree(tree: Tree): string[] {
+        const paths: string[] = []
+
+        for (const child of tree.children || []) {
+            if (child.toggled) {
+                paths.push(child.path)
+            }
+            paths.push(...SecretsDirectoryService.getToggledPathsFromTree(child))
+        }
+
+        return paths
+    }
+
     /**
      * Convert
      *  from: "{ xyz: { service: { someServiceName: { db: { password: {} } } } }  }"
      *  to Tree interface
      */
-    private static directoryToTree(directory: any, selectedPath: string | undefined, totalEntries: number): Tree {
+    private static directoryToTree(directory: any, previousTree: Tree, totalEntries: number): Tree {
         const openAllEntries = totalEntries <= 15
-        const children = SecretsDirectoryService.getChildren(directory, selectedPath, true, openAllEntries)
+        const toggledPaths = SecretsDirectoryService.getToggledPathsFromTree(previousTree)
+        const children = SecretsDirectoryService.getChildren(directory, toggledPaths, true, openAllEntries)
         const tree: Tree = {
             name: 'Stores',
             toggled: true,
@@ -50,7 +64,7 @@ export default class SecretsDirectoryService {
 
     private static getChildren(
         directory: any | string,
-        selectedPath: string | undefined,
+        toggledPaths: string[],
         toggled: boolean = false,
         toggleAll: boolean = false,
         parentPath = ''
@@ -58,23 +72,23 @@ export default class SecretsDirectoryService {
         if (!(directory instanceof Object)) {
             return undefined
         }
-        const keys = Object.keys(directory).filter(key => key !== '')
+        const childDirNames = Object.keys(directory).filter(key => key !== '')
 
-        if (keys.length === 0) {
+        if (childDirNames.length === 0) {
             return undefined
         }
 
-        return keys.map(name => {
+        return childDirNames.map(name => {
             const path = parentPath.length > 0 ? parentPath + '/' + name : name
-            const children = SecretsDirectoryService.getChildren(directory[name], selectedPath, false, toggleAll, path)
-            const isToggledBecauseChildSelected =
-                !!selectedPath && selectedPath.length > 0 && !!path && path.length > 0 && !!children && children.length > 0 && selectedPath.startsWith(path)
+            const toggledFromPreviousTree = toggledPaths.includes(path)
+            const toggledPathsLeft = toggledFromPreviousTree ? toggledPaths.filter(p => p !== path) : toggledPaths
+            const children = SecretsDirectoryService.getChildren(directory[name], toggledPathsLeft, false, toggleAll, path)
 
             return {
                 name,
                 path,
                 children,
-                toggled: toggleAll || toggled || isToggledBecauseChildSelected
+                toggled: toggleAll || toggled || toggledFromPreviousTree
             }
         })
     }

@@ -10,7 +10,7 @@ describe('SecretsDirectoryService', () => {
             'codecentric/common/gitlab/username',
             'codecentric/customers/some/notes'
         ]
-        const tree: Tree = SecretsDirectoryService.secretPathsToTree(secretPaths, 'codecentric/common/gitlab/password')
+        const tree: Tree = SecretsDirectoryService.secretPathsToTree(secretPaths, { name: 'someName', path: '' })
 
         expect(tree).toEqual({
             children: [
