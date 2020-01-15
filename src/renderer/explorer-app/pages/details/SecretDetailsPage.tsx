@@ -12,9 +12,10 @@ import PasswordRatingComponent from '../../password-health/PasswordRatingCompone
 interface SecretDetailsPageProps extends RouteComponentProps {
     secretName: string
     isAdded?: boolean
+    onSecretDelete: () => void
 }
 
-function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPageProps) {
+function SecretDetailsPage({ secretName, isAdded, history, onSecretDelete }: SecretDetailsPageProps) {
     const [ secretValue, setSecretValue ] = React.useState('')
     const [ historyEntries, setHistoryEntries ] = React.useState<HistoryEntry[]>([])
     const [ loading, setLoading ] = React.useState(true)
@@ -44,7 +45,11 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
     const confirmSecretDeletion = () => Gopass.deleteSecret(secretName).then(() => history.replace('/'))
     const deletionModeButtons = queryDeletion ? <>
         <a className='link' onClick={denySecretDeletion}>NO, keep it!</a>
-        <a className='link' onClick={confirmSecretDeletion}>Sure!</a>
+        <a className='link'
+            onClick={async () => {
+                await confirmSecretDeletion()
+                onSecretDelete()
+            }}>Sure!</a>
     </> : <a className='link' onClick={querySecretDeletion}>Delete</a>
 
     const querySecretEditing = () => setEditedSecretValue(secretValue)

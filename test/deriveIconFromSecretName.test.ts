@@ -23,11 +23,7 @@ describe('deriveIconFromSecretName', () => {
     })
 
     describe('"person" icon', () => {
-        const testCases = [
-            { secretName: 'some/random/user' },
-            { secretName: 'some/random/name' },
-            { secretName: 'some/random/id' }
-        ]
+        const testCases = [{ secretName: 'some/random/user' }, { secretName: 'some/random/name' }, { secretName: 'some/random/id' }]
 
         testCases.forEach(testCase => {
             it(`should derive icon "person" from secret name "${testCase.secretName}"`, () => {

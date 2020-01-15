@@ -8,7 +8,7 @@ export interface Tree {
     toggled?: boolean
     loading?: boolean
     children?: Tree[]
-    entryId?: any
+    path: string
 }
 
 export interface TreeComponentProps {
@@ -16,8 +16,9 @@ export interface TreeComponentProps {
     onLeafClick: (leafId: string) => void
 }
 
-export default class TreeComponent extends React.Component<TreeComponentProps, any> {
-    public state: any = {}
+interface TreeComponentState { selectedNode?: any }
+export default class TreeComponent extends React.Component<TreeComponentProps, TreeComponentState> {
+    public state: TreeComponentState = {}
 
     public render() {
         return <t.Treebeard
@@ -29,19 +30,24 @@ export default class TreeComponent extends React.Component<TreeComponentProps, a
     }
 
     private onToggle = (node: any, toggled: boolean) => {
-        if ((!node.children || node.children.length === 0) && !!node.entryId) {
-            this.props.onLeafClick(node.entryId)
+        // if no children (thus being a leaf and thereby an entry), trigger the handler
+        if ((!node.children || node.children.length === 0)) {
+            this.props.onLeafClick(node.path)
         }
 
-        if (this.state.cursor) {
-            this.state.cursor.active = false
+        // previously selected node is no more active
+        if (this.state.selectedNode) {
+            this.state.selectedNode.active = false
         }
+
+        // newly selected node shall be active
         node.active = true
 
+        // ...and toggled if having children
         if (node.children) {
             node.toggled = toggled
         }
-        this.setState({ cursor: node })
+        this.setState({ selectedNode: node })
 
         if (node.children && node.children.length === 1) {
             this.onToggle(node.children[ 0 ], true)

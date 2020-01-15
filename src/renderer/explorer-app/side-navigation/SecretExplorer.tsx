@@ -4,32 +4,34 @@ import * as KeyboardEventHandler from 'react-keyboard-event-handler'
 
 import { RouteComponentProps, withRouter } from 'react-router'
 import SecretTree from './SecretTree'
+import { Tree } from '../../components/tree/TreeComponent'
 
-class SecretExplorer extends React.Component<RouteComponentProps, { searchValue: string }> {
-    constructor(props: RouteComponentProps) {
-        super(props)
-        this.state = { searchValue: '' }
-    }
+interface SecretExplorerProps extends RouteComponentProps {
+    tree: Tree
+    onSearchValueChange: (value: string) => void
+    searchValue: string
+}
 
+class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
     public render() {
-        const { searchValue } = this.state
+        const { tree, searchValue, onSearchValueChange } = this.props
 
         return (
             <div className='secret-explorer'>
-                <KeyboardEventHandler handleKeys={[ 'esc' ]} handleFocusableElements onKeyEvent={this.onCancelSearch}/>
-                <m.Input className='search-bar' value={searchValue} placeholder='Search...' onChange={this.onSearchChange}/>
-                <SecretTree searchValue={searchValue} onSecretClick={this.onSecretClick}/>
+                <KeyboardEventHandler handleKeys={[ 'esc' ]} handleFocusableElements onKeyEvent={this.clearSearch}/>
+                <m.Input className='search-bar' value={searchValue} placeholder='Search...' onChange={(_: any, updatedSearchValue: string) => {
+                    onSearchValueChange(updatedSearchValue)
+                }}/>
+                <SecretTree tree={tree} onSecretClick={secretName => {
+                    this.navigateToSecretDetailView(secretName)
+                }}/>
             </div>
         )
     }
 
-    private onSecretClick = (secretName: string) => {
-        this.props.history.replace(`/secret/${btoa(secretName)}`)
-    }
+    private navigateToSecretDetailView = (secretName: string) => this.props.history.replace(`/secret/${btoa(secretName)}`)
 
-    private onSearchChange = (_: any, searchValue: string) => this.setState({ searchValue })
-
-    private onCancelSearch = () => this.setState({ searchValue: '' })
+    private clearSearch = () => this.setState({ searchValue: '' })
 }
 
 export default withRouter(SecretExplorer)

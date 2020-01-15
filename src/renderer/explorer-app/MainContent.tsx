@@ -12,7 +12,7 @@ import PasswordHealthOverview from './pages/PasswordHealthPage'
 import AddSecretPage from './pages/AddSecretPage'
 import SecretDetailsPage from './pages/details/SecretDetailsPage'
 
-function MainContentRoutes() {
+function MainContentRoutes({ onTreeUpdate }: { onTreeUpdate: () => void }) {
     return <>
         <Route
             path='/'
@@ -34,6 +34,7 @@ function MainContentRoutes() {
                     <>
                         <MainNavigation/>
                         <SecretDetailsPage
+                            onSecretDelete={onTreeUpdate}
                             secretName={secretName}
                             isAdded={isAdded}
                         />
@@ -67,20 +68,20 @@ function MainContentRoutes() {
             render={() => (
                 <>
                     <GoBackNavigation/>
-                    <AddSecretPage/>
+                    <AddSecretPage onSecretSave={onTreeUpdate} />
                 </>
             )}
         />
     </>
 }
 
-function MainContent() {
+function MainContent({ onTreeUpdate }: { onTreeUpdate: () => void }) {
     return <div className='main-content'>
         <NotificationProvider>
             <Notification/>
             <m.Row>
                 <m.Col s={12}>
-                    <MainContentRoutes/>
+                    <MainContentRoutes onTreeUpdate={onTreeUpdate}/>
                 </m.Col>
             </m.Row>
         </NotificationProvider>
