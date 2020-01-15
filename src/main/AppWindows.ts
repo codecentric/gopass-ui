@@ -91,21 +91,13 @@ export const buildContextMenu = (mainWindow: BrowserWindow | null, searchWindow:
         {
             label: 'Explorer',
             click: () => {
-                if (mainWindow) {
-                    mainWindow.show()
-                } else {
-                    mainWindow = createMainWindow()
-                }
+                mainWindow = createMainWindow()
             }
         },
         {
             label: 'Search',
             click: () => {
-                if (searchWindow) {
-                    searchWindow.show()
-                } else {
-                    createSearchWindow(true)
-                }
+                searchWindow = createSearchWindow(true)
             }
         },
         {
