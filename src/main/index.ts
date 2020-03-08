@@ -116,6 +116,11 @@ const setup = async () => {
     const settings = getUserSettings()
 
     mainWindow = createMainWindow()
+
+    mainWindow.on('closed', () => {
+        app.quit()
+    })
+
     searchWindow = createSearchWindow(false)
 
     setGlobalShortcut(settings.searchShortcut)
