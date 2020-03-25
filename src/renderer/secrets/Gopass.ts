@@ -14,15 +14,15 @@ let executionId = 1
 
 export default class Gopass {
     public static async copy(key: string): Promise<string> {
-        return Gopass.execute(`show ${key} -c`)
+        return Gopass.execute(`show "${key}" -c`)
     }
 
     public static async show(key: string): Promise<string> {
-        return Gopass.execute(`show -f ${key}`)
+        return Gopass.execute(`show -f "${key}"`)
     }
 
     public static async history(key: string): Promise<HistoryEntry[]> {
-        return (await Gopass.execute(`history ${key}`))
+        return (await Gopass.execute(`history "${key}"`))
             .split(lineSplitRegex)
             .filter(isDefined)
             .map(historyLine => {
@@ -48,7 +48,7 @@ export default class Gopass {
     }
 
     public static async addSecret(name: string, value: string): Promise<void> {
-        await Gopass.execute('insert', [name], value)
+        await Gopass.execute('insert', [`"${name}"`], value)
     }
 
     public static async editSecret(name: string, newValue: string): Promise<void> {
@@ -56,7 +56,7 @@ export default class Gopass {
     }
 
     public static async deleteSecret(name: string): Promise<void> {
-        await Gopass.execute('rm', ['--force', name])
+        await Gopass.execute('rm', ['--force', `"${name}"`])
     }
 
     private static execute(command: string, args?: string[], pipeTextInto?: string): Promise<string> {
