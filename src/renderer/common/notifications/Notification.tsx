@@ -25,7 +25,7 @@ export default function NotificationView(props: { dismissTimeout?: number }) {
     }, [ notification, dismissTimeout ])
 
     return (
-        <Animated animationIn="fadeInDown" animationInDuration={1000} animationOutDuration={1000} animationOut="fadeOutUp" isVisible={!isHidden}>
+        <Animated animationIn='fadeInDown' animationInDuration={1000} animationOutDuration={1000} animationOut='fadeOutUp' isVisible={!isHidden}>
             <m.Row>
                 <m.Col s={ 12 }>
                     {notification && <m.CardPanel className={`${notification.status === 'OK' ? 'green' : 'red'} lighten-1 black-text`}>
