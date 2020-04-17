@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Event, globalShortcut, ipcMain, Menu, Tray, session, shell } from 'electron'
+import { app, BrowserWindow, Event, globalShortcut, ipcMain, IpcMainEvent, Tray, session, shell } from 'electron'
 import { URL } from 'url'
 import * as path from 'path'
 import * as fixPath from 'fix-path'
@@ -54,7 +54,7 @@ const updateTray = (showTray: boolean) => {
 const listenEvents = () => {
     ipcMain.on('gopass', GopassExecutor.handleEvent)
 
-    ipcMain.on('getUserSettings', (event: Event) => {
+    ipcMain.on('getUserSettings', (event: IpcMainEvent) => {
         event.returnValue = getUserSettings()
     })
 
@@ -64,7 +64,7 @@ const listenEvents = () => {
         }
     })
 
-    ipcMain.on('getSystemSettings', (event: Event) => {
+    ipcMain.on('getSystemSettings', (event: IpcMainEvent) => {
         event.returnValue = getSystemSettings()
     })
 

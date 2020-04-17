@@ -1,5 +1,5 @@
 import { exec } from 'child_process'
-import { Event } from 'electron'
+import { IpcMainEvent } from 'electron'
 
 export interface GopassOptions {
     executionId: string
@@ -9,7 +9,7 @@ export interface GopassOptions {
 }
 
 export default class GopassExecutor {
-    public static async handleEvent(event: Event, options: GopassOptions) {
+    public static async handleEvent(event: IpcMainEvent, options: GopassOptions) {
         const argsString = options.args ? ` ${options.args.join(' ')}` : ''
         const pipeText = options.pipeTextInto ? `echo "${options.pipeTextInto}" | ` : ''
         const command = `${pipeText}gopass ${options.command}${argsString}`
