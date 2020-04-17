@@ -21,7 +21,6 @@ export const globalStyle = {
             link: {
                 cursor: 'pointer',
                 position: 'relative',
-                padding: '0px 500px',
                 display: 'block'
             },
             activeLink: {
