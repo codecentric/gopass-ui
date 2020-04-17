@@ -57,7 +57,7 @@ function SecretDetailsPage({ secretName, isAdded, history, onSecretDelete }: Sec
     const onNewSecretValueChange = (event: any) => setEditedSecretValue(event.target.value)
     const saveEditedSecretValue = async () => {
         if (editedSecretValue !== secretValue) {
-            await Gopass.editSecret(secretName, editedSecretValue).then()
+            await Gopass.editSecret(secretName, editedSecretValue)
         }
 
         setSecretValue(editedSecretValue)

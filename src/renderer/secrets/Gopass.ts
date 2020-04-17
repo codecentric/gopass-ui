@@ -9,20 +9,21 @@ export interface HistoryEntry {
 
 const lineSplitRegex = /\r?\n/
 const isDefined = (value: string) => !!value
-
-let executionId = 1
+const escapeShellValue = (value: string) => value.replace(/(["'$`\\])/g, '\\$1')
 
 export default class Gopass {
+    public static executionId = 1
+
     public static async copy(key: string): Promise<string> {
-        return Gopass.execute(`show "${key}" -c`)
+        return Gopass.execute(`show "${escapeShellValue(key)}" -c`)
     }
 
     public static async show(key: string): Promise<string> {
-        return Gopass.execute(`show -f "${key}"`)
+        return Gopass.execute(`show -f "${escapeShellValue(key)}"`)
     }
 
     public static async history(key: string): Promise<HistoryEntry[]> {
-        return (await Gopass.execute(`history "${key}"`))
+        return (await Gopass.execute(`history "${escapeShellValue(key)}"`))
             .split(lineSplitRegex)
             .filter(isDefined)
             .map(historyLine => {
@@ -48,7 +49,7 @@ export default class Gopass {
     }
 
     public static async addSecret(name: string, value: string): Promise<void> {
-        await Gopass.execute('insert', [`"${name}"`], value)
+        await Gopass.execute('insert', [`"${escapeShellValue(name.trim())}"`], escapeShellValue(value))
     }
 
     public static async editSecret(name: string, newValue: string): Promise<void> {
@@ -56,15 +57,14 @@ export default class Gopass {
     }
 
     public static async deleteSecret(name: string): Promise<void> {
-        await Gopass.execute('rm', ['--force', `"${name}"`])
+        await Gopass.execute('rm', ['--force', `"${escapeShellValue(name)}"`])
     }
 
     private static execute(command: string, args?: string[], pipeTextInto?: string): Promise<string> {
         // tslint:disable-next-line
-        executionId++
 
         const result = new Promise<string>((resolve, reject) => {
-            ipcRenderer.once(`gopass-answer-${executionId}`, (_: Event, value: any) => {
+            ipcRenderer.once(`gopass-answer-${Gopass.executionId}`, (_: Event, value: any) => {
                 if (value.status === 'ERROR') {
                     reject(value.payload)
                 } else {
@@ -73,7 +73,9 @@ export default class Gopass {
             })
         })
 
-        ipcRenderer.send('gopass', { executionId, command, args, pipeTextInto })
+        ipcRenderer.send('gopass', { executionId: Gopass.executionId, command, args, pipeTextInto })
+
+        Gopass.executionId++
 
         return result
     }
