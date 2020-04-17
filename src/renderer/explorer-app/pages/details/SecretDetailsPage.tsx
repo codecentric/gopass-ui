@@ -33,6 +33,8 @@ function SecretDetailsPage({ secretName, isAdded, history, onSecretDelete }: Sec
             setSecretValue(newSecretValue)
             setHistoryEntries(newHistoryEntries)
             setLoading(false)
+            setQueryDeletion(false)
+            setEditedSecretValue(undefined)
         })
     }, [ secretName ])
 
