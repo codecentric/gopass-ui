@@ -15,11 +15,15 @@ interface SecretDetailsPageProps extends RouteComponentProps {
     onSecretDelete: () => void
 }
 
+// todo: make this configurable in the application settings
+const DISPLAY_SECRET_VALUE_BY_DEFAULT = false
+
 function SecretDetailsPage({ secretName, isAdded, history, onSecretDelete }: SecretDetailsPageProps) {
     const [ secretValue, setSecretValue ] = React.useState('')
     const [ historyEntries, setHistoryEntries ] = React.useState<HistoryEntry[]>([])
     const [ loading, setLoading ] = React.useState(true)
     const [ isPassword, setIsPassword ] = React.useState(false)
+    const [ displaySecretValue, setDisplaySecretValue ] = React.useState(DISPLAY_SECRET_VALUE_BY_DEFAULT)
     const [ editedSecretValue, setEditedSecretValue ] = React.useState()
     const [ queryDeletion, setQueryDeletion ] = React.useState(false)
 
@@ -35,6 +39,7 @@ function SecretDetailsPage({ secretName, isAdded, history, onSecretDelete }: Sec
             setLoading(false)
             setQueryDeletion(false)
             setEditedSecretValue(undefined)
+            setDisplaySecretValue(DISPLAY_SECRET_VALUE_BY_DEFAULT)
         })
     }, [ secretName ])
 
@@ -73,11 +78,13 @@ function SecretDetailsPage({ secretName, isAdded, history, onSecretDelete }: Sec
     const inEditMode = editedSecretValue !== undefined
     const copySecretToClipboard = useCopySecretToClipboard()
     const cardActions = [
+        <a key='toggle-display' className='link' onClick={() => setDisplaySecretValue(!displaySecretValue)}>{displaySecretValue ? 'Hide' : 'Show'}</a>,
         <a key='copy-clipboard' className='link' onClick={() => copySecretToClipboard(secretName)}>Copy to clipboard</a>,
         inEditMode ? <span key='edit-secret-mode-actions'>{ editModeButtons }</span> :
             <span key='view-secret-mode-actions'><a className='link' onClick={querySecretEditing}>Edit</a>{deletionModeButtons}</span>
     ]
-    const valueToDisplay = inEditMode ? editedSecretValue : secretValue
+    const secretValueToDisplay = displaySecretValue ? secretValue : '*******************'
+    const valueToDisplay = inEditMode ? editedSecretValue : secretValueToDisplay
     const linesRequired = valueToDisplay.split('\n').length
 
     return loading ? <><h4>Secret {isAdded && <m.Icon small>fiber_new</m.Icon>}</h4><LoadingScreen/></> : <>
