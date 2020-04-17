@@ -1,11 +1,11 @@
 import * as React from 'react'
 
-const passwordStrengthColorExtractor = (health: number): string => {
-    if (health >= 50) {
-        return 'yellow'
-    }
+export const passwordStrengthColorExtractor = (health: number): string => {
     if (health >= 70) {
         return 'green'
+    }
+    if (health >= 50) {
+        return 'yellow'
     }
 
     return 'red'
