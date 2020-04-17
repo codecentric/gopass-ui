@@ -1,14 +1,15 @@
 language: node_js
 node_js: "12"
-
-cache: npm
+install: npm install
+cache:
+  directories:
+    - "node_modules"
 
 before_install:
   - sudo apt-get update
   - sudo apt-get install alien # we need rpm and rpmbuild
 
 script:
-  - npm install # do install explicitly because the default (npm ci) is not sufficient
   - npm audit || true
   - npm run release
 
