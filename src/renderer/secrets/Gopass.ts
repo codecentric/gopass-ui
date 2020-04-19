@@ -22,19 +22,23 @@ export default class Gopass {
     }
 
     public static async history(key: string): Promise<HistoryEntry[]> {
-        return (await Gopass.execute(`history ${key}`))
-            .split(lineSplitRegex)
-            .filter(isDefined)
-            .map(historyLine => {
-                const lineSplit = historyLine.split(' - ')
+        try {
+            return (await Gopass.execute(`history ${key}`))
+                .split(lineSplitRegex)
+                .filter(isDefined)
+                .map(historyLine => {
+                    const lineSplit = historyLine.split(' - ')
 
-                return {
-                    hash: lineSplit[0],
-                    author: lineSplit[1],
-                    timestamp: lineSplit[2],
-                    message: lineSplit[3]
-                }
-            })
+                    return {
+                        hash: lineSplit[0],
+                        author: lineSplit[1],
+                        timestamp: lineSplit[2],
+                        message: lineSplit[3]
+                    }
+                })
+        } catch (e) {
+            return []
+        }
     }
 
     public static async sync(): Promise<void> {
