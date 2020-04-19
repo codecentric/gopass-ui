@@ -7,7 +7,7 @@ const baseConfig = require('./webpack.base.config')
 
 module.exports = merge.smart(baseConfig, {
     output: {
-        path: path.resolve(__dirname, 'dist', 'explorer'),
+        path: path.resolve(__dirname, 'dist', 'explorer')
     },
     target: 'electron-renderer',
     entry: {
@@ -17,9 +17,7 @@ module.exports = merge.smart(baseConfig, {
         rules: [
             {
                 test: /\.tsx?$/,
-                include: [
-                    path.resolve(__dirname, 'src', 'renderer')
-                ],
+                include: [path.resolve(__dirname, 'src', 'renderer')],
                 loader: 'awesome-typescript-loader'
             },
             {
@@ -50,13 +48,15 @@ module.exports = merge.smart(baseConfig, {
             },
             {
                 test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]',
-                        outputPath: 'fonts/'
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'fonts/'
+                        }
                     }
-                }]
+                ]
             }
         ]
     },

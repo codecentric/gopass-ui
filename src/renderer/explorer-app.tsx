@@ -7,6 +7,7 @@ import ExplorerApplication from './explorer-app/ExplorerApplication'
 
 import 'materialize-css/dist/css/materialize.css'
 import 'material-design-icons/iconfont/material-icons.css'
+import 'animate.css/animate.css'
 
 const mainElement = document.createElement('div')
 document.body.appendChild(mainElement)

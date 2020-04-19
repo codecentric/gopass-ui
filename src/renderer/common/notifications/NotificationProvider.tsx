@@ -7,6 +7,7 @@ export interface Notification {
 
 export interface NotificationContext {
     notification?: Notification
+    isHidden: boolean
     show: (notification: Notification) => void
     hide: () => void
 }
@@ -25,14 +26,20 @@ export function useNotificationContext() {
 
 export default function NotificationProvider({ children }: any) {
     const [ notification, setNotification ] = React.useState<Notification | undefined>()
+    const [ isHidden, setIsHidden ] = React.useState<boolean>(false)
 
     return <Context.Provider value={{
         notification,
+        isHidden,
         show: newNotification => {
             setNotification(newNotification)
+            setIsHidden(false)
         },
         hide: () => {
-            setNotification(undefined)
+            setIsHidden(true)
+            setTimeout(() => {
+                setNotification(undefined)
+            }, 1000)
         }
     }}>{children}</Context.Provider>
 }

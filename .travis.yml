@@ -1,7 +1,9 @@
 language: node_js
-node_js: "10"
-
-cache: npm
+node_js: "12"
+install: npm install
+cache:
+  directories:
+    - "node_modules"
 
 before_install:
   - sudo apt-get update
@@ -9,8 +11,6 @@ before_install:
 
 script:
   - npm audit || true
-  - npm run lint
-  - npm test
   - npm run release
 
 branches:
