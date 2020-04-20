@@ -14,7 +14,7 @@ In addition there is a search window that can be opened with `(cmd || ctrl) + sh
 
 ## How can I use it?
 
-For most platforms just [download the latest packaged application](https://github.com/codecentric/gopass-ui/releases/latest) from our releases and install it. We provide binaries for MacOS, Windows and Linux (deb, RPM, Gentoo). For more details see [supported platforms and packages](docs/platforms-and-packages.md).
+For most platforms just [download the latest packaged application](https://github.com/codecentric/gopass-ui/releases/latest) from our releases and install it. We provide binaries for MacOS, Windows and Linux (deb, RPM, snap, AppImage, Gentoo). For more details see [supported platforms and packages](docs/platforms-and-packages.md).
 
 Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and running. We also recommend to use a dialog-based PIN-entry-tool for typing in GPG passphrases like [pinentry-mac for MacOS](https://formulae.brew.sh/formula/pinentry-mac) instead of using the default terminal-based.
 
