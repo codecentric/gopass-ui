@@ -11,5 +11,6 @@ For Linux the following packages are provided:
 * .deb (download [here](https://github.com/codecentric/gopass-ui/releases/latest))
 * .rpm (download [here](https://github.com/codecentric/gopass-ui/releases/latest))
 * .snap (download [here](https://github.com/codecentric/gopass-ui/releases/latest))
+* .pacman (download [here](https://github.com/codecentric/gopass-ui/releases/latest))
 * .AppImage (download [here](https://github.com/codecentric/gopass-ui/releases/latest))
 * Gentoo: `emerge app-admin/gopass-ui` ([gentoo overlay](https://gitlab.awesome-it.de/overlays/awesome), thanks [@danielcb](https://github.com/danielcb))
