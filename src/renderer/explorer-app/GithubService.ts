@@ -10,7 +10,7 @@ export default class GithubService {
             const url = `https://api.github.com/repos/${owner}/${repositoryName}/git/refs/tags`
 
             httpRequest.open('GET', url)
-            httpRequest.onload = (e) => {
+            httpRequest.onload = e => {
                 if (httpRequest.status >= 200 && httpRequest.status < 300) {
                     resolve(JSON.parse(httpRequest.response) as GithubTag[])
                 } else {
