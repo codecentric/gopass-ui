@@ -23,6 +23,7 @@
     "test:integration": "jest --testRegex '\\.itest\\.ts$'",
     "release:check": "npm run lint && npm test",
     "release": "npm run release:check && npm run build && electron-builder --publish onTag",
+    "release:full": "npm run release:check && npm run build && electron-builder --mac dmg --win --linux deb rpm snap AppImage",
     "postinstall": "electron-builder install-app-deps"
   },
   "jest": {

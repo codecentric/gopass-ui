@@ -5,9 +5,10 @@ This documents the steps it needs to release and publish a new version of Gopass
 ### In the codebase
 
 1. Let's check if code style and tests are okay: `npm run release:check`. If there are issues, fix them first.
-2. Increment the version number by incrementing patch, minor or major version using `npm version [major | minor | patch]` ([see "npm-version" documentation](https://docs.npmjs.com/cli/version.html)).
-3. Build the releases for all supported platforms: `npm run release`. This takes a while. If successful, the binaries were built in `release/`.
-4. As we know that everything worked, the Git release commit and tag can be pushed: `git push && git push --tags`.
+2. Increment the version number in `package.json` and do `npm i` to reflect it within `package-lock.json`.
+3. Build the releases for your local platform to verify everything is working: `npm run release`. This takes a while. If successful, the binaries were built in `release/`
+4. Build the releases for all other platforms: `./node_modules/.bin/electron-builder --mac dmg --win --linux deb rpm snap AppImage`
+5. As we know that everything worked, commit and push the version change
 
 ### Draft and public release on Github
 
