@@ -1,6 +1,6 @@
 import { IpcMainEvent } from 'electron'
-import { ipcMain, ipcRenderer } from '../../../__mocks__/electron'
-import Gopass from './Gopass'
+import Gopass from '../src/renderer/secrets/Gopass'
+import { ipcMain, ipcRenderer } from './mock/electron-mock'
 
 const mockGopassResponse = (payload: string) => {
     ipcMain.once('gopass', (event: IpcMainEvent) => {

@@ -1,4 +1,4 @@
-import { passwordStrengthColorExtractor } from './PasswordHealthIndicator'
+import { passwordStrengthColorExtractor } from '../src/renderer/explorer-app/password-health/PasswordHealthIndicator'
 
 describe('PasswordHealthIndicator', () => {
     it.each`
