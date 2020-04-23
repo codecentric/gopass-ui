@@ -11,81 +11,84 @@ import NotificationProvider from '../common/notifications/NotificationProvider'
 import PasswordHealthOverview from './pages/PasswordHealthPage'
 import AddSecretPage from './pages/AddSecretPage'
 import SecretDetailsPage from './pages/details/SecretDetailsPage'
+import { useSecretsContext } from './SecretsProvider'
 
-function MainContentRoutes({ onTreeUpdate }: { onTreeUpdate: () => void }) {
-    return (
-        <>
-            <Route
-                path='/'
-                exact
-                render={() => (
-                    <>
-                        <MainNavigation />
-                        <HomePage />
-                    </>
-                )}
-            />
-            <Route
-                path='/secret/:encodedSecretName'
-                component={(props: { match: match<{ encodedSecretName: string }>; location: { search?: string } }) => {
-                    const secretName = atob(props.match.params.encodedSecretName)
-                    const isAdded = props.location.search ? props.location.search === '?added' : false
+function MainContentRoutes() {
+    const { loadSecretsAndBuildTree } = useSecretsContext()
 
-                    return (
-                        <>
-                            <MainNavigation />
-                            <SecretDetailsPage onSecretDelete={onTreeUpdate} secretName={secretName} isAdded={isAdded} />
-                        </>
-                    )
-                }}
-            />
-            <Route
-                path='/settings'
-                exact
-                render={() => (
+    return <>
+        <Route
+            path='/'
+            exact
+            render={() => (
+                <>
+                    <MainNavigation/>
+                    <HomePage/>
+                </>
+            )}
+        />
+        <Route
+            path='/secret/:encodedSecretName'
+            component={(props: { match: match<{ encodedSecretName: string }>, location: { search?: string } }) => {
+                const secretName = atob(props.match.params.encodedSecretName)
+                const isAdded = props.location.search ? props.location.search === '?added' : false
+
+                return (
                     <>
-                        <GoBackNavigation />
-                        <SettingsPage />
+                        <MainNavigation/>
+                        <SecretDetailsPage
+                            onSecretDelete={loadSecretsAndBuildTree}
+                            secretName={secretName}
+                            isAdded={isAdded}
+                        />
                     </>
-                )}
-            />
-            <Route
-                path='/password-health'
-                exact
-                render={() => (
-                    <>
-                        <GoBackNavigation />
-                        <PasswordHealthOverview />
-                    </>
-                )}
-            />
-            <Route
-                path='/add-secret'
-                exact
-                render={() => (
-                    <>
-                        <GoBackNavigation />
-                        <AddSecretPage onSecretSave={onTreeUpdate} />
-                    </>
-                )}
-            />
-        </>
-    )
+                )
+            }}
+        />
+        <Route
+            path='/settings'
+            exact
+            render={() => (
+                <>
+                    <GoBackNavigation/>
+                    <SettingsPage/>
+                </>
+            )}
+        />
+        <Route
+            path='/password-health'
+            exact
+            render={() => (
+                <>
+                    <GoBackNavigation/>
+                    <PasswordHealthOverview/>
+                </>
+            )}
+        />
+        <Route
+            path='/add-secret'
+            exact
+            render={() => (
+                <>
+                    <GoBackNavigation/>
+                    <AddSecretPage onSecretSave={loadSecretsAndBuildTree} />
+                </>
+            )}
+        />
+    </>
 }
 
-function MainContent({ onTreeUpdate }: { onTreeUpdate: () => void }) {
-    return (
-        <div className='main-content'>
-            <NotificationProvider>
-                <Notification />
-                <m.Row>
-                    <m.Col s={12}>
-                        <MainContentRoutes onTreeUpdate={onTreeUpdate} />
-                    </m.Col>
-                </m.Row>
-            </NotificationProvider>
-        </div>
-    )
+function MainContent() {
+    return <div className='main-content'>
+        <NotificationProvider>
+            <Notification/>
+            <m.Row>
+                <m.Col s={12}>
+                    <MainContentRoutes/>
+                </m.Col>
+            </m.Row>
+        </NotificationProvider>
+    </div>
 }
 
 export default MainContent

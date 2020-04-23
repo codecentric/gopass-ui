@@ -12,7 +12,7 @@ export interface NotificationContext {
     hide: () => void
 }
 
-export const Context = React.createContext<NotificationContext | null>(null)
+const Context = React.createContext<NotificationContext | null>(null)
 
 export function useNotificationContext() {
     const context = React.useContext(Context)

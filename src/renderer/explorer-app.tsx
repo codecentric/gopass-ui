@@ -8,6 +8,7 @@ import ExplorerApplication from './explorer-app/ExplorerApplication'
 import 'materialize-css/dist/css/materialize.css'
 import 'material-design-icons/iconfont/material-icons.css'
 import 'animate.css/animate.css'
+import { SecretsProvider } from './explorer-app/SecretsProvider'
 
 const mainElement = document.createElement('div')
 document.body.appendChild(mainElement)
@@ -15,7 +16,9 @@ document.body.appendChild(mainElement)
 ReactDOM.render(
     <AppContainer>
         <Router>
-            <ExplorerApplication />
+            <SecretsProvider>
+                <ExplorerApplication />
+            </SecretsProvider>
         </Router>
     </AppContainer>,
     mainElement
