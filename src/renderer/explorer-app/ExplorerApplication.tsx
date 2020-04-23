@@ -7,11 +7,11 @@ import './ExplorerApplication.css'
 import { useSecretsContext } from './SecretsProvider'
 
 const ExplorerApplication = () => {
-    const { tree, applySearchToTree, loadSecretsAndBuildTree, searchValue } = useSecretsContext()
+    const { tree, applySearchToTree, reloadSecretNames, searchValue } = useSecretsContext()
 
     React.useEffect(
         () => {
-            loadSecretsAndBuildTree()
+            reloadSecretNames()
         },
         ['once']
     )

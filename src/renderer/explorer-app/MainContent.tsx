@@ -14,7 +14,7 @@ import SecretDetailsPage from './pages/details/SecretDetailsPage'
 import { useSecretsContext } from './SecretsProvider'
 
 function MainContentRoutes() {
-    const { loadSecretsAndBuildTree } = useSecretsContext()
+    const { reloadSecretNames } = useSecretsContext()
 
     return <>
         <Route
@@ -37,7 +37,7 @@ function MainContentRoutes() {
                     <>
                         <MainNavigation/>
                         <SecretDetailsPage
-                            onSecretDelete={loadSecretsAndBuildTree}
+                            onSecretDelete={reloadSecretNames}
                             secretName={secretName}
                             isAdded={isAdded}
                         />
@@ -71,7 +71,7 @@ function MainContentRoutes() {
             render={() => (
                 <>
                     <GoBackNavigation/>
-                    <AddSecretPage onSecretSave={loadSecretsAndBuildTree} />
+                    <AddSecretPage onSecretSave={reloadSecretNames} />
                 </>
             )}
         />

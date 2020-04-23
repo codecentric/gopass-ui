@@ -18,7 +18,7 @@ function MainNavigationComponent({ history }: MainNavigationViewProps) {
     const refreshGopassStores = async () => {
         try {
             await Gopass.sync()
-            await secretsContext.loadSecretsAndBuildTree()
+            await secretsContext.reloadSecretNames()
             notificationContext.show({ status: 'OK', message: 'Your stores have been synchronised successfully.' })
         } catch (err) {
             notificationContext.show({ status: 'ERROR', message: `Oops, something went wrong: ${JSON.stringify(err)}` })

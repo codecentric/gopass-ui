@@ -6,10 +6,10 @@ import Gopass from '../secrets/Gopass'
 
 export interface SecretsContext {
     tree: Tree
-    secretNames: string[]
     searchValue: string
+
     applySearchToTree: (searchValue: string) => void
-    loadSecretsAndBuildTree: (searchValue?: string) => Promise<void>
+    reloadSecretNames: () => Promise<void>
 }
 
 const Context = React.createContext<SecretsContext | undefined>(undefined)
@@ -38,16 +38,16 @@ export const SecretsProvider = ({ children }: { children: React.ReactNode }) => 
 
         setTree(newTree)
     }
+    const loadSecretsAndBuildTree = async (newSearchValue: string | undefined = undefined) => {
+        const allSecretNames = await Gopass.getAllSecretNames()
+        setSecretNames(allSecretNames)
+        applySearchToTree(newSearchValue !== undefined ? newSearchValue : searchValue, allSecretNames)
+    }
 
     const providerValue: SecretsContext = {
         tree,
-        secretNames,
         searchValue,
-        loadSecretsAndBuildTree: async (newSearchValue = undefined) => {
-            const allSecretNames = await Gopass.getAllSecretNames()
-            setSecretNames(allSecretNames)
-            applySearchToTree(newSearchValue !== undefined ? newSearchValue : searchValue, allSecretNames)
-        },
+        reloadSecretNames: () => loadSecretsAndBuildTree(),
         applySearchToTree
     }
 
