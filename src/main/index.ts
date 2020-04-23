@@ -9,6 +9,7 @@ import GopassExecutor from './GopassExecutor'
 import { buildContextMenu, createMainWindow, createSearchWindow } from './AppWindows'
 import { getSystemSettings, getUserSettings, installExtensions } from './AppUtilities'
 
+const isDevMode = process.env.NODE_ENV !== 'production'
 fixPath()
 
 let mainWindow: BrowserWindow | null
@@ -94,22 +95,18 @@ const setup = async () => {
      * About default-src: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/default-src
      * Electron reference: https://electronjs.org/docs/tutorial/security#6-define-a-content-security-policy
      */
-    if (session.defaultSession) {
-        const developmentHosts =
-            process.env.NODE_ENV !== 'production' ? ['ws://localhost:2003', 'ws://localhost:2004', 'http://localhost:2003', 'http://localhost:2004'] : []
-        const developmentHostsStr = developmentHosts.length ? ` ${developmentHosts.join(' ')}` : ''
-
-        // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-        //     callback({
-        //         responseHeaders: {
-        //             ...details.responseHeaders,
-        //             'Content-Security-Policy': [`default-src 'self' 'unsafe-inline'; connect-src https://api.github.com${developmentHostsStr}`]
-        //         }
-        //     })
-        // })
+    if (session.defaultSession && !isDevMode) {
+        session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+            callback({
+                responseHeaders: {
+                    ...details.responseHeaders,
+                    'Content-Security-Policy': [`default-src 'self' 'unsafe-inline'; connect-src https://api.github.com`]
+                }
+            })
+        })
     }
 
-    if (process.env.NODE_ENV !== 'production') {
+    if (isDevMode) {
         await installExtensions()
     }
 
