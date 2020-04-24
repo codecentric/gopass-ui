@@ -16,22 +16,19 @@ export interface TreeComponentProps {
     onLeafClick: (leafId: string) => void
 }
 
-interface TreeComponentState { selectedNode?: any }
+interface TreeComponentState {
+    selectedNode?: any
+}
 export default class TreeComponent extends React.Component<TreeComponentProps, TreeComponentState> {
     public state: TreeComponentState = {}
 
     public render() {
-        return <t.Treebeard
-            data={this.props.tree}
-            decorators={{ ...t.decorators, Header }}
-            onToggle={this.onToggle}
-            style={globalStyle}
-        />
+        return <t.Treebeard data={this.props.tree} decorators={{ ...t.decorators, Header }} onToggle={this.onToggle} style={globalStyle} />
     }
 
     private onToggle = (node: any, toggled: boolean) => {
         // if no children (thus being a leaf and thereby an entry), trigger the handler
-        if ((!node.children || node.children.length === 0)) {
+        if (!node.children || node.children.length === 0) {
             this.props.onLeafClick(node.path)
         }
 
@@ -50,7 +47,7 @@ export default class TreeComponent extends React.Component<TreeComponentProps, T
         this.setState({ selectedNode: node })
 
         if (node.children && node.children.length === 1) {
-            this.onToggle(node.children[ 0 ], true)
+            this.onToggle(node.children[0], true)
         }
     }
 }

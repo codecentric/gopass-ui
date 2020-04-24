@@ -1,9 +1,7 @@
 declare module 'string-replace-to-array' {
     // tslint:disable-next-line
-    function replace(haystack: string, needle: RegExp | string, newVal: string | Function): any[];
+    function replace(haystack: string, needle: RegExp | string, newVal: string | Function): any[]
 
-    namespace replace {
-
-    }
+    namespace replace {}
     export = replace
 }

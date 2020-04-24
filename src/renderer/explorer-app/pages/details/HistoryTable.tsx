@@ -20,10 +20,5 @@ export function HistoryTable({ entries }: HistoryTableProps) {
         { fieldName: 'message', label: 'Message' }
     ]
 
-    return (
-        <PaginatedTable
-            columns={ columns }
-            rows={ rows }
-        />
-    )
+    return <PaginatedTable columns={columns} rows={rows} />
 }

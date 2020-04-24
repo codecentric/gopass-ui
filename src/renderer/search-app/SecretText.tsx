@@ -17,18 +17,17 @@ const getHighlightedSegment = (segment: string, highlightRegExp?: RegExp) => {
 }
 
 export function SecretText({ secretPath, highlightRegExp }: SecretTextProps) {
-    return <>{ secretPath.reduce(
-        (result: string[], segment, currentIndex) => {
-            const extendedResult = result.concat(
-                getHighlightedSegment(segment, highlightRegExp)
-            )
+    return (
+        <>
+            {secretPath.reduce((result: string[], segment, currentIndex) => {
+                const extendedResult = result.concat(getHighlightedSegment(segment, highlightRegExp))
 
-            if (currentIndex < secretPath.length - 1) {
-                extendedResult.push(' > ')
-            }
+                if (currentIndex < secretPath.length - 1) {
+                    extendedResult.push(' > ')
+                }
 
-            return extendedResult
-        },
-        []
-    ) }</>
+                return extendedResult
+            }, [])}
+        </>
+    )
 }

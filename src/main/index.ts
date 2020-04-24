@@ -99,14 +99,14 @@ const setup = async () => {
             process.env.NODE_ENV !== 'production' ? ['ws://localhost:2003', 'ws://localhost:2004', 'http://localhost:2003', 'http://localhost:2004'] : []
         const developmentHostsStr = developmentHosts.length ? ` ${developmentHosts.join(' ')}` : ''
 
-        session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-            callback({
-                responseHeaders: {
-                    ...details.responseHeaders,
-                    'Content-Security-Policy': [`default-src 'self' 'unsafe-inline'; connect-src https://api.github.com${developmentHostsStr}`]
-                }
-            })
-        })
+        // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
+        //     callback({
+        //         responseHeaders: {
+        //             ...details.responseHeaders,
+        //             'Content-Security-Policy': [`default-src 'self' 'unsafe-inline'; connect-src https://api.github.com${developmentHostsStr}`]
+        //         }
+        //     })
+        // })
     }
 
     if (process.env.NODE_ENV !== 'production') {

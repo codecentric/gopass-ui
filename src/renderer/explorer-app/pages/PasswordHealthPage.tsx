@@ -45,7 +45,7 @@ class PasswordHealthPage extends React.Component<RouteComponentProps, PasswordHe
         return (
             <>
                 <h4>Password Health</h4>
-                {status ? this.renderStatus(status) : <LoadingScreen/>}
+                {status ? this.renderStatus(status) : <LoadingScreen />}
             </>
         )
     }
@@ -62,8 +62,12 @@ class PasswordHealthPage extends React.Component<RouteComponentProps, PasswordHe
     // tslint:disable-next-line
     private renderStatus(status: PasswordHealthCollectionStatus) {
         if (!status.inProgress && status.passwordsCollected === 0) {
-            return <p>It seems you don't have passwords in your stores yet. A secret is considered a password if it contains words such as: password, pw,
-                pass, secret, key or similar.</p>
+            return (
+                <p>
+                    It seems you don't have passwords in your stores yet. A secret is considered a password if it contains words such as: password, pw, pass,
+                    secret, key or similar.
+                </p>
+            )
         }
 
         if (status.inProgress && status.passwordsCollected > 0) {
@@ -73,7 +77,7 @@ class PasswordHealthPage extends React.Component<RouteComponentProps, PasswordHe
                 <>
                     <p>Your passwords are currently being collected and analysed, please wait until ready... {progressPercentage}%</p>
                     <div style={{ width: '60%', minWidth: '200px', marginTop: '30px' }}>
-                        <m.ProgressBar progress={progressPercentage}/>
+                        <m.ProgressBar progress={progressPercentage} />
                     </div>
                 </>
             )
@@ -97,46 +101,49 @@ class PasswordHealthPage extends React.Component<RouteComponentProps, PasswordHe
     }
 
     private renderOverallPasswordHealth(overallPasswordHealth: PasswordHealthSummary, improvablePasswordsAmount: number) {
-        return <div className='row'>
-            <div className='col s12'>
-                <div className='card-panel z-depth-1'>
-                    <div className='row valign-wrapper'>
-                        <div className='col s2'>
-                            <PasswordHealthIndicator health={overallPasswordHealth.health}/>
-                        </div>
-                        <div className='col s10'>
-                            This is the average health for your passwords.
-                            {improvablePasswordsAmount > 0 ? ` There are ${improvablePasswordsAmount} suggestions available.` : ''}
+        return (
+            <div className='row'>
+                <div className='col s12'>
+                    <div className='card-panel z-depth-1'>
+                        <div className='row valign-wrapper'>
+                            <div className='col s2'>
+                                <PasswordHealthIndicator health={overallPasswordHealth.health} />
+                            </div>
+                            <div className='col s10'>
+                                This is the average health for your passwords.
+                                {improvablePasswordsAmount > 0 ? ` There are ${improvablePasswordsAmount} suggestions available.` : ''}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        )
     }
 
     private renderImprovementPotential(improvablePasswords: PasswordSecretHealth[]) {
-        return improvablePasswords.length > 0 && <>
-            <h4 className='m-top'>Improvement Potential</h4>
-            <PaginatedTable
-                columns={[
-                    { fieldName: 'name', label: 'Name' },
-                    { fieldName: 'health', label: 'Health' },
-                    { fieldName: 'rulesToImprove', label: 'Rules to improve' }
-                ]}
-                rows={
-                    improvablePasswords.map(rated => ({
-                        id: rated.name,
-                        name: <a onClick={this.onSecretClick(rated.name)}>{rated.name}</a>,
-                        health: `${rated.health}`,
-                        rulesToImprove: `${rated.failedRulesCount}`
-                    }))
-                }
-            />
-        </>
+        return (
+            improvablePasswords.length > 0 && (
+                <>
+                    <h4 className='m-top'>Improvement Potential</h4>
+                    <PaginatedTable
+                        columns={[
+                            { fieldName: 'name', label: 'Name' },
+                            { fieldName: 'health', label: 'Health' },
+                            { fieldName: 'rulesToImprove', label: 'Rules to improve' }
+                        ]}
+                        rows={improvablePasswords.map(rated => ({
+                            id: rated.name,
+                            name: <a onClick={this.onSecretClick(rated.name)}>{rated.name}</a>,
+                            health: `${rated.health}`,
+                            rulesToImprove: `${rated.failedRulesCount}`
+                        }))}
+                    />
+                </>
+            )
+        )
     }
 
     private onSecretClick = (secretName: string) => () => this.props.history.replace(`/secret/${btoa(secretName)}`)
-
 }
 
 export default withRouter(PasswordHealthPage)

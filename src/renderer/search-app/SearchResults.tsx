@@ -14,10 +14,10 @@ export interface SearchResultsProps {
 }
 
 export default function SearchResults(props: SearchResultsProps) {
-    const [ allSecretNames, setAllSecretNames ] = React.useState<string[]>([])
-    const [ filteredSecretNames, setFilteredSecretNames ] = React.useState<string[]>([])
-    const [ selectedItemIndex, setSelectedItemIndex ] = React.useState(0)
-    const [ highlightRegExp, setHighlightRegExp ] = React.useState<RegExp | undefined>()
+    const [allSecretNames, setAllSecretNames] = React.useState<string[]>([])
+    const [filteredSecretNames, setFilteredSecretNames] = React.useState<string[]>([])
+    const [selectedItemIndex, setSelectedItemIndex] = React.useState(0)
+    const [highlightRegExp, setHighlightRegExp] = React.useState<RegExp | undefined>()
 
     const copySecretToClipboard = useCopySecretToClipboard()
 
@@ -42,11 +42,11 @@ export default function SearchResults(props: SearchResultsProps) {
 
     React.useEffect(() => {
         updateFilteredSecrets()
-    }, [ allSecretNames ])
+    }, [allSecretNames])
 
     React.useEffect(() => {
         updateFilteredSecrets(props.search)
-    }, [ props.search ])
+    }, [props.search])
 
     const onKeyEvent = (key: string, event: any) => {
         switch (key) {
@@ -88,21 +88,19 @@ export default function SearchResults(props: SearchResultsProps) {
         copySecretToClipboard(secretKey)
     }
 
-    return <>
-        <KeyboardEventHandler
-            handleKeys={[ 'up', 'shift+tab', 'down', 'tab', 'enter', 'esc' ]}
-            handleFocusableElements
-            onKeyEvent={onKeyEvent}
-        />
-        <m.Collection>
-            <CollectionItems
-                filteredSecretNames={ filteredSecretNames }
-                selectedItemIndex={ selectedItemIndex }
-                highlightRegExp={ highlightRegExp }
-                onItemClick={ onSelectCollectionItem }
-            />
-        </m.Collection>
-    </>
+    return (
+        <>
+            <KeyboardEventHandler handleKeys={['up', 'shift+tab', 'down', 'tab', 'enter', 'esc']} handleFocusableElements onKeyEvent={onKeyEvent} />
+            <m.Collection>
+                <CollectionItems
+                    filteredSecretNames={filteredSecretNames}
+                    selectedItemIndex={selectedItemIndex}
+                    highlightRegExp={highlightRegExp}
+                    onItemClick={onSelectCollectionItem}
+                />
+            </m.Collection>
+        </>
+    )
 }
 
 function filterMatchingSecrets(searchValues: string[]) {

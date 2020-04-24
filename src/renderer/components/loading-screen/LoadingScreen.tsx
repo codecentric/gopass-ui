@@ -8,12 +8,12 @@ const WAITING_TEXTS = [
     'Still doing something...',
     'It seems to takes some time...',
     'Doop di doop di douuu...',
-    'I\'m sorry that it takes longer.',
+    "I'm sorry that it takes longer.",
     'Maybe there is a persistent problem. Sorry for that!'
 ]
 
 export function LoadingScreen() {
-    const [ waitingTextIndex, setWaitingTextIndex ] = React.useState(0)
+    const [waitingTextIndex, setWaitingTextIndex] = React.useState(0)
 
     React.useEffect(() => {
         const timeout = setInterval(() => {
@@ -26,7 +26,7 @@ export function LoadingScreen() {
     return (
         <div className='loading-screen-wrapper'>
             <div className='loading-screen-message'>
-                <p>{ WAITING_TEXTS[ waitingTextIndex % WAITING_TEXTS.length ] }</p>
+                <p>{WAITING_TEXTS[waitingTextIndex % WAITING_TEXTS.length]}</p>
                 <m.ProgressBar />
             </div>
         </div>

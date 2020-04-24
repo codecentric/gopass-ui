@@ -11,12 +11,18 @@ export interface CollectionItemProps {
 }
 
 export function CollectionItems({ filteredSecretNames, selectedItemIndex, onItemClick, highlightRegExp }: CollectionItemProps) {
-    return <>{filteredSecretNames.map((secretKey, i) => {
-        const secretPath = secretKey.split('/')
-        const isSelected = i === selectedItemIndex ? 'selected' : undefined
+    return (
+        <>
+            {filteredSecretNames.map((secretKey, i) => {
+                const secretPath = secretKey.split('/')
+                const isSelected = i === selectedItemIndex ? 'selected' : undefined
 
-        return <m.CollectionItem key={`entry-${i}`} className={isSelected} onClick={() => onItemClick(secretKey)}>
-            <SecretText secretPath={secretPath} highlightRegExp={highlightRegExp}/>
-        </m.CollectionItem>
-    })}</>
+                return (
+                    <m.CollectionItem key={`entry-${i}`} className={isSelected} onClick={() => onItemClick(secretKey)}>
+                        <SecretText secretPath={secretPath} highlightRegExp={highlightRegExp} />
+                    </m.CollectionItem>
+                )
+            })}
+        </>
+    )
 }

@@ -48,8 +48,9 @@ export default class ExplorerApplication extends React.Component<{}, ExplorerApp
                             await this.calculateAndSetTreeState(newValue)
                         }
                         this.setState({ searchValue: newValue })
-                    }}/>
-                <MainContent onTreeUpdate={() => this.componentDidMount()}/>
+                    }}
+                />
+                <MainContent onTreeUpdate={() => this.componentDidMount()} />
             </>
         )
     }

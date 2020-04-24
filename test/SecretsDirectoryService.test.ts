@@ -44,7 +44,10 @@ describe('SecretsDirectoryService', () => {
                         name: 'codecentric',
                         path: 'codecentric',
                         toggled: true,
-                        children: [{ name: 'some-secret', path: 'codecentric/some-secret' }, { name: 'common', path: 'codecentric/common', toggled: true }]
+                        children: [
+                            { name: 'some-secret', path: 'codecentric/some-secret' },
+                            { name: 'common', path: 'codecentric/common', toggled: true }
+                        ]
                     }
                 ]
             },

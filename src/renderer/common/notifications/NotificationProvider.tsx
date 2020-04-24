@@ -25,21 +25,27 @@ export function useNotificationContext() {
 }
 
 export default function NotificationProvider({ children }: any) {
-    const [ notification, setNotification ] = React.useState<Notification | undefined>()
-    const [ isHidden, setIsHidden ] = React.useState<boolean>(false)
+    const [notification, setNotification] = React.useState<Notification | undefined>()
+    const [isHidden, setIsHidden] = React.useState<boolean>(false)
 
-    return <Context.Provider value={{
-        notification,
-        isHidden,
-        show: newNotification => {
-            setNotification(newNotification)
-            setIsHidden(false)
-        },
-        hide: () => {
-            setIsHidden(true)
-            setTimeout(() => {
-                setNotification(undefined)
-            }, 1000)
-        }
-    }}>{children}</Context.Provider>
+    return (
+        <Context.Provider
+            value={{
+                notification,
+                isHidden,
+                show: newNotification => {
+                    setNotification(newNotification)
+                    setIsHidden(false)
+                },
+                hide: () => {
+                    setIsHidden(true)
+                    setTimeout(() => {
+                        setNotification(undefined)
+                    }, 1000)
+                }
+            }}
+        >
+            {children}
+        </Context.Provider>
+    )
 }

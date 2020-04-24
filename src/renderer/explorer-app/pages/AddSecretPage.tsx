@@ -41,18 +41,19 @@ class AddSecretPage extends React.Component<RouteComponentProps & { onSecretSave
                 </m.CardPanel>
 
                 <m.Row>
-                    <m.Input s={12} value={name} onChange={this.changeName} label={nameLabel}/>
+                    <m.Input s={12} value={name} onChange={this.changeName} label={nameLabel} />
                     <div className='secret-value-field-row'>
                         <label className='secret-value-label'>{valueLabel}</label>
-                        <textarea className='secret-value-textarea' placeholder={valueLabel} value={value} onChange={this.changeValue}/>
+                        <textarea className='secret-value-textarea' placeholder={valueLabel} value={value} onChange={this.changeValue} />
                     </div>
-                    <PasswordStrengthInfo
-                        strength={currentPasswordValueRating.health}
-                        labelContent={`${entity} value strength`}
-                    />
+                    <PasswordStrengthInfo strength={currentPasswordValueRating.health} labelContent={`${entity} value strength`} />
                     <m.Col s={12}>
-                        <m.Button style={{ marginRight: '10px' }} onClick={this.shuffleRandomValue} waves='light'>{shuffleButtonLabel}</m.Button>
-                        <m.Button disabled={!name || !value} onClick={this.addSecret} waves='light'>Save</m.Button>
+                        <m.Button style={{ marginRight: '10px' }} onClick={this.shuffleRandomValue} waves='light'>
+                            {shuffleButtonLabel}
+                        </m.Button>
+                        <m.Button disabled={!name || !value} onClick={this.addSecret} waves='light'>
+                            Save
+                        </m.Button>
                     </m.Col>
                 </m.Row>
             </>

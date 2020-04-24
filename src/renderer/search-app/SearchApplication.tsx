@@ -7,7 +7,7 @@ import NotificationProvider from '../common/notifications/NotificationProvider'
 
 import './SearchApplication.css'
 
-const NAVIGATION_KEYS = [ 'ArrowUp', 'ArrowDown', 'Enter', 'Tab' ]
+const NAVIGATION_KEYS = ['ArrowUp', 'ArrowDown', 'Enter', 'Tab']
 
 const preventNavigationKeys = (event: any) => {
     if (NAVIGATION_KEYS.includes(event.key)) {
@@ -16,7 +16,7 @@ const preventNavigationKeys = (event: any) => {
 }
 
 export function SearchApplication() {
-    const [ searchValue, setSearchValue ] = React.useState('')
+    const [searchValue, setSearchValue] = React.useState('')
 
     React.useEffect(() => {
         const element = document.getElementById('search')
@@ -25,23 +25,25 @@ export function SearchApplication() {
             element.focus()
             element.click()
         }
-    }, [ ])
+    }, [])
 
     const onChange = (_: any, newValue: string) => {
         setSearchValue(newValue)
     }
 
-    return <NotificationProvider>
-        <Notification dismissTimeout={ 3000 } />
-        <m.Row>
-            <m.Col s={ 12 }>
-                <m.Input id='search' placeholder='Search...' onChange={ onChange} onKeyDown={preventNavigationKeys } s={ 12 } />
-            </m.Col>
-        </m.Row>
-        <m.Row>
-            <m.Col s={ 12 }>
-                <SearchResults search={ searchValue } />
-            </m.Col>
-        </m.Row>
-    </NotificationProvider>
+    return (
+        <NotificationProvider>
+            <Notification dismissTimeout={3000} />
+            <m.Row>
+                <m.Col s={12}>
+                    <m.Input id='search' placeholder='Search...' onChange={onChange} onKeyDown={preventNavigationKeys} s={12} />
+                </m.Col>
+            </m.Row>
+            <m.Row>
+                <m.Col s={12}>
+                    <SearchResults search={searchValue} />
+                </m.Col>
+            </m.Row>
+        </NotificationProvider>
+    )
 }

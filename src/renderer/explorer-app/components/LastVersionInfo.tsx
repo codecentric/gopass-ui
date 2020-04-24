@@ -8,11 +8,11 @@ const VERSION_CHECK_INTERVAL = ONE_HOUR_IN_MILLIS
 
 export const LatestVersionInfo = () => {
     const { releaseCheck } = Settings.getSystemSettings()
-    const [ tags, setTags ] = React.useState<GithubTag[]>([])
+    const [tags, setTags] = React.useState<GithubTag[]>([])
 
     React.useEffect(() => {
         const millisNow = new Date().getTime()
-        const shouldFetchTags = !releaseCheck || !releaseCheck.lastCheckTimestamp || (millisNow - VERSION_CHECK_INTERVAL) > releaseCheck.lastCheckTimestamp
+        const shouldFetchTags = !releaseCheck || !releaseCheck.lastCheckTimestamp || millisNow - VERSION_CHECK_INTERVAL > releaseCheck.lastCheckTimestamp
 
         if (shouldFetchTags) {
             GithubService.getTagsOfRepository('codecentric', 'gopass-ui').then(newTags => {
@@ -24,7 +24,7 @@ export const LatestVersionInfo = () => {
         }
     })
 
-    const lastTag = tags[ tags.length - 1 ]
+    const lastTag = tags[tags.length - 1]
     const lastTagName = lastTag ? lastTag.ref.slice(10, lastTag.ref.length) : ''
 
     return lastTagName ? (

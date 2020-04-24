@@ -11,7 +11,7 @@ export interface TableColumn {
 export interface TableRow {
     id: string
 
-    [ fieldName: string ]: string | React.ReactNode
+    [fieldName: string]: string | React.ReactNode
 }
 
 export interface PaginatedTableProps {
@@ -47,25 +47,23 @@ export default class PaginatedTable extends React.Component<PaginatedTableProps,
             <>
                 <m.Table>
                     <thead>
-                    <tr>
-                        {
-                            columns.map(column => (
+                        <tr>
+                            {columns.map(column => (
                                 <th key={column.fieldName} data-field={column.fieldName}>
                                     {column.label}
                                 </th>
-                            ))
-                        }
-                    </tr>
+                            ))}
+                        </tr>
                     </thead>
 
                     <tbody>
-                    {
-                        pageRows.map(row => (
+                        {pageRows.map(row => (
                             <tr key={row.id}>
-                                {columns.map(column => (<td key={`${row.id}-${column.fieldName}`}>{row[ column.fieldName ]}</td>))}
+                                {columns.map(column => (
+                                    <td key={`${row.id}-${column.fieldName}`}>{row[column.fieldName]}</td>
+                                ))}
                             </tr>
-                        ))
-                    }
+                        ))}
                     </tbody>
                 </m.Table>
 

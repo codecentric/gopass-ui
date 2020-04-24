@@ -8,11 +8,6 @@ export interface SecretTreeViewerProps {
 
 export default class SecretTreeViewer extends React.Component<SecretTreeViewerProps, {}> {
     public render() {
-        return (
-            <TreeComponent
-                tree={this.props.tree}
-                onLeafClick={this.props.onSecretClick}
-            />
-        )
+        return <TreeComponent tree={this.props.tree} onLeafClick={this.props.onSecretClick} />
     }
 }

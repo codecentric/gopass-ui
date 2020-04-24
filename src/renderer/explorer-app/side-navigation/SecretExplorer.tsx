@@ -18,13 +18,21 @@ class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
 
         return (
             <div className='secret-explorer'>
-                <KeyboardEventHandler handleKeys={[ 'esc' ]} handleFocusableElements onKeyEvent={this.clearSearch}/>
-                <m.Input className='search-bar' value={searchValue} placeholder='Search...' onChange={(_: any, updatedSearchValue: string) => {
-                    onSearchValueChange(updatedSearchValue)
-                }}/>
-                <SecretTree tree={tree} onSecretClick={secretName => {
-                    this.navigateToSecretDetailView(secretName)
-                }}/>
+                <KeyboardEventHandler handleKeys={['esc']} handleFocusableElements onKeyEvent={this.clearSearch} />
+                <m.Input
+                    className='search-bar'
+                    value={searchValue}
+                    placeholder='Search...'
+                    onChange={(_: any, updatedSearchValue: string) => {
+                        onSearchValueChange(updatedSearchValue)
+                    }}
+                />
+                <SecretTree
+                    tree={tree}
+                    onSecretClick={secretName => {
+                        this.navigateToSecretDetailView(secretName)
+                    }}
+                />
             </div>
         )
     }

@@ -12,9 +12,7 @@ export const TreeHeader = ({ style, node }: any) => {
 
     return (
         <div style={style.base}>
-            <m.Icon small>
-                {iconType}
-            </m.Icon>
+            <m.Icon small>{iconType}</m.Icon>
 
             {node.name}
         </div>

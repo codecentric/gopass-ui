@@ -13,21 +13,24 @@ interface MainNavigationViewProps {
 function MainNavigationComponent({ history }: MainNavigationViewProps) {
     const notificationContext = useNotificationContext()
     const refreshGopassStores = () => {
-        Gopass.sync().then(() => {
-            notificationContext.show({ status: 'OK', message: 'Your stores have been synchronised successfully.' })
-        })
-        .catch((err) => {
-            notificationContext.show({ status: 'ERROR', message: `Oops, something went wrong: ${JSON.stringify(err)}` })
-        })
+        Gopass.sync()
+            .then(() => {
+                notificationContext.show({ status: 'OK', message: 'Your stores have been synchronised successfully.' })
+            })
+            .catch(err => {
+                notificationContext.show({ status: 'ERROR', message: `Oops, something went wrong: ${JSON.stringify(err)}` })
+            })
     }
 
-    return <div style={{ paddingTop: '0.75rem' }}>
-        <RoundActionButton icon='home' onClick={() => history.replace('/')}/>
-        <RoundActionButton icon='add' onClick={() => history.replace('/add-secret')}/>
-        <RoundActionButton icon='refresh' onClick={refreshGopassStores}/>
-        <RoundActionButton icon='settings' onClick={() => history.replace('/settings')}/>
-        <RoundActionButton icon='security' onClick={() => history.replace('/password-health')}/>
-    </div>
+    return (
+        <div style={{ paddingTop: '0.75rem' }}>
+            <RoundActionButton icon='home' onClick={() => history.replace('/')} />
+            <RoundActionButton icon='add' onClick={() => history.replace('/add-secret')} />
+            <RoundActionButton icon='refresh' onClick={refreshGopassStores} />
+            <RoundActionButton icon='settings' onClick={() => history.replace('/settings')} />
+            <RoundActionButton icon='security' onClick={() => history.replace('/password-health')} />
+        </div>
+    )
 }
 
 export default withRouter(MainNavigationComponent)
