@@ -1,6 +1,6 @@
 import * as React from 'react'
-import GithubService, { GithubTag } from '../GithubService'
 import { remote } from 'electron'
+import GithubService, { GithubTag } from '../GithubService'
 import { ExternalLink } from '../../components/ExternalLink'
 import { Settings } from '../../common/Settings'
 
