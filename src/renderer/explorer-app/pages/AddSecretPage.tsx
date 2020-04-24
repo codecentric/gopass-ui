@@ -7,6 +7,7 @@ import { PasswordStrengthInfo } from '../components/PasswordStrengthInfo'
 import { PasswordRater } from '../password-health/PasswordRater'
 
 import './AddSecretPage.css'
+import { Settings } from '../../common/Settings'
 
 interface AddSecretPageState {
     name?: string
@@ -18,7 +19,7 @@ class AddSecretPage extends React.Component<RouteComponentProps & { onSecretSave
         super(props)
         this.state = {
             name: undefined,
-            value: this.generateRandomValue()
+            value: this.generateRandomValue(Settings.getUserSettings().secretValueLength)
         }
     }
 
@@ -61,7 +62,7 @@ class AddSecretPage extends React.Component<RouteComponentProps & { onSecretSave
     private changeName = (_: any, name: string) => this.setState({ name })
     private changeValue = (event: any) => this.setState({ value: event.target.value })
 
-    private generateRandomValue = (length = 50) => {
+    private generateRandomValue = (length: number) => {
         const chars = 'abcdefghijklmnopqrstuvwxyz!@#$%^&*()-+<>ABCDEFGHIJKLMNOP1234567890'
         let randomPassword = ''
 
@@ -73,7 +74,7 @@ class AddSecretPage extends React.Component<RouteComponentProps & { onSecretSave
         return randomPassword
     }
 
-    private shuffleRandomValue = () => this.setState({ value: this.generateRandomValue() })
+    private shuffleRandomValue = () => this.setState({ value: this.generateRandomValue(Settings.getUserSettings().secretValueLength) })
 
     private addSecret = async () => {
         const { name, value } = this.state
