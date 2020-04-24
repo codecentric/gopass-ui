@@ -1,5 +1,6 @@
 import * as React from 'react'
 import GithubService, { GithubTag } from '../GithubService'
+import { remote } from 'electron'
 import { ExternalLink } from '../../components/ExternalLink'
 import { Settings } from '../../common/Settings'
 
@@ -26,11 +27,20 @@ export const LatestVersionInfo = () => {
 
     const lastTag = tags[tags.length - 1]
     const lastTagName = lastTag ? lastTag.ref.slice(10, lastTag.ref.length) : ''
+    const appVersion = remote.app.getVersion()
 
-    return lastTagName ? (
-        <>
-            Make sure you got the latest version of Gopass UI:&nbsp;
-            <ExternalLink url='https://github.com/codecentric/gopass-ui/releases/latest'>{`${lastTagName} on Github`}</ExternalLink>
-        </>
-    ) : null
+    if (lastTagName) {
+        return lastTagName.includes(appVersion) ? (
+            <>
+                You have the latest version <strong>{appVersion}</strong> of Gopass UI installed 🎉
+            </>
+        ) :  (
+            <>
+                Your Gopass UI version({appVersion}) is out of date 😕 Make sure you got the latest version of Gopass UI:&nbsp;
+                <ExternalLink url='https://github.com/codecentric/gopass-ui/releases/latest'>{`${lastTagName} on Github`}</ExternalLink>
+            </>
+        )
+    }
+
+    return null
 }
