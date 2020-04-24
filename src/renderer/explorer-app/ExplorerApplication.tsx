@@ -9,12 +9,9 @@ import { useSecretsContext } from './SecretsProvider'
 const ExplorerApplication = () => {
     const { tree, applySearchToTree, reloadSecretNames, searchValue } = useSecretsContext()
 
-    React.useEffect(
-        () => {
-            reloadSecretNames()
-        },
-        ['once']
-    )
+    React.useEffect(() => {
+        reloadSecretNames()
+    }, ['once'])
 
     return (
         <>
@@ -25,7 +22,7 @@ const ExplorerApplication = () => {
                     applySearchToTree(newValue)
                 }}
             />
-            <MainContent/>
+            <MainContent />
         </>
     )
 }

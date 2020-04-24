@@ -25,13 +25,15 @@ function MainNavigationComponent({ history }: MainNavigationViewProps) {
         }
     }
 
-    return <div style={{ paddingTop: '0.75rem' }}>
-        <RoundActionButton icon='home' onClick={() => history.replace('/')}/>
-        <RoundActionButton icon='add' onClick={() => history.replace('/add-secret')}/>
-        <RoundActionButton icon='refresh' onClick={refreshGopassStores}/>
-        <RoundActionButton icon='settings' onClick={() => history.replace('/settings')}/>
-        <RoundActionButton icon='security' onClick={() => history.replace('/password-health')}/>
-    </div>
+    return (
+        <div style={{ paddingTop: '0.75rem' }}>
+            <RoundActionButton icon='home' onClick={() => history.replace('/')} />
+            <RoundActionButton icon='add' onClick={() => history.replace('/add-secret')} />
+            <RoundActionButton icon='refresh' onClick={refreshGopassStores} />
+            <RoundActionButton icon='settings' onClick={() => history.replace('/settings')} />
+            <RoundActionButton icon='security' onClick={() => history.replace('/password-health')} />
+        </div>
+    )
 }
 
 export default withRouter(MainNavigationComponent)
