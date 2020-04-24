@@ -8,17 +8,17 @@ import { LoadingScreen } from '../../../components/loading-screen/LoadingScreen'
 import { useCopySecretToClipboard } from '../../../secrets/useCopySecretToClipboard'
 import { HistoryTable } from './HistoryTable'
 import PasswordRatingComponent from '../../password-health/PasswordRatingComponent'
+import { useSecretsContext } from '../../SecretsProvider'
 
 interface SecretDetailsPageProps extends RouteComponentProps {
     secretName: string
     isAdded?: boolean
-    onSecretDelete: () => void
 }
 
 // todo: make this configurable in the application settings
 const DISPLAY_SECRET_VALUE_BY_DEFAULT = false
 
-function SecretDetailsPage({ secretName, isAdded, history, onSecretDelete }: SecretDetailsPageProps) {
+function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPageProps) {
     const [secretValue, setSecretValue] = React.useState('')
     const [historyEntries, setHistoryEntries] = React.useState<HistoryEntry[]>([])
     const [loading, setLoading] = React.useState(true)
@@ -56,7 +56,7 @@ function SecretDetailsPage({ secretName, isAdded, history, onSecretDelete }: Sec
                 className='link'
                 onClick={async () => {
                     await confirmSecretDeletion()
-                    onSecretDelete()
+                    await useSecretsContext().reloadSecretNames()
                 }}
             >
                 Sure!
