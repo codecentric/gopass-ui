@@ -8,13 +8,14 @@ import { PasswordRater } from '../password-health/PasswordRater'
 
 import './AddSecretPage.css'
 import { Settings } from '../../common/Settings'
+import { useSecretsContext } from '../SecretsProvider'
 
 interface AddSecretPageState {
     name?: string
     value?: string
 }
 
-class AddSecretPage extends React.Component<RouteComponentProps & { onSecretSave: () => void }, AddSecretPageState> {
+class AddSecretPage extends React.Component<RouteComponentProps, AddSecretPageState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -81,11 +82,11 @@ class AddSecretPage extends React.Component<RouteComponentProps & { onSecretSave
         const { name, value } = this.state
 
         if (name && value) {
-            const { history, onSecretSave } = this.props
+            const { history } = this.props
 
             try {
                 await Gopass.addSecret(name, value)
-                onSecretSave()
+                await useSecretsContext().reloadSecretNames()
                 history.replace(`/secret/${btoa(name)}?added`)
             } catch (e) {
                 console.info('Error during adding a secret', e)

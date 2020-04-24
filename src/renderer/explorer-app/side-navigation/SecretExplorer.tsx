@@ -4,42 +4,31 @@ import * as KeyboardEventHandler from 'react-keyboard-event-handler'
 
 import { RouteComponentProps, withRouter } from 'react-router'
 import SecretTree from './SecretTree'
-import { Tree } from '../../components/tree/TreeComponent'
+import { useSecretsContext } from '../SecretsProvider'
 
-interface SecretExplorerProps extends RouteComponentProps {
-    tree: Tree
-    onSearchValueChange: (value: string) => void
-    searchValue: string
-}
+const SecretExplorer = ({ history }: RouteComponentProps) => {
+    const { tree, applySearchToTree, reloadSecretNames, searchValue } = useSecretsContext()
+    const navigateToSecretDetailView = (secretName: string) => history.replace(`/secret/${btoa(secretName)}`)
+    const clearSearch = () => applySearchToTree('')
 
-class SecretExplorer extends React.Component<SecretExplorerProps, {}> {
-    public render() {
-        const { tree, searchValue, onSearchValueChange } = this.props
+    React.useEffect(() => {
+        reloadSecretNames()
+    }, ['once'])
 
-        return (
-            <div className='secret-explorer'>
-                <KeyboardEventHandler handleKeys={['esc']} handleFocusableElements onKeyEvent={this.clearSearch} />
-                <m.Input
-                    className='search-bar'
-                    value={searchValue}
-                    placeholder='Search...'
-                    onChange={(_: any, updatedSearchValue: string) => {
-                        onSearchValueChange(updatedSearchValue)
-                    }}
-                />
-                <SecretTree
-                    tree={tree}
-                    onSecretClick={secretName => {
-                        this.navigateToSecretDetailView(secretName)
-                    }}
-                />
-            </div>
-        )
-    }
-
-    private navigateToSecretDetailView = (secretName: string) => this.props.history.replace(`/secret/${btoa(secretName)}`)
-
-    private clearSearch = () => this.setState({ searchValue: '' })
+    return (
+        <div className='secret-explorer'>
+            <KeyboardEventHandler handleKeys={['esc']} handleFocusableElements onKeyEvent={clearSearch} />
+            <m.Input
+                className='search-bar'
+                value={searchValue}
+                placeholder='Search...'
+                onChange={(_: any, updatedSearchValue: string) => {
+                    applySearchToTree(updatedSearchValue)
+                }}
+            />
+            <SecretTree tree={tree} onSecretClick={navigateToSecretDetailView} />
+        </div>
+    )
 }
 
 export default withRouter(SecretExplorer)
