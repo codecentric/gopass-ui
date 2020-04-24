@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Event, globalShortcut, ipcMain, IpcMainEvent, Tray, session, shell } from 'electron'
+import { app, BrowserWindow, Event, globalShortcut, ipcMain, IpcMainEvent, Tray, session, shell, Accelerator } from 'electron'
 import { URL } from 'url'
 import * as path from 'path'
 import * as fixPath from 'fix-path'
@@ -15,8 +15,23 @@ let mainWindow: BrowserWindow | null
 let searchWindow: BrowserWindow | null
 let tray: Tray
 
-const setGlobalShortcut = (shortcut: string) => {
-    globalShortcut.unregister(shortcut)
+const setGlobalSearchWindowShortcut = (shortcut: Accelerator, previousShortcut?: Accelerator) => {
+    // unregister previously used shortcut if Electron recognises it as valid
+    if (previousShortcut) {
+        try {
+            globalShortcut.unregister(previousShortcut)
+        } catch (e) {}
+    }
+
+    // unregister shortcut from other usages within the application
+    // in case an error is thrown, Electron does not recognise it as valid and the method returns
+    try {
+        globalShortcut.unregister(shortcut)
+    } catch (e) {
+        return
+    }
+
+    // register shortcut once sure it is a valid and usage-free Accelerator for Electron
     globalShortcut.register(shortcut, () => {
         if (searchWindow) {
             if (searchWindow.isFocused()) {
@@ -30,7 +45,7 @@ const setGlobalShortcut = (shortcut: string) => {
     })
 }
 
-const updateTray = (showTray: boolean) => {
+const setTray = (showTray: boolean) => {
     if (showTray) {
         if (!tray || tray.isDestroyed()) {
             if (process.platform === 'darwin') {
@@ -51,7 +66,7 @@ const updateTray = (showTray: boolean) => {
     }
 }
 
-const listenEvents = () => {
+const listenToIpcEvents = () => {
     ipcMain.on('gopass', GopassExecutor.handleEvent)
 
     ipcMain.on('getUserSettings', (event: IpcMainEvent) => {
@@ -68,20 +83,30 @@ const listenEvents = () => {
         event.returnValue = getSystemSettings()
     })
 
-    ipcMain.on('setUserSettings', (_: Event, data: UserSettings) => {
-        setGlobalShortcut(data.searchShortcut)
-        updateTray(data.showTray)
-        updateStartOnLoginConfiguration(data.startOnLogin)
+    ipcMain.on('updateUserSettings', (_: Event, update: Partial<UserSettings>) => {
+        const current = getUserSettings()
+        const all = { ...current, ...update }
 
-        electronSettings.set('user_settings', data as any)
+        // modify aspects of application where updated settings need take effect
+        if (update.searchShortcut && update.searchShortcut !== current.searchShortcut) {
+            setGlobalSearchWindowShortcut(update.searchShortcut, current.searchShortcut)
+        }
+        if (update.showTray && update.showTray !== current.showTray) {
+            setTray(update.showTray)
+        }
+        if (update.startOnLogin && update.startOnLogin !== current.startOnLogin) {
+            configureStartOnLogin(update.startOnLogin)
+        }
+
+        electronSettings.set('user_settings', all as any)
     })
 
-    ipcMain.on('setSystemSettings', (_: Event, data: SystemSettings) => {
-        electronSettings.set('system_settings', data as any)
+    ipcMain.on('updateSystemSettings', (_: Event, update: Partial<SystemSettings>) => {
+        electronSettings.set('system_settings', { ...getSystemSettings(), ...update } as any)
     })
 }
 
-const updateStartOnLoginConfiguration = (startOnLogin: boolean) => {
+const configureStartOnLogin = (startOnLogin: boolean) => {
     app.setLoginItemSettings({
         openAtLogin: startOnLogin,
         openAsHidden: true
@@ -123,11 +148,11 @@ const setup = async () => {
 
     searchWindow = createSearchWindow(false)
 
-    setGlobalShortcut(settings.searchShortcut)
-    updateTray(settings.showTray)
-    updateStartOnLoginConfiguration(settings.startOnLogin)
+    setGlobalSearchWindowShortcut(settings.searchShortcut, undefined)
+    setTray(settings.showTray)
+    configureStartOnLogin(settings.startOnLogin)
 
-    listenEvents()
+    listenToIpcEvents()
 }
 
 app.on('ready', setup)

@@ -6,7 +6,7 @@ import { LatestVersionInfo } from '../components/LastVersionInfo'
 import { ExternalLink } from '../../components/ExternalLink'
 import { Settings } from '../../common/Settings'
 
-function OptionalSetupInstructions() {
+const OptionalSetupInstructions = () => {
     const { environmentTestSuccessful } = Settings.getSystemSettings()
 
     return environmentTestSuccessful ? null : (
@@ -19,7 +19,9 @@ function OptionalSetupInstructions() {
     )
 }
 
-export default function HomePage() {
+const HomePage = () => {
+    const { searchShortcut } = Settings.getUserSettings()
+
     return (
         <>
             <h3>Welcome to Gopass UI</h3>
@@ -31,8 +33,8 @@ export default function HomePage() {
 
             <h4 className='m-top'>Global search window</h4>
             <m.CardPanel>
-                The shortcut for the global search window for quick secret clipboard-copying is:
-                <pre>(cmd || ctrl) + shift + p</pre>
+                The configured shortcut for the global search window (quick secret clipboard-copying) is:
+                <pre>{searchShortcut.replace(/\+/g, ' + ')}</pre>
             </m.CardPanel>
 
             <h4 className='m-top'>Issues</h4>
@@ -43,3 +45,5 @@ export default function HomePage() {
         </>
     )
 }
+
+export default HomePage

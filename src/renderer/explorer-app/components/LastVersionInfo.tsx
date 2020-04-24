@@ -17,7 +17,7 @@ export const LatestVersionInfo = () => {
         if (shouldFetchTags) {
             GithubService.getTagsOfRepository('codecentric', 'gopass-ui').then(newTags => {
                 setTags(newTags)
-                Settings.setSystemSettings({ releaseCheck: { lastCheckTimestamp: millisNow, results: newTags } })
+                Settings.updateSystemSettings({ releaseCheck: { lastCheckTimestamp: millisNow, results: newTags } })
             })
         } else {
             setTags(releaseCheck.results)

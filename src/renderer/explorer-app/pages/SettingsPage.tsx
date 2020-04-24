@@ -1,8 +1,10 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
+import * as isValidElectronShortcut from 'electron-is-accelerator'
 
 import { EnvironmentTest } from '../components/EnvironmentTest'
 import { Settings } from '../../common/Settings'
+import { ExternalLink } from '../../components/ExternalLink'
 
 interface SettingsPageState {
     environmentTestSuccessful: boolean
@@ -12,6 +14,7 @@ interface SettingsPageState {
 
 export default function SettingsPage() {
     const [state, setState] = React.useState<SettingsPageState | undefined>(undefined)
+    const [isShortcutValidationError, setShortcutValidationError] = React.useState<boolean>(false)
 
     React.useEffect(() => {
         const { environmentTestSuccessful } = Settings.getSystemSettings()
@@ -37,7 +40,7 @@ export default function SettingsPage() {
                                 min='6'
                                 onChange={event => {
                                     const value = parseInt(event.target.value, 10)
-                                    Settings.setUserSettings({ secretValueLength: value })
+                                    Settings.updateUserSettings({ secretValueLength: value })
                                 }}
                                 max='200'
                             />
@@ -45,11 +48,22 @@ export default function SettingsPage() {
                     </m.Col>
                     <m.Input
                         s={4}
+                        error={isShortcutValidationError}
                         defaultValue={state.searchShortcut}
                         onChange={(_: any, value: string) => {
-                            Settings.setUserSettings({ searchShortcut: value })
+                            const isValid = isValidElectronShortcut(value)
+                            if (isValid) {
+                                Settings.updateUserSettings({ searchShortcut: value })
+                            }
+
+                            setShortcutValidationError(!isValid)
                         }}
-                        label='Shortcut for opening the search window'
+                        label={
+                            <>
+                                <span>Global search window shortcut</span>{' '}
+                                <ExternalLink url='https://www.electronjs.org/docs/api/accelerator#available-modifiers'>(see all options)</ExternalLink>
+                            </>
+                        }
                     />
                 </m.Row>
             </m.CardPanel>

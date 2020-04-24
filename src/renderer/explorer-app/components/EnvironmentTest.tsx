@@ -27,18 +27,18 @@ export function EnvironmentTest() {
                     timeout(Gopass.show(firstEntry), 10000)
                         .then(() => {
                             setEnvironmentTestStatus('OK')
-                            Settings.setSystemSettings({ environmentTestSuccessful: true })
+                            Settings.updateSystemSettings({ environmentTestSuccessful: true })
                         })
                         .catch(() => {
                             setEnvironmentTestStatus('ERROR')
-                            Settings.setSystemSettings({ environmentTestSuccessful: false })
+                            Settings.updateSystemSettings({ environmentTestSuccessful: false })
                             setErrorDetails('DECRYPTION')
                         })
                 }
             })
             .catch(() => {
                 setEnvironmentTestStatus('ERROR')
-                Settings.setSystemSettings({ environmentTestSuccessful: false })
+                Settings.updateSystemSettings({ environmentTestSuccessful: false })
                 setErrorDetails('GOPASS_CONNECTION')
             })
     }

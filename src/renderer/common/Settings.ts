@@ -1,24 +1,21 @@
 import { ipcRenderer } from 'electron'
 import { SystemSettings, UserSettings } from '../../shared/settings'
+import set = Reflect.set
 
 export class Settings {
     public static getUserSettings(): UserSettings {
         return ipcRenderer.sendSync('getUserSettings')
     }
 
-    public static setUserSettings(settings: Partial<UserSettings>) {
-        const currentSettings = ipcRenderer.sendSync('getUserSettings')
-
-        ipcRenderer.send('setUserSettings', { ...currentSettings, ...settings })
+    public static updateUserSettings(settings: Partial<UserSettings>) {
+        ipcRenderer.send('updateUserSettings', settings)
     }
 
     public static getSystemSettings(): SystemSettings {
         return ipcRenderer.sendSync('getSystemSettings')
     }
 
-    public static setSystemSettings(settings: Partial<SystemSettings>) {
-        const currentSettings = ipcRenderer.sendSync('getSystemSettings')
-
-        ipcRenderer.send('setSystemSettings', { ...currentSettings, ...settings })
+    public static updateSystemSettings(settings: Partial<SystemSettings>) {
+        ipcRenderer.send('updateSystemSettings', settings)
     }
 }
