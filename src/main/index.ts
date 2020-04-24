@@ -20,7 +20,9 @@ const setGlobalSearchWindowShortcut = (shortcut: Accelerator, previousShortcut?:
     if (previousShortcut) {
         try {
             globalShortcut.unregister(previousShortcut)
-        } catch (e) {}
+        } catch (e) {
+            // previous shortcut was not considered as valid
+        }
     }
 
     // unregister shortcut from other usages within the application
