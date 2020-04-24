@@ -20,7 +20,7 @@ export default function SettingsPage() {
         const { environmentTestSuccessful } = Settings.getSystemSettings()
         const { secretValueLength, searchShortcut } = Settings.getUserSettings()
         setState({ environmentTestSuccessful, secretValueLength, searchShortcut })
-    })
+    }, [])
 
     if (!state) {
         return null
@@ -48,7 +48,7 @@ export default function SettingsPage() {
                     </m.Col>
                     <m.Input
                         s={4}
-                        error={isShortcutValidationError}
+                        error={isShortcutValidationError ? 'error' : undefined}
                         defaultValue={state.searchShortcut}
                         onChange={(_: any, value: string) => {
                             const isValid = isValidElectronShortcut(value)

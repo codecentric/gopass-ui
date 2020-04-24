@@ -13,7 +13,7 @@ const SecretExplorer = ({ history }: RouteComponentProps) => {
 
     React.useEffect(() => {
         reloadSecretNames()
-    }, ['once'])
+    }, [])
 
     return (
         <div className='secret-explorer'>

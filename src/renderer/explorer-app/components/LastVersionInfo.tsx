@@ -23,7 +23,7 @@ export const LatestVersionInfo = () => {
         } else {
             setTags(releaseCheck.results)
         }
-    })
+    }, [])
 
     const lastTag = tags[tags.length - 1]
     const lastTagName = lastTag ? lastTag.ref.slice(10, lastTag.ref.length) : ''

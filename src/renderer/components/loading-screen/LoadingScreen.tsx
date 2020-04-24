@@ -21,7 +21,7 @@ export function LoadingScreen() {
         }, 2000)
 
         return () => clearInterval(timeout)
-    })
+    }, [])
 
     return (
         <div className='loading-screen-wrapper'>
