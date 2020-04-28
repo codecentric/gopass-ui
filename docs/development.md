@@ -51,16 +51,6 @@ This project contains `prettier` and `tslint`. **TLDR:** Prettier assists during
 
 ### Production packaging
 
-We use [Electron builder](https://www.electron.build/) to build and package the application. By default you can run the following to package for your current platform:
+We use [Electron builder](https://www.electron.build/) to build and package the application. See how we use it to package all targeted platforms and formats in [our release docs](../releasing.md).
 
-```bash
-npm run release
-```
-
-This will create a installer for your platform in the `releases` folder.
-
-You can make builds for specific platforms (or multiple platforms) by using the options found [here](https://www.electron.build/cli). E.g. building for all platforms (Windows, Mac, Linux):
-
-```bash
-npm run release -- -mwl
-```
+Packaging will create all results in `releases` folder.
