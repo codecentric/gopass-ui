@@ -11,6 +11,7 @@ import NotificationProvider from '../common/notifications/NotificationProvider'
 import PasswordHealthOverview from './pages/PasswordHealthPage'
 import AddSecretPage from './pages/AddSecretPage'
 import SecretDetailsPage from './pages/details/SecretDetailsPage'
+import MountsPage from './pages/MountsPage'
 
 const Routes = () => (
     <>
@@ -45,6 +46,16 @@ const Routes = () => (
                 <>
                     <GoBackNavigation />
                     <SettingsPage />
+                </>
+            )}
+        />
+        <Route
+            path='/mounts'
+            exact
+            render={() => (
+                <>
+                    <GoBackNavigation />
+                    <MountsPage />
                 </>
             )}
         />

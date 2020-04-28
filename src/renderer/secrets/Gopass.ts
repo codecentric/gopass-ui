@@ -7,6 +7,11 @@ export interface HistoryEntry {
     message: string
 }
 
+export interface Mount {
+    name: string
+    path: string
+}
+
 const lineSplitRegex = /\r?\n/
 const isDefined = (value: string) => !!value
 const escapeShellValue = (value: string) => value.replace(/(["'$`\\])/g, '\\$1')
@@ -40,6 +45,32 @@ export default class Gopass {
         } catch {
             return []
         }
+    }
+
+    public static async getAllMounts(): Promise<Mount[]> {
+        try {
+            return (await Gopass.execute('mounts'))
+                .split(lineSplitRegex)
+                .filter(line => line.includes('└──'))
+                .map(mountLine => {
+                    const lineSplit = mountLine.split(' ')
+
+                    return {
+                        name: lineSplit[1],
+                        path: lineSplit[2].replace(/[{()}]/g, '')
+                    }
+                })
+        } catch {
+            return []
+        }
+    }
+
+    public static async addMount(mount: Mount) {
+        await Gopass.execute(`mounts add "${escapeShellValue(mount.name)}" "${escapeShellValue(mount.path)}" -i 0`)
+    }
+
+    public static async deleteMount(name: string) {
+        await Gopass.execute(`mounts rm "${escapeShellValue(name)}"`)
     }
 
     public static async sync(): Promise<void> {

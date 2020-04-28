@@ -34,9 +34,9 @@ export const LatestVersionInfo = () => {
             <>
                 You have the latest version <strong>{appVersion}</strong> of Gopass UI installed 🎉
             </>
-        ) :  (
+        ) : (
             <>
-                Your Gopass UI version({appVersion}) is out of date 😕 Make sure you got the latest version of Gopass UI:&nbsp;
+                Your Gopass UI version ({appVersion}) is out of date 😕 Make sure you got the latest release of Gopass UI:&nbsp;
                 <ExternalLink url='https://github.com/codecentric/gopass-ui/releases/latest'>{`${lastTagName} on Github`}</ExternalLink>
             </>
         )

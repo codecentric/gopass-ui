@@ -31,6 +31,7 @@ function MainNavigationComponent({ history }: MainNavigationViewProps) {
             <RoundActionButton icon='add' onClick={() => history.replace('/add-secret')} />
             <RoundActionButton icon='refresh' onClick={refreshGopassStores} />
             <RoundActionButton icon='settings' onClick={() => history.replace('/settings')} />
+            <RoundActionButton icon='storage' onClick={() => history.replace('/mounts')} />
             <RoundActionButton icon='security' onClick={() => history.replace('/password-health')} />
         </div>
     )
