@@ -20,7 +20,7 @@ Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and 
 
 ### Platform notice
 
-We'll only test the MacOS builds and **are not able to offer support support for Linux and Windows releases**. We are happy to review your pull requests addressing any of such issues.  
+We'll only test the MacOS builds and **are not able to offer support for Linux and Windows releases**. We are happy to review your pull requests addressing any of such issues.  
 
 ## Issues
 
