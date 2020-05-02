@@ -12,6 +12,7 @@ import PasswordHealthOverview from './pages/PasswordHealthPage'
 import AddSecretPage from './pages/AddSecretPage'
 import SecretDetailsPage from './pages/details/SecretDetailsPage'
 import MountsPage from './pages/MountsPage'
+import AddMountPage from './pages/AddMountPage'
 
 const Routes = () => (
     <>
@@ -49,16 +50,7 @@ const Routes = () => (
                 </>
             )}
         />
-        <Route
-            path='/mounts'
-            exact
-            render={() => (
-                <>
-                    <GoBackNavigation />
-                    <MountsPage />
-                </>
-            )}
-        />
+        <Route path='/mounts' exact render={() => <MountsPage />} />
         <Route
             path='/password-health'
             exact
@@ -69,6 +61,7 @@ const Routes = () => (
                 </>
             )}
         />
+        <Route path='/add-mount' exact render={() => <AddMountPage />} />
         <Route
             path='/add-secret'
             exact
