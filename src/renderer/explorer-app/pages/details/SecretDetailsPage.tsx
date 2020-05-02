@@ -24,7 +24,7 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
     const [loading, setLoading] = React.useState(true)
     const [isPassword, setIsPassword] = React.useState(false)
     const [displaySecretValue, setDisplaySecretValue] = React.useState(DISPLAY_SECRET_VALUE_BY_DEFAULT)
-    const [editedSecretValue, setEditedSecretValue] = React.useState()
+    const [editedSecretValue, setEditedSecretValue] = React.useState<string | undefined>(undefined)
     const [queryDeletion, setQueryDeletion] = React.useState(false)
 
     React.useEffect(() => {
@@ -72,11 +72,11 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
     const discardSecretEditing = () => setEditedSecretValue(undefined)
     const onNewSecretValueChange = (event: any) => setEditedSecretValue(event.target.value)
     const saveEditedSecretValue = async () => {
-        if (editedSecretValue !== secretValue) {
+        if (editedSecretValue && editedSecretValue !== secretValue) {
             await Gopass.editSecret(secretName, editedSecretValue)
+            setSecretValue(editedSecretValue)
         }
 
-        setSecretValue(editedSecretValue)
         setEditedSecretValue(undefined)
     }
     const editModeButtons = (
@@ -112,7 +112,7 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
     ]
     const secretValueToDisplay = displaySecretValue ? secretValue : '*******************'
     const valueToDisplay = inEditMode ? editedSecretValue : secretValueToDisplay
-    const linesRequired = valueToDisplay.split('\n').length
+    const linesRequired = (valueToDisplay || '').split('\n').length
 
     return loading ? (
         <>

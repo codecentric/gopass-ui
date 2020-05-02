@@ -87,6 +87,7 @@
   },
   "homepage": "https://github.com/codecentric/gopass-ui",
   "devDependencies": {
+    "@types/node": "^12.12.37",
     "@types/dateformat": "^3.0.0",
     "@types/electron-devtools-installer": "^2.2.0",
     "@types/electron-settings": "^3.1.1",
@@ -129,7 +130,7 @@
     "tslint-config-airbnb": "^5.4.2",
     "tslint-config-prettier": "^1.18.0",
     "tslint-react": "^4.0.0",
-    "typescript": "^3.0.1",
+    "typescript": "^3.8.3",
     "webpack": "^4.29.0",
     "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.14",
