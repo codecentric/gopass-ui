@@ -18,6 +18,7 @@ interface SecretDetailsPageProps extends RouteComponentProps {
 // todo: make this configurable in the application settings
 const DISPLAY_SECRET_VALUE_BY_DEFAULT = false
 
+/* tslint:disable */
 function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPageProps) {
     const [secretValue, setSecretValue] = React.useState('')
     const [historyEntries, setHistoryEntries] = React.useState<HistoryEntry[]>([])
