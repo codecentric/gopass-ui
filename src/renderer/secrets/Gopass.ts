@@ -47,11 +47,19 @@ export default class Gopass {
         }
     }
 
+    public static async getMyRecipientId(): Promise<string | undefined> {
+        const recipientIdLine = (await Gopass.execute('recipients')).split(lineSplitRegex).find(line => line.includes('└──'))
+        if (recipientIdLine) {
+            const lineSplit = recipientIdLine.split(' ')
+            return lineSplit[4].replace('0x', '')
+        }
+    }
+
     public static async getAllMounts(): Promise<Mount[]> {
         try {
             return (await Gopass.execute('mounts'))
                 .split(lineSplitRegex)
-                .filter(line => line.includes('└──'))
+                .filter(line => line.includes('└──') || line.includes('├──'))
                 .map(mountLine => {
                     const lineSplit = mountLine.split(' ')
 
@@ -66,11 +74,23 @@ export default class Gopass {
     }
 
     public static async addMount(mount: Mount) {
-        await Gopass.execute(`mounts add "${escapeShellValue(mount.name)}" "${escapeShellValue(mount.path)}" -i 0`)
+        const myRecipientId = await Gopass.getMyRecipientId()
+        if (myRecipientId) {
+            const result = await Gopass.execute('mounts add', [
+                `"${escapeShellValue(mount.name)}"`,
+                `"${escapeShellValue(mount.path)}"`,
+                `-i "${myRecipientId}"`
+            ])
+            if (result.includes('is already mounted')) {
+                throw 'duplicate-name'
+            }
+        } else {
+            throw new Error('Own GPG recipient ID could not be determined')
+        }
     }
 
     public static async deleteMount(name: string) {
-        await Gopass.execute(`mounts rm "${escapeShellValue(name)}"`)
+        await Gopass.execute('mounts rm', [`"${escapeShellValue(name)}"`])
     }
 
     public static async sync(): Promise<void> {
