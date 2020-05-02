@@ -82,6 +82,7 @@ export default class Gopass {
                 `-i "${myRecipientId}"`
             ])
             if (result.includes('is already mounted')) {
+                // tslint:disable-next-line
                 throw 'duplicate-name'
             }
         } else {
