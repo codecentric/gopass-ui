@@ -51,6 +51,6 @@ This project contains `prettier` and `tslint`. **TLDR:** Prettier assists during
 
 ### Production packaging
 
-We use [Electron builder](https://www.electron.build/) to build and package the application. See how we use it to package all targeted platforms and formats in [our release docs](../releasing.md).
+We use [Electron builder](https://www.electron.build/) to build and package the application. See how we use it to package all targeted platforms and formats in [our release docs](./releasing.md).
 
 Packaging will create all results in `releases` folder.
