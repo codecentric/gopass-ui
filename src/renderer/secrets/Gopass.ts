@@ -20,7 +20,7 @@ export default class Gopass {
     public static executionId = 1
 
     public static async copy(key: string): Promise<string> {
-        return Gopass.execute(`show "${escapeShellValue(key)}" -c`)
+        return Gopass.execute(`show -c "${escapeShellValue(key)}"`)
     }
 
     public static async show(key: string): Promise<string> {

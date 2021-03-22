@@ -58,7 +58,7 @@ describe('Gopass', () => {
 
             expect(ipcRendererSendSpy).toHaveBeenCalledWith('gopass', {
                 args: undefined,
-                command: 'show "some-secret-name" -c',
+                command: 'show -c "some-secret-name"',
                 executionId: 1,
                 pipeTextInto: undefined
             })
