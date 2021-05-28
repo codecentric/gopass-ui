@@ -109,7 +109,7 @@ export default class Gopass {
     }
 
     public static async editSecret(name: string, newValue: string): Promise<void> {
-        await Gopass.addSecret(name, newValue)
+        await Gopass.execute('insert', ['--force', `"${escapeShellValue(name.trim())}"`], escapeShellValue(newValue))
     }
 
     public static async deleteSecret(name: string): Promise<void> {
