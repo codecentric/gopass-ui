@@ -11,7 +11,9 @@ export const createMainWindow = (): BrowserWindow => {
         icon: path.join(__dirname, 'assets', 'icon.png'),
         webPreferences: {
             enableRemoteModule: true,
-            nodeIntegration: true
+            nodeIntegration: true,
+            contextIsolation: false,
+            worldSafeExecuteJavaScript: false
         }
     })
 

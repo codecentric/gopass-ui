@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { remote } from 'electron'
+import { app } from '@electron/remote'
 import GithubService, { GithubTag } from '../GithubService'
 import { ExternalLink } from '../../components/ExternalLink'
 import { Settings } from '../../common/Settings'
@@ -27,7 +27,7 @@ export const LatestVersionInfo = () => {
 
     const lastTag = tags[tags.length - 1]
     const lastTagName = lastTag ? lastTag.ref.slice(10, lastTag.ref.length) : ''
-    const appVersion = remote.app.getVersion()
+    const appVersion = app.getVersion()
 
     if (lastTagName) {
         return lastTagName.includes(appVersion) ? (
