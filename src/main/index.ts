@@ -226,10 +226,6 @@ app.on('remote-get-current-web-contents', event => {
     event.preventDefault()
 })
 
-app.on('remote-get-guest-web-contents', event => {
-    event.preventDefault()
-})
-
 /**
  * Mitigate malicious attempts to open new windows & frames.
  * Reference: https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
