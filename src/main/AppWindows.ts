@@ -1,15 +1,16 @@
-import { BrowserWindow, Menu, app, globalShortcut, session } from 'electron'
+import { BrowserWindow, Menu, app } from 'electron'
 import * as url from 'url'
 import * as path from 'path'
 
 export const createMainWindow = (): BrowserWindow => {
-    let mainWindow: BrowserWindow | null = new BrowserWindow({
+    let mainWindow = new BrowserWindow({
         width: 1000,
         height: 600,
         center: true,
         title: 'Gopass UI',
         icon: path.join(__dirname, 'assets', 'icon.png'),
         webPreferences: {
+            enableRemoteModule: true,
             nodeIntegration: true
         }
     })
@@ -27,10 +28,6 @@ export const createMainWindow = (): BrowserWindow => {
             })
         )
     }
-
-    mainWindow.on('closed', () => {
-        mainWindow = null
-    })
 
     return mainWindow
 }
