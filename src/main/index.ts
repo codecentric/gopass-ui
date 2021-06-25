@@ -227,17 +227,3 @@ app.on('remote-get-current-window', event => {
 app.on('remote-get-current-web-contents', event => {
     event.preventDefault()
 })
-
-/**
- * Mitigate malicious attempts to open new windows & frames.
- * Reference: https://electronjs.org/docs/tutorial/security#13-disable-or-limit-creation-of-new-windows
- */
-app.on('web-contents-created', (event, contents) => {
-    contents.on('new-window', (newWindowEvent, navigationUrl) => {
-        // In this example, we'll ask the operating system
-        // to open this event's url in the default browser.
-        newWindowEvent.preventDefault()
-
-        shell.openExternal(navigationUrl)
-    })
-})
