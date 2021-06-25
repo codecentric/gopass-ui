@@ -1,13 +1,13 @@
 name: On push (tests, build)
 on: push
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
       - run: npm i
       - run: npm test
@@ -20,11 +20,14 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Check out Git repository
+        uses: actions/checkout@v1
+
+      - name: Install Node.js, NPM and Yarn
+        uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 12
+
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
