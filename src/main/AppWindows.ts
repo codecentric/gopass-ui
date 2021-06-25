@@ -3,7 +3,7 @@ import * as url from 'url'
 import * as path from 'path'
 
 export const createMainWindow = (): BrowserWindow => {
-    let mainWindow = new BrowserWindow({
+    const mainWindow = new BrowserWindow({
         width: 1000,
         height: 600,
         center: true,

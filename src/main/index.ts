@@ -12,7 +12,8 @@ import { getSystemSettings, getUserSettings, installExtensions } from './AppUtil
 const isDevMode = process.env.NODE_ENV !== 'production'
 fixPath()
 
-require('@electron/remote/main').initialize()
+import * as remoteMain from '@electron/remote/main'
+remoteMain.initialize()
 
 let mainWindow: BrowserWindow | null
 let searchWindow: BrowserWindow | null
