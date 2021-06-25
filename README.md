@@ -1,4 +1,4 @@
-# Gopass UI [![Build Status](https://travis-ci.org/codecentric/gopass-ui.svg?branch=master)](https://travis-ci.org/codecentric/gopass-ui) [![Latest release](https://img.shields.io/github/release/codecentric/gopass-ui.svg)](https://github.com/codecentric/gopass-ui/releases/latest) [![Snyk vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/codecentric/gopass-ui.svg)](https://snyk.io/test/github/codecentric/gopass-ui) [![David Dependencies Status](https://david-dm.org/codecentric/gopass-ui.svg)](https://david-dm.org/codecentric/gopass-ui)
+# Gopass UI [![Latest release](https://img.shields.io/github/release/codecentric/gopass-ui.svg)](https://github.com/codecentric/gopass-ui/releases/latest) [![Snyk vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/codecentric/gopass-ui.svg)](https://snyk.io/test/github/codecentric/gopass-ui) [![David Dependencies Status](https://david-dm.org/codecentric/gopass-ui.svg)](https://david-dm.org/codecentric/gopass-ui)
 
 <img src="docs/img/gopass-ui-logo.png" alt="Gopass UI logo" style="max-width: 800px">
 

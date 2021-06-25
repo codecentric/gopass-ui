@@ -42,7 +42,7 @@ Run them with `npm test` and `npm run test:integration`.
 
 ### Linting
 
-This project contains `prettier` and `tslint`. **TLDR:** Prettier assists during development. Tslint is ran in a Husky pre-commit hook together with unit tests and in the Travis CI pipeline (see `.travis.yml`).
+This project contains `prettier` and `tslint`. **TLDR:** Prettier assists during development. Tslint is ran in a Husky pre-commit hook together with unit tests and in Github actions (see `.github/workflows/`).
 
 **Prettier** is more aggressive because it is designed opinionated. It will find and correct more . The only options we decide on are to be found in `.prettierrc`. We use Prettier to enforce and apply code style during development process. Right after saving an edited file it will correct code style mistakes! In VSCode this comes with the Prettier extension already. In JetBrains IntelliJ IDEA/Webstorm [this can be easily configured](https://prettier.io/docs/en/webstorm.html). On the CLI, feel free to use `npm run prettier:check` and `npm run prettier:write`.
 
