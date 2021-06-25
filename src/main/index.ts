@@ -12,6 +12,8 @@ import { getSystemSettings, getUserSettings, installExtensions } from './AppUtil
 const isDevMode = process.env.NODE_ENV !== 'production'
 fixPath()
 
+require('@electron/remote/main').initialize()
+
 let mainWindow: BrowserWindow | null
 let searchWindow: BrowserWindow | null
 let tray: Tray
