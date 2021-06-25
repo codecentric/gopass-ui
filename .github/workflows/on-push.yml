@@ -12,19 +12,17 @@ jobs:
       - run: npm i
       - run: npm test
 
-  release:
+  build:
     runs-on: ${{ matrix.os }}
-
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 14
       - name: Build/release Electron app
         uses: samuelmeuli/action-electron-builder@v1
         with:
