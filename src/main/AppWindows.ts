@@ -35,7 +35,7 @@ export const createMainWindow = (): BrowserWindow => {
 }
 
 export const createSearchWindow = (show: boolean): BrowserWindow => {
-    let searchWindow: BrowserWindow | null = new BrowserWindow({
+    const searchWindow = new BrowserWindow({
         show,
         width: process.env.NODE_ENV !== 'production' ? 1200 : 600,
         height: 600,
@@ -45,7 +45,10 @@ export const createSearchWindow = (show: boolean): BrowserWindow => {
         title: 'Gopass UI Search Window',
         resizable: false,
         webPreferences: {
-            nodeIntegration: true
+            enableRemoteModule: true,
+            nodeIntegration: true,
+            contextIsolation: false,
+            worldSafeExecuteJavaScript: false
         }
     })
 
@@ -64,10 +67,6 @@ export const createSearchWindow = (show: boolean): BrowserWindow => {
             })
         )
     }
-
-    searchWindow.on('closed', () => {
-        searchWindow = null
-    })
 
     return searchWindow
 }
