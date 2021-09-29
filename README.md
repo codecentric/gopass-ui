@@ -1,4 +1,4 @@
-# Gopass UI [![Latest release](https://img.shields.io/github/release/codecentric/gopass-ui.svg)](https://github.com/codecentric/gopass-ui/releases/latest) [![Snyk vulnerabilities](https://img.shields.io/snyk/vulnerabilities/github/codecentric/gopass-ui.svg)](https://snyk.io/test/github/codecentric/gopass-ui) [![David Dependencies Status](https://david-dm.org/codecentric/gopass-ui.svg)](https://david-dm.org/codecentric/gopass-ui)
+# Gopass UI [![Latest release](https://img.shields.io/github/release/codecentric/gopass-ui.svg)](https://github.com/codecentric/gopass-ui/releases/latest)
 
 <img src="docs/img/gopass-ui-logo.png" alt="Gopass UI logo" style="max-width: 800px">
 
@@ -8,7 +8,7 @@
 
 `Gopass UI` is wrapping `gopass` from your command line. It makes your life easier by providing a graphical user interface to search and manage your secrets. It looks like this:
 
-<img src="docs/img/demo-720p.gif" alt="GIF demonstrating core features of Gopass UI" title="Gopass UI demo" style="max-width: 800px" />
+<img src="docs/img/demo-720p.gif" alt="GIF demonstrating core features of Gopass UI" title="Gopass UI demo" style="max-width: 720px" />
 
 In addition there is a search window that can be opened with `(cmd || ctrl) + shift + p`.
 
@@ -22,21 +22,11 @@ Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and 
 
 We'll only test the MacOS builds and **are not able to offer support for Linux and Windows releases**. We are happy to review your pull requests addressing any of such issues.  
 
-## Issues
+## Issues and Contribution
 
-Feel free to report any issue. We are very keen about your feedback and appreciate any help.
+Feel free to report any usage issue. We are very keen about your feedback and appreciate any help.
+You'd like to help us developing Gopass UI? Awesome! We are looking forward to your pull requests, issues and participation in discussion.
 
 ## Development
 
-See how to get started with development [here](docs/development.md).
-
-## Contribution
-
-You'd like to help us? No problem. We are looking forward to your pull requests, issues and participation in discussion.
-
-| [<img alt="Jonas Verhoelen" src="https://avatars1.githubusercontent.com/u/6791360?v=4&s=200" width="200">](https://github.com/jverhoelen) | [<img alt="Matthias Rütten" src="https://avatars1.githubusercontent.com/u/2926623?v=4&s=200" width="200">](https://github.com/ruettenm) |
-:---: | :---:
-|[Jonas Verhoelen](https://github.com/jverhoelen) | [Matthias Rütten](https://github.com/ruettenm)|
-
-## License
-MIT
+See how to get started in our [development documentation](docs/development.md).
