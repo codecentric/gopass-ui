@@ -15,6 +15,18 @@
     padding: 0 8% !important;
 }
 
+.secret-explorer .chevron {
+    display: inline-block;
+}
+
+.secret-explorer .chevron.toggled .material-icons {
+    transform: rotate(90deg);
+}
+
+.secret-explorer .chevron .material-icons {
+    margin: 0;
+}
+
 .secret-explorer i.material-icons {
     position: relative;
     top: 7px;
