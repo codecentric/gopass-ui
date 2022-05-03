@@ -17,10 +17,15 @@
 
 .secret-explorer .chevron {
     display: inline-block;
+    user-select: none;
 }
 
 .secret-explorer .chevron.toggled .material-icons {
     transform: rotate(90deg);
+}
+
+.secret-explorer .icon-wrapper > .material-icons:only-child {
+    margin-left: 30px;
 }
 
 .secret-explorer .chevron .material-icons {

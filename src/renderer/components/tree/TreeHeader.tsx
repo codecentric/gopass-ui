@@ -11,7 +11,7 @@ export const TreeHeader = ({ style, node }: any) => {
         iconType = deriveIconFromSecretName(node.name)
     }
     return (
-        <div style={style.base}>
+        <div style={style.base} className='icon-wrapper'>
             {node.children && (
                 <div className={`chevron ${node.toggled && 'toggled'}`}>
                     <m.Icon small>chevron_right</m.Icon>
