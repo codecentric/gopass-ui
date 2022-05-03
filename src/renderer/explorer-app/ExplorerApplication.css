@@ -35,11 +35,11 @@
 }
 
 .link {
-    cursor: pointer
+    cursor: pointer;
 }
 
 span.code {
-    font-family: Consolas, monospace
+    font-family: Consolas, monospace;
 }
 
 .card-panel pre {
