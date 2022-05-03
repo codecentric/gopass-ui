@@ -18,14 +18,15 @@ const SecretExplorer = ({ history }: RouteComponentProps) => {
     return (
         <div className='secret-explorer'>
             <KeyboardEventHandler handleKeys={['esc']} handleFocusableElements onKeyEvent={clearSearch} />
-            <m.Input
-                className='search-bar'
-                value={searchValue}
-                placeholder='Search...'
-                onChange={(_: any, updatedSearchValue: string) => {
-                    applySearchToTree(updatedSearchValue)
-                }}
-            />
+            <div className='search-bar'>
+                <m.Input
+                    value={searchValue}
+                    placeholder='Search...'
+                    onChange={(_: any, updatedSearchValue: string) => {
+                        applySearchToTree(updatedSearchValue)
+                    }}
+                />
+            </div>
             <SecretTree tree={tree} onSecretClick={navigateToSecretDetailView} />
         </div>
     )

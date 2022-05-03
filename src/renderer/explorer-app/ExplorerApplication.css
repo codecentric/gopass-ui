@@ -11,8 +11,25 @@
 }
 
 .secret-explorer .search-bar {
-    width: 84% !important;
-    padding: 0 8% !important;
+    background: #f9f9f9;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.14);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.secret-explorer .search-bar * {
+    margin: 0 !important;
+    border: none !important;
+}
+
+.secret-explorer .search-bar > div {
+    padding: 0 !important;
+}
+
+.secret-explorer .search-bar input {
+    box-sizing: border-box !important;
+    padding: 24px !important;
 }
 
 .secret-explorer > ul > li {
