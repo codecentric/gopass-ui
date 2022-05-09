@@ -1,8 +1,9 @@
-import { BrowserWindow, Menu, app } from 'electron'
+import { BrowserWindow, Menu, app, nativeTheme } from 'electron'
 import * as url from 'url'
 import * as path from 'path'
 
 export const createMainWindow = (): BrowserWindow => {
+    nativeTheme.themeSource = 'light'
     const mainWindow = new BrowserWindow({
         width: 1000,
         height: 600,

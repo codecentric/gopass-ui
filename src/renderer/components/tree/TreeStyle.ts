@@ -15,8 +15,9 @@ export const globalStyle = {
         node: {
             base: {
                 position: 'relative',
-                marginLeft: '27px',
-                marginTop: '3px'
+                borderLeft: '1px solid #ececec',
+                padding: '4px 12px 4px',
+                marginLeft: '8px'
             },
             link: {
                 cursor: 'pointer',
