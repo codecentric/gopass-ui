@@ -1,11 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const spawn = require('child_process').spawn
 
 const baseConfig = require('./webpack.renderer.explorer.config')
 
-module.exports = merge.smart(baseConfig, {
+module.exports = merge(baseConfig, {
     entry: [
         'react-hot-loader/patch',
         './src/renderer/explorer-app.tsx'
@@ -15,27 +15,31 @@ module.exports = merge.smart(baseConfig, {
             {
                 test: /\.tsx?$/,
                 include: [ path.resolve(__dirname, 'src', 'renderer') ],
-                loaders: ['react-hot-loader/webpack', 'ts-loader']
+                use: [
+                    {
+                        loader: 'react-hot-loader/webpack'
+                    },
+                    {
+                        loader: 'ts-loader'
+                    }
+                ]
             }
         ]
     },
-    plugins: [
-        new webpack.NamedModulesPlugin(),
-        new webpack.HotModuleReplacementPlugin()
-    ],
+    optimization: {
+        moduleIds: 'named',
+    },
+    stats: 'errors-only',
     devServer: {
         port: 2003,
         compress: true,
-        noInfo: true,
-        stats: 'errors-only',
-        inline: true,
         hot: true,
         headers: { 'Access-Control-Allow-Origin': '*' },
         historyApiFallback: {
             verbose: true,
             disableDotRule: false
         },
-        before() {
+        onBeforeSetupMiddleware: () => {
             if (process.env.START_HOT) {
                 console.log('Starting main process');
                 spawn('npm', ['run', 'start-main-dev'], {
@@ -43,8 +47,8 @@ module.exports = merge.smart(baseConfig, {
                     env: process.env,
                     stdio: 'inherit'
                 })
-                    .on('close', code => process.exit(code))
-                    .on('error', spawnError => console.error(spawnError));
+                .on('close', code => process.exit(code))
+                .on('error', spawnError => console.error(spawnError));
             }
         }
     }
