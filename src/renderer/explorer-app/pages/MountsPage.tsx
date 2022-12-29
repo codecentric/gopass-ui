@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { RouteComponentProps, withRouter } from 'react-router'
+import {useNavigate} from 'react-router-dom'
 
 import Gopass, { Mount } from '../../secrets/Gopass'
 import PaginatedTable from '../../components/PaginatedTable'
@@ -8,10 +8,11 @@ import { LoadingScreen } from '../../components/loading-screen/LoadingScreen'
 import { RoundActionButton } from '../../components/RoundActionButton'
 import { useSecretsContext } from '../SecretsProvider'
 
-const MountsPage = ({ history }: RouteComponentProps) => {
+const MountsPage = () => {
     const secretsContext = useSecretsContext()
     const [mounts, setMounts] = React.useState<Mount[] | undefined>(undefined)
     const [loading, setLoading] = React.useState(true)
+    const navigate = useNavigate()
 
     const loadMounts = async () => {
         setLoading(true)
@@ -32,8 +33,8 @@ const MountsPage = ({ history }: RouteComponentProps) => {
     return (
         <>
             <div style={{ paddingTop: '0.75rem' }}>
-                <RoundActionButton icon='arrow_back' onClick={() => history.replace('/')} />
-                <RoundActionButton icon='add' onClick={() => history.replace('/add-mount')} />
+                <RoundActionButton icon='arrow_back' onClick={() => navigate('/')} />
+                <RoundActionButton icon='add' onClick={() => navigate('/add-mount')} />
             </div>
 
             <h4>Mounts</h4>
@@ -65,4 +66,4 @@ const MountsTable = ({ entries, deleteRow }: { entries: Mount[]; deleteRow: (nam
     return <PaginatedTable columns={columns} rows={rows} />
 }
 
-export default withRouter(MountsPage)
+export default MountsPage

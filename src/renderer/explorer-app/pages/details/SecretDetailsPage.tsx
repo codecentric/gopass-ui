@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { useParams } from 'react-router'
 
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import { passwordSecretRegex } from '../../../secrets/deriveIconFromSecretName'
@@ -9,17 +9,18 @@ import { useCopySecretToClipboard } from '../../../secrets/useCopySecretToClipbo
 import { HistoryTable } from './HistoryTable'
 import PasswordRatingComponent from '../../password-health/PasswordRatingComponent'
 import { useSecretsContext } from '../../SecretsProvider'
-
-interface SecretDetailsPageProps extends RouteComponentProps {
-    secretName: string
-    isAdded?: boolean
-}
+import {useNavigate, useSearchParams} from 'react-router-dom'
 
 // todo: make this configurable in the application settings
 const DISPLAY_SECRET_VALUE_BY_DEFAULT = false
 
 /* tslint:disable */
-function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPageProps) {
+export default function SecretDetailsPage() {
+    let params = useParams()
+    const secretName = atob(params.encodedSecretName!)
+    let [ searchParams ] = useSearchParams()
+    const isAdded = searchParams ? searchParams.has('added') : false
+    const navigate = useNavigate()
     const [secretValue, setSecretValue] = React.useState('')
     const [historyEntries, setHistoryEntries] = React.useState<HistoryEntry[]>([])
     const [loading, setLoading] = React.useState(true)
@@ -47,7 +48,7 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
 
     const querySecretDeletion = () => setQueryDeletion(true)
     const denySecretDeletion = () => setQueryDeletion(false)
-    const confirmSecretDeletion = () => Gopass.deleteSecret(secretName).then(() => history.replace('/'))
+    const confirmSecretDeletion = () => Gopass.deleteSecret(secretName).then(() => navigate('/'))
     const deletionModeButtons = queryDeletion ? (
         <>
             <a className='link' onClick={denySecretDeletion}>
@@ -153,5 +154,3 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
         </>
     )
 }
-
-export default withRouter(SecretDetailsPage)

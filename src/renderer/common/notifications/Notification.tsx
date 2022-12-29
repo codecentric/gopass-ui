@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { Animated } from 'react-animated-css'
+// import { Animated } from 'react-animated-css'
 
 import { useNotificationContext } from './NotificationProvider'
 
@@ -25,7 +25,8 @@ export default function NotificationView(props: { dismissTimeout?: number }) {
     }, [notification, dismissTimeout])
 
     return (
-        <Animated animationIn='fadeInDown' animationInDuration={1000} animationOutDuration={1000} animationOut='fadeOutUp' isVisible={!isHidden}>
+        // TODO!
+        // <Animated animationIn='fadeInDown' animationInDuration={1000} animationOutDuration={1000} animationOut='fadeOutUp' isVisible={!isHidden}>
             <m.Row>
                 <m.Col s={12}>
                     {notification && (
@@ -44,6 +45,6 @@ export default function NotificationView(props: { dismissTimeout?: number }) {
                     )}
                 </m.Col>
             </m.Row>
-        </Animated>
+        // </Animated>
     )
 }

@@ -11,10 +11,11 @@ export const createMainWindow = (): BrowserWindow => {
         title: 'Gopass UI',
         icon: path.join(__dirname, 'assets', 'icon.png'),
         webPreferences: {
-            enableRemoteModule: true,
+            // TODO!
+            // enableRemoteModule: true,
+            // worldSafeExecuteJavaScript: false
             nodeIntegration: true,
-            contextIsolation: false,
-            worldSafeExecuteJavaScript: false
+            contextIsolation: false
         }
     })
 
@@ -46,10 +47,11 @@ export const createSearchWindow = (show: boolean): BrowserWindow => {
         title: 'Gopass UI Search Window',
         resizable: false,
         webPreferences: {
-            enableRemoteModule: true,
+            // TODO
+            // enableRemoteModule: true,
+            // worldSafeExecuteJavaScript: false
             nodeIntegration: true,
             contextIsolation: false,
-            worldSafeExecuteJavaScript: false
         }
     })
 

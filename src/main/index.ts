@@ -1,7 +1,7 @@
-import { app, BrowserWindow, Event, globalShortcut, ipcMain, IpcMainEvent, Tray, session, shell, Accelerator } from 'electron'
+import { app, BrowserWindow, Event, globalShortcut, ipcMain, IpcMainEvent, Tray, session } from 'electron'
 import { URL } from 'url'
 import * as path from 'path'
-import * as fixPath from 'fix-path'
+import fixPath from 'fix-path'
 import * as electronSettings from 'electron-settings'
 
 import { SystemSettings, UserSettings } from '../shared/settings'
@@ -19,7 +19,7 @@ let mainWindow: BrowserWindow | null
 let searchWindow: BrowserWindow | null
 let tray: Tray
 
-const setGlobalSearchWindowShortcut = (shortcut: Accelerator, previousShortcut?: Accelerator) => {
+const setGlobalSearchWindowShortcut = (shortcut: string, previousShortcut?: string) => {
     // unregister previously used shortcut if Electron recognises it as valid
     if (previousShortcut) {
         try {
@@ -188,43 +188,44 @@ app.on('web-contents-created', (event, contents) => {
     })
 })
 
+// TODO!
 /**
  * Prevents unwanted modules from 'remote' from being used.
  * Reference: https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module
  */
-const allowedRemoteModules = new Set(['app'])
-app.on('remote-get-builtin', (event, webContents, moduleName) => {
-    if (!allowedRemoteModules.has(moduleName)) {
-        event.preventDefault()
-        console.warn(`Blocked module "${moduleName}"`)
-    }
-})
-
-const allowedModules = new Set()
-const proxiedModules = new Map()
-app.on('remote-require', (event, webContents, moduleName) => {
-    if (proxiedModules.has(moduleName)) {
-        const proxiedModule = proxiedModules.get(moduleName)
-        event.returnValue = proxiedModule
-        console.warn(`Proxied remote-require of module "${moduleName}" to "${proxiedModule}"`)
-    }
-    if (!allowedModules.has(moduleName)) {
-        event.preventDefault()
-        console.warn(`Blocked remote-require of module "${moduleName}"`)
-    }
-})
-
-const allowedGlobals = new Set()
-app.on('remote-get-global', (event, webContents, globalName) => {
-    if (!allowedGlobals.has(globalName)) {
-        event.preventDefault()
-    }
-})
-
-app.on('remote-get-current-window', event => {
-    event.preventDefault()
-})
-
-app.on('remote-get-current-web-contents', event => {
-    event.preventDefault()
-})
+// const allowedRemoteModules = new Set(['app'])
+// app.on('remote-get-builtin', (event, webContents, moduleName) => {
+//     if (!allowedRemoteModules.has(moduleName)) {
+//         event.preventDefault()
+//         console.warn(`Blocked module "${moduleName}"`)
+//     }
+// })
+//
+// const allowedModules = new Set()
+// const proxiedModules = new Map()
+// app.on('remote-require', (event, webContents, moduleName) => {
+//     if (proxiedModules.has(moduleName)) {
+//         const proxiedModule = proxiedModules.get(moduleName)
+//         event.returnValue = proxiedModule
+//         console.warn(`Proxied remote-require of module "${moduleName}" to "${proxiedModule}"`)
+//     }
+//     if (!allowedModules.has(moduleName)) {
+//         event.preventDefault()
+//         console.warn(`Blocked remote-require of module "${moduleName}"`)
+//     }
+// })
+//
+// const allowedGlobals = new Set()
+// app.on('remote-get-global', (event, webContents, globalName) => {
+//     if (!allowedGlobals.has(globalName)) {
+//         event.preventDefault()
+//     }
+// })
+//
+// app.on('remote-get-current-window', event => {
+//     event.preventDefault()
+// })
+//
+// app.on('remote-get-current-web-contents', event => {
+//     event.preventDefault()
+// })

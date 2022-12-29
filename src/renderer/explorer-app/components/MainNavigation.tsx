@@ -1,19 +1,15 @@
 import * as React from 'react'
-import { History } from 'history'
-import { withRouter } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
 import { RoundActionButton } from '../../components/RoundActionButton'
 import { useNotificationContext } from '../../common/notifications/NotificationProvider'
 import Gopass from '../../secrets/Gopass'
 import { useSecretsContext } from '../SecretsProvider'
 
-interface MainNavigationViewProps {
-    history: History
-}
-
-function MainNavigationComponent({ history }: MainNavigationViewProps) {
+export default function MainNavigationComponent() {
     const notificationContext = useNotificationContext()
     const secretsContext = useSecretsContext()
+    const navigate = useNavigate()
 
     const refreshGopassStores = async () => {
         try {
@@ -27,14 +23,12 @@ function MainNavigationComponent({ history }: MainNavigationViewProps) {
 
     return (
         <div style={{ paddingTop: '0.75rem' }}>
-            <RoundActionButton icon='home' onClick={() => history.replace('/')} />
-            <RoundActionButton icon='add' onClick={() => history.replace('/add-secret')} />
+            <RoundActionButton icon='home' onClick={() => navigate('/')} />
+            <RoundActionButton icon='add' onClick={() => navigate('/add-secret')} />
             <RoundActionButton icon='refresh' onClick={refreshGopassStores} />
-            <RoundActionButton icon='settings' onClick={() => history.replace('/settings')} />
-            <RoundActionButton icon='storage' onClick={() => history.replace('/mounts')} />
-            <RoundActionButton icon='security' onClick={() => history.replace('/password-health')} />
+            <RoundActionButton icon='settings' onClick={() => navigate('/settings')} />
+            <RoundActionButton icon='storage' onClick={() => navigate('/mounts')} />
+            <RoundActionButton icon='security' onClick={() => navigate('/password-health')} />
         </div>
     )
 }
-
-export default withRouter(MainNavigationComponent)

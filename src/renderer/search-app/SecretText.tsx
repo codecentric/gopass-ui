@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as replace from 'string-replace-to-array'
+import replace from 'string-replace-to-array'
 
 export interface SecretTextProps {
     secretPath: string[]

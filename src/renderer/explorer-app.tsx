@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { HashRouter as Router } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { AppContainer } from 'react-hot-loader'
 
 import ExplorerApplication from './explorer-app/ExplorerApplication'
@@ -15,11 +15,11 @@ document.body.appendChild(mainElement)
 
 ReactDOM.render(
     <AppContainer>
-        <Router>
+        <HashRouter>
             <SecretsProvider>
                 <ExplorerApplication />
             </SecretsProvider>
-        </Router>
+        </HashRouter>
     </AppContainer>,
     mainElement
 )

@@ -1,11 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const baseConfig = require('./webpack.base.config')
 
-module.exports = merge.smart(baseConfig, {
+module.exports = merge(baseConfig, {
     target: 'electron-main',
     entry: {
         main: './src/main/index.ts'
@@ -15,17 +15,16 @@ module.exports = merge.smart(baseConfig, {
             {
                 test: /\.tsx?$/,
                 include: [path.resolve(__dirname, 'src', 'main'), path.resolve(__dirname, 'src', 'shared')],
-                loader: 'awesome-typescript-loader'
+                loader: 'ts-loader'
             }
         ]
     },
     plugins: [
-        new CopyWebpackPlugin([
-            {
-                from: 'src/main/assets',
-                to: 'assets'
-            }
-        ]),
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: 'src/main/assets', to: 'assets' },
+            ],
+        }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
         })

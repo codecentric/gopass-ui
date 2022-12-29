@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { withRouter, RouteComponentProps } from 'react-router'
 import AsyncPasswordHealthCollector, { PasswordHealthCollectionStatus, PasswordSecretHealth } from '../../secrets/AsyncPasswordHealthCollector'
 import PaginatedTable from '../../components/PaginatedTable'
 import { LoadingScreen } from '../../components/loading-screen/LoadingScreen'
@@ -13,7 +12,7 @@ interface PasswordHealthPageState {
     status?: PasswordHealthCollectionStatus
 }
 
-class PasswordHealthPage extends React.Component<RouteComponentProps, PasswordHealthPageState> {
+class PasswordHealthPage extends React.Component<any, PasswordHealthPageState> {
     constructor(props: any) {
         super(props)
         this.state = {
@@ -143,7 +142,7 @@ class PasswordHealthPage extends React.Component<RouteComponentProps, PasswordHe
         )
     }
 
-    private onSecretClick = (secretName: string) => () => this.props.history.replace(`/secret/${btoa(secretName)}`)
+    private onSecretClick = (secretName: string) => () => { /*no-op*/ } // this.props.history.replace(`/secret/${btoa(secretName)}`) TODO!!!
 }
 
-export default withRouter(PasswordHealthPage)
+export default PasswordHealthPage

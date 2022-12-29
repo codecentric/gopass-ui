@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import * as isValidElectronShortcut from 'electron-is-accelerator'
+import isValidElectronShortcut from 'electron-is-accelerator'
 
 import { EnvironmentTest } from '../components/EnvironmentTest'
 import { Settings } from '../../common/Settings'

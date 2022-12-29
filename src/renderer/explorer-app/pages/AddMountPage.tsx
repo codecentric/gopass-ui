@@ -1,22 +1,23 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { RouteComponentProps, withRouter } from 'react-router'
 import Gopass, { Mount } from '../../secrets/Gopass'
 import { RoundActionButton } from '../../components/RoundActionButton'
 import { useSecretsContext } from '../SecretsProvider'
 import { useNotificationContext } from '../../common/notifications/NotificationProvider'
+import { useNavigate } from 'react-router-dom'
 
-function AddMountPage({ history }: RouteComponentProps) {
+function AddMountPage() {
     const notificationContext = useNotificationContext()
     const secretsContext = useSecretsContext()
     const [mount, setMount] = React.useState<Mount>({ name: '', path: '' })
+    const navigate = useNavigate()
 
     const addMount = async () => {
         if (mount.path && mount.name) {
             try {
                 await Gopass.addMount(mount)
                 await secretsContext.reloadSecretNames()
-                history.replace('/mounts')
+                navigate('/mounts')
             } catch (err) {
                 if (typeof err === 'string') {
                     if (err === 'duplicate-name') {
@@ -42,7 +43,7 @@ function AddMountPage({ history }: RouteComponentProps) {
     return (
         <>
             <div style={{ paddingTop: '0.75rem' }}>
-                <RoundActionButton icon='arrow_back' onClick={() => history.replace('/mounts')} />
+                <RoundActionButton icon='arrow_back' onClick={() => navigate('/mounts')} />
             </div>
 
             <h4>New Mount</h4>
@@ -62,4 +63,4 @@ function AddMountPage({ history }: RouteComponentProps) {
     )
 }
 
-export default withRouter(AddMountPage)
+export default AddMountPage

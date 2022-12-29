@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as dateformat from 'dateformat'
+import dateFormat from 'dateformat'
 
 import PaginatedTable from '../../../components/PaginatedTable'
 import { HistoryEntry } from '../../../secrets/Gopass'
@@ -12,7 +12,7 @@ export function HistoryTable({ entries }: HistoryTableProps) {
     const rows = entries.map(entry => ({
         ...entry,
         id: entry.hash,
-        timestamp: dateformat(new Date(entry.timestamp), 'yyyy-mm-dd HH:MM')
+        timestamp: dateFormat(new Date(entry.timestamp), 'yyyy-mm-dd HH:MM')
     }))
     const columns = [
         { fieldName: 'timestamp', label: 'Time' },

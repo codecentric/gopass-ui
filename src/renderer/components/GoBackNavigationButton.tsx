@@ -1,13 +1,16 @@
 import * as React from 'react'
-import { withRouter } from 'react-router'
-import { History } from 'history'
+import { useNavigate } from 'react-router-dom'
 
 import { RoundActionButton } from './RoundActionButton'
 
-const GoBackNavigationButton = (props: { history: History }) => (
-    <div style={{ paddingTop: '0.75rem' }}>
-        <RoundActionButton icon='arrow_back' onClick={() => props.history.replace('/')} />
-    </div>
-)
+const GoBackNavigationButton = () => {
+    const navigate = useNavigate()
 
-export default withRouter(GoBackNavigationButton)
+    return (
+        <div style={{ paddingTop: '0.75rem' }}>
+            <RoundActionButton icon='arrow_back' onClick={() => navigate('/')} />
+        </div>
+    )
+}
+
+export default GoBackNavigationButton

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { match, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 
 import SettingsPage from './pages/SettingsPage'
 import HomePage from './pages/HomePage'
@@ -17,60 +17,41 @@ import AddMountPage from './pages/AddMountPage'
 const Routes = () => (
     <>
         <Route
-            path='/'
-            exact
-            render={() => (
-                <>
-                    <MainNavigation />
-                    <HomePage />
-                </>
-            )}
-        />
-        <Route
             path='/secret/:encodedSecretName'
-            component={(props: { match: match<{ encodedSecretName: string }>; location: { search?: string } }) => {
-                const secretName = atob(props.match.params.encodedSecretName)
-                const isAdded = props.location.search ? props.location.search === '?added' : false
-
-                return (
-                    <>
-                        <MainNavigation />
-                        <SecretDetailsPage secretName={secretName} isAdded={isAdded} />
-                    </>
-                )
-            }}
+            element={<>
+                <MainNavigation />
+                <SecretDetailsPage />
+            </>}
         />
         <Route
             path='/settings'
-            exact
-            render={() => (
-                <>
-                    <GoBackNavigation />
-                    <SettingsPage />
-                </>
-            )}
+            element={<>
+                <GoBackNavigation />
+                <SettingsPage />
+            </>}
         />
-        <Route path='/mounts' exact render={() => <MountsPage />} />
+        <Route path='/mounts' element={<MountsPage />} />
         <Route
             path='/password-health'
-            exact
-            render={() => (
-                <>
-                    <GoBackNavigation />
-                    <PasswordHealthOverview />
-                </>
-            )}
+            element={<>
+                <GoBackNavigation />
+                <PasswordHealthOverview />
+            </>}
         />
-        <Route path='/add-mount' exact render={() => <AddMountPage />} />
+        <Route path='/add-mount' element={<AddMountPage />} />
         <Route
             path='/add-secret'
-            exact
-            render={() => (
-                <>
-                    <GoBackNavigation />
-                    <AddSecretPage />
-                </>
-            )}
+            element={<>
+                <GoBackNavigation />
+                <AddSecretPage />
+            </>}
+        />
+        <Route
+            path='/'
+            element={<>
+                <MainNavigation />
+                <HomePage />
+            </>}
         />
     </>
 )

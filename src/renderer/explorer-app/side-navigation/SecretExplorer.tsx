@@ -1,14 +1,15 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
 import * as KeyboardEventHandler from 'react-keyboard-event-handler'
+import { useNavigate } from 'react-router-dom'
 
-import { RouteComponentProps, withRouter } from 'react-router'
 import SecretTree from './SecretTree'
 import { useSecretsContext } from '../SecretsProvider'
 
-const SecretExplorer = ({ history }: RouteComponentProps) => {
+const SecretExplorer = () => {
+    const navigate = useNavigate()
     const { tree, applySearchToTree, reloadSecretNames, searchValue } = useSecretsContext()
-    const navigateToSecretDetailView = (secretName: string) => history.replace(`/secret/${btoa(secretName)}`)
+    const navigateToSecretDetailView = (secretName: string) => navigate(`/secret/${btoa(secretName)}`)
     const clearSearch = () => applySearchToTree('')
 
     React.useEffect(() => {
@@ -32,4 +33,4 @@ const SecretExplorer = ({ history }: RouteComponentProps) => {
     )
 }
 
-export default withRouter(SecretExplorer)
+export default SecretExplorer
