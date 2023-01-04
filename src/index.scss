@@ -1,0 +1,18 @@
+.ant-list-item {
+  &.even {
+    background-color: rgba(211, 211, 211, 0.4);
+  }
+
+  &.selected {
+    background-color: rgba(211, 211, 211, 0.81);
+  }
+
+
+  &.list-entry {
+    align-items: start;
+  }
+}
+
+.secret-value {
+  margin: 0;
+}

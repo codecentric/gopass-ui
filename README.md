@@ -1,32 +1,62 @@
-# Gopass UI [![Latest release](https://img.shields.io/github/release/codecentric/gopass-ui.svg)](https://github.com/codecentric/gopass-ui/releases/latest)
+# electron-vite-react
 
-<img src="docs/img/gopass-ui-logo.png" alt="Gopass UI logo" style="max-width: 800px">
+## 👀 Overview
 
-## What is Gopass and Gopass UI?
+📦 Ready out of the box  
+🎯 Based on the official [template-react-ts](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts), project structure will be familiar to you  
+🌱 Easily extendable and customizable  
+💪 Supports Node.js API in the renderer process  
+🔩 Supports C/C++ native addons  
+🐞 Debugger configuration included  
+🖥 Easy to implement multiple windows  
 
-> [Gopass](https://github.com/gopasspw/gopass) is a rewrite of the pass password manager in Go with the aim of making it cross-platform and adding additional features – (Taken from Github)
+## 🛫 Quick start
 
-`Gopass UI` is wrapping `gopass` from your command line. It makes your life easier by providing a graphical user interface to search and manage your secrets. It looks like this:
+```sh
+npm create electron-vite
+```
 
-<img src="docs/img/demo-720p.gif" alt="GIF demonstrating core features of Gopass UI" title="Gopass UI demo" style="max-width: 720px" />
+## 📂 Directory structure
 
-In addition there is a search window that can be opened with `(cmd || ctrl) + shift + p`.
+Familiar React application structure, just with `electron` folder on the top :wink:  
+*Files in this folder will be separated from your React application and built into `dist-electron`*  
 
-## How can I use it?
+```tree
+├── electron                                 Electron-related code
+│   ├── main                                 Main-process source code
+│   └── preload                              Preload-scripts source code
+│
+├── release                                  Generated after production build, contains executables
+│   └── {version}
+│       ├── {os}-{os_arch}                   Contains unpacked application executable
+│       └── {app_name}_{version}.{ext}       Installer for the application
+│
+├── public                                   Static assets
+└── src                                      Renderer source code, your React application
+```
 
-For most platforms just [download the latest packaged application](https://github.com/codecentric/gopass-ui/releases/latest) from our releases and install it. We provide binaries for MacOS, Windows and Linux (deb, RPM, snap, AppImage, Gentoo). For more details see [supported platforms and packages](docs/platforms-and-packages.md).
+## 🚨 Be aware
 
-Of course, you need to have [Gopass](https://github.com/gopasspw/gopass) up and running. We also recommend to use a dialog-based PIN-entry-tool for typing in GPG passphrases like [pinentry-mac for MacOS](https://formulae.brew.sh/formula/pinentry-mac) instead of using the default terminal-based.
+This template integrates Node.js API to the renderer process by default. If you want to follow **Electron Security Concerns** you might want to disable this feature. You will have to expose needed API by yourself.  
 
-### Platform notice
+To get started, remove the option as shown below. This will [modify the Vite configuration and disable this feature](https://github.com/electron-vite/vite-plugin-electron-renderer#config-presets-opinionated).
 
-We'll only test the MacOS builds and **are not able to offer support for Linux and Windows releases**. We are happy to review your pull requests addressing any of such issues.  
+```diff
+# vite.config.ts
 
-## Issues and Contribution
+export default {
+  plugins: [
+    ...
+-   // Use Node.js API in the Renderer-process
+-   renderer({
+-     nodeIntegration: true,
+-   }),
+    ...
+  ],
+}
+```
 
-Feel free to report any usage issue. We are very keen about your feedback and appreciate any help.
-You'd like to help us developing Gopass UI? Awesome! We are looking forward to your pull requests, issues and participation in discussion.
+## ❔ FAQ
 
-## Development
-
-See how to get started in our [development documentation](docs/development.md).
+- [dependencies vs devDependencies](https://github.com/electron-vite/vite-plugin-electron-renderer#dependencies-vs-devdependencies)
+- [C/C++ addons, Node.js modules - Pre-Bundling](https://github.com/electron-vite/vite-plugin-electron-renderer#dependency-pre-bundling)
