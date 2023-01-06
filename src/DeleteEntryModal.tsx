@@ -31,7 +31,7 @@ export const DeleteEntryModal = ({ secretKey, closeModal, refreshSecrets }: AddE
             ]}
             onCancel={closeModal}
         >
-            <p>Are you sure that you want to delete the Entry?</p>
+            <p>Are you sure you want to delete this Entry?</p>
             <pre>{secretKey}</pre>
         </Modal>
     )
