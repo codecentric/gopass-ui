@@ -23,7 +23,7 @@ export function SecretKey({ secretPath, highlightRegExp }: SecretKeyProps) {
                 const extendedResult = result.concat(getHighlightedSegment(segment, highlightRegExp))
 
                 if (currentIndex < secretPath.length - 1) {
-                    extendedResult.push(' > ')
+                    extendedResult.push('/')
                 }
 
                 return extendedResult

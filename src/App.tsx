@@ -11,20 +11,20 @@ console.log('[App.tsx]', `Hello world from Electron ${process.versions.electron}
 
 function App() {
     const [search, setSearch] = React.useState('')
-    const [settingsShown, setSettingsShown] = React.useState(false)
+    const [settingsModalShown, setSettingsModalShown] = React.useState(false)
     const [_, contextHolder] = notification.useNotification()
     const showSettings = React.useCallback(() => {
-        setSettingsShown(true)
+        setSettingsModalShown(true)
     }, [])
     const closeSettings = React.useCallback(() => {
-        setSettingsShown(false)
+        setSettingsModalShown(false)
     }, [])
 
     return (
         <>
             {contextHolder}
             <div className='app'>
-                <SettingsModal shown={settingsShown} closeModal={closeSettings} />
+                <SettingsModal shown={settingsModalShown} closeModal={closeSettings} />
                 <div className='header'>
                     <Input
                         prefix={<SearchOutlined />}

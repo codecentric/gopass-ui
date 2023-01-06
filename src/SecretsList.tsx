@@ -1,13 +1,16 @@
 import * as React from 'react'
 import { ipcRenderer } from 'electron'
 import { useCopySecretToClipboard } from './useCopySecretToClipboard'
-import Gopass from './Gopass'
+import { Gopass } from './Gopass'
 import KeyboardEventHandler from 'react-keyboard-event-handler'
-import { Button, Input, List, notification, Space } from 'antd'
+import { List, notification, Space } from 'antd'
+import { PlusCircleTwoTone } from '@ant-design/icons'
 import { SecretKey } from './SecretKey'
 import { SecretValue } from './SecretValue'
 import classNames from 'classnames'
 import { EditSecret } from './EditSecret'
+import { ListHeader } from './ListHeader'
+import { AddEntryModal } from './AddEntryModal'
 
 export interface SecretsListProps {
     search: string
@@ -21,6 +24,14 @@ export function SecretsList({ search }: SecretsListProps) {
     const [filteredSecretNames, setFilteredSecretNames] = React.useState<string[]>([])
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0)
     const [highlightRegExp, setHighlightRegExp] = React.useState<RegExp | undefined>()
+    const [addEntryModalShown, setAddEntryModalShown] = React.useState(false)
+
+    const openAddEntryModal = React.useCallback(() => {
+        setAddEntryModalShown(true)
+    }, [])
+    const closeAddEntryModal = React.useCallback(() => {
+        setAddEntryModalShown(false)
+    }, [])
 
     const copySecretToClipboard = useCopySecretToClipboard()
 
@@ -114,9 +125,10 @@ export function SecretsList({ search }: SecretsListProps) {
     return (
         <>
             <KeyboardEventHandler handleKeys={['up', 'shift+tab', 'down', 'tab', 'enter', 'esc']} handleFocusableElements onKeyEvent={onKeyEvent} />
+            <AddEntryModal shown={addEntryModalShown} closeModal={closeAddEntryModal} />
             <List
                 size='small'
-                header={<strong>{filteredSecretNames.length} Entries</strong>}
+                header={<ListHeader numberOfEntries={filteredSecretNames.length} openAddEntryModal={openAddEntryModal} />}
                 bordered
                 dataSource={filteredSecretNames}
                 renderItem={(secretKey, i) => {
