@@ -4,7 +4,6 @@ import { SettingOutlined, SearchOutlined } from '@ant-design/icons'
 
 import { SecretsList } from './SecretsList'
 
-import './App.scss'
 import { SettingsModal } from './SettingsModal'
 
 console.log('[App.tsx]', `Hello world from Electron ${process.versions.electron}!`)

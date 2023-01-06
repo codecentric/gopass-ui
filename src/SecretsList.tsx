@@ -4,13 +4,13 @@ import { useCopySecretToClipboard } from './useCopySecretToClipboard'
 import { Gopass } from './Gopass'
 import KeyboardEventHandler from 'react-keyboard-event-handler'
 import { List, notification, Space } from 'antd'
-import { PlusCircleTwoTone } from '@ant-design/icons'
 import { SecretKey } from './SecretKey'
 import { SecretValue } from './SecretValue'
 import classNames from 'classnames'
 import { EditSecret } from './EditSecret'
 import { ListHeader } from './ListHeader'
 import { AddEntryModal } from './AddEntryModal'
+import { DeleteEntryModal } from './DeleteEntryModal'
 
 export interface SecretsListProps {
     search: string
@@ -25,12 +25,17 @@ export function SecretsList({ search }: SecretsListProps) {
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0)
     const [highlightRegExp, setHighlightRegExp] = React.useState<RegExp | undefined>()
     const [addEntryModalShown, setAddEntryModalShown] = React.useState(false)
+    const [secretKeyToDelete, setSecretKeyToDelete] = React.useState<string | undefined>(undefined)
 
     const openAddEntryModal = React.useCallback(() => {
         setAddEntryModalShown(true)
     }, [])
     const closeAddEntryModal = React.useCallback(() => {
         setAddEntryModalShown(false)
+    }, [])
+
+    const closeDeleteEntryModal = React.useCallback(() => {
+        setSecretKeyToDelete(undefined)
     }, [])
 
     const copySecretToClipboard = useCopySecretToClipboard()
@@ -48,9 +53,11 @@ export function SecretsList({ search }: SecretsListProps) {
         setSelectedItemIndex(0)
     }
 
-    React.useEffect(() => {
+    const refreshSecrets = () => {
         Gopass.getAllSecretNames().then(setAllSecretNames)
-    }, [])
+    }
+
+    React.useEffect(refreshSecrets, [])
 
     React.useEffect(() => {
         updateFilteredSecrets()
@@ -103,13 +110,6 @@ export function SecretsList({ search }: SecretsListProps) {
 
     const onClickShowKey = (secretKey: string) => () => {
         setShownSecretNames([...shownSecretNames, secretKey])
-    }
-
-    const onClickEditKey = (secretKey: string) => () => {
-        setSecretNamesInEditMode([...secretNamesInEditMode, secretKey])
-    }
-
-    const closeEditMode = (secretKey: string) => {
         setSecretNamesInEditMode(secretNamesInEditMode.filter(key => key !== secretKey))
     }
 
@@ -117,18 +117,31 @@ export function SecretsList({ search }: SecretsListProps) {
         setShownSecretNames(shownSecretNames.filter(key => key !== secretKey))
     }
 
-    const onClickCopyKey = (secretKey: string) => () => {
+    const onClickEditKey = (secretKey: string) => () => {
+        setSecretNamesInEditMode([...secretNamesInEditMode, secretKey])
         setShownSecretNames(shownSecretNames.filter(key => key !== secretKey))
-        api.info({ message: 'Secret copied', description: 'The secret is copied to the clipboard.', placement: 'top' })
+    }
+
+    const closeEditMode = (secretKey: string) => {
+        setSecretNamesInEditMode(secretNamesInEditMode.filter(key => key !== secretKey))
+    }
+
+    const onClickCopyKey = (secretKey: string) => () => {
+        Gopass.copy(secretKey)
+    }
+
+    const onClickDeleteKey = (secretKey: string) => () => {
+        setSecretKeyToDelete(secretKey)
     }
 
     return (
         <>
             <KeyboardEventHandler handleKeys={['up', 'shift+tab', 'down', 'tab', 'enter', 'esc']} handleFocusableElements onKeyEvent={onKeyEvent} />
-            <AddEntryModal shown={addEntryModalShown} closeModal={closeAddEntryModal} />
+            <AddEntryModal shown={addEntryModalShown} closeModal={closeAddEntryModal} refreshSecrets={refreshSecrets} />
+            <DeleteEntryModal secretKey={secretKeyToDelete} closeModal={closeDeleteEntryModal} refreshSecrets={refreshSecrets} />
             <List
                 size='small'
-                header={<ListHeader numberOfEntries={filteredSecretNames.length} openAddEntryModal={openAddEntryModal} />}
+                header={<ListHeader numberOfEntries={filteredSecretNames.length} openAddEntryModal={openAddEntryModal} refreshSecrets={refreshSecrets} />}
                 bordered
                 dataSource={filteredSecretNames}
                 renderItem={(secretKey, i) => {
@@ -152,6 +165,9 @@ export function SecretsList({ search }: SecretsListProps) {
                                 </a>,
                                 <a onClick={onClickCopyKey(secretKey)}>
                                     <u>c</u>opy
+                                </a>,
+                                <a onClick={onClickDeleteKey(secretKey)}>
+                                    <u>d</u>elete
                                 </a>
                             ]}
                         >

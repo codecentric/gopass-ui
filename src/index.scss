@@ -16,3 +16,35 @@
 .secret-value {
   margin: 0;
 }
+
+body {
+  margin: 0;
+}
+
+.app {
+  margin: 0 12px 12px 12px;
+}
+
+.header {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+.ant-list .ant-list-item .ant-list-item-action {
+  margin-inline-start: 16px;
+}
+
+.list-entry .ant-space {
+  width: 100%;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
