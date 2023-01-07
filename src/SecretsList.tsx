@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron'
 import { useCopySecretToClipboard } from './useCopySecretToClipboard'
 import { Gopass } from './Gopass'
 import KeyboardEventHandler from 'react-keyboard-event-handler'
-import { List, notification, Space } from 'antd'
+import { List, notification, Space, Tooltip } from 'antd'
 import { SecretKey } from './SecretKey'
 import { SecretValue } from './SecretValue'
 import classNames from 'classnames'
@@ -11,6 +11,7 @@ import { EditSecret } from './EditSecret'
 import { ListHeader } from './ListHeader'
 import { AddEntryModal } from './AddEntryModal'
 import { DeleteEntryModal } from './DeleteEntryModal'
+import { EditOutlined, CopyOutlined, DeleteOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
 
 export interface SecretsListProps {
     search: string
@@ -25,8 +26,15 @@ export function SecretsList({ search }: SecretsListProps) {
     const [selectedItemIndex, setSelectedItemIndex] = React.useState(0)
     const [highlightRegExp, setHighlightRegExp] = React.useState<RegExp | undefined>()
     const [addEntryModalShown, setAddEntryModalShown] = React.useState(false)
+    const [watchingForKeyEvents, setWatchingForKeyEvents] = React.useState(true)
     const [secretKeyToDelete, setSecretKeyToDelete] = React.useState<string | undefined>(undefined)
 
+    const disableKeyWatching = React.useCallback(() => {
+        setWatchingForKeyEvents(false)
+    }, [])
+    const enableKeyWatching = React.useCallback(() => {
+        setWatchingForKeyEvents(true)
+    }, [])
     const openAddEntryModal = React.useCallback(() => {
         setAddEntryModalShown(true)
     }, [])
@@ -66,6 +74,14 @@ export function SecretsList({ search }: SecretsListProps) {
     React.useEffect(() => {
         updateFilteredSecrets(search)
     }, [search])
+
+    React.useEffect(() => {
+        if (addEntryModalShown || secretKeyToDelete) {
+            disableKeyWatching()
+        } else {
+            enableKeyWatching()
+        }
+    }, [addEntryModalShown, secretKeyToDelete])
 
     const onKeyEvent = (key: string, event: any) => {
         switch (key) {
@@ -136,7 +152,12 @@ export function SecretsList({ search }: SecretsListProps) {
 
     return (
         <>
-            <KeyboardEventHandler handleKeys={['up', 'shift+tab', 'down', 'tab', 'enter', 'esc']} handleFocusableElements onKeyEvent={onKeyEvent} />
+            <KeyboardEventHandler
+                isDisabled={!watchingForKeyEvents}
+                handleKeys={['up', 'shift+tab', 'down', 'tab', 'enter', 'esc']}
+                handleFocusableElements
+                onKeyEvent={onKeyEvent}
+            />
             <AddEntryModal shown={addEntryModalShown} closeModal={closeAddEntryModal} refreshSecrets={refreshSecrets} />
             <DeleteEntryModal secretKey={secretKeyToDelete} closeModal={closeDeleteEntryModal} refreshSecrets={refreshSecrets} />
             <List
@@ -159,15 +180,33 @@ export function SecretsList({ search }: SecretsListProps) {
                             className={className}
                             onClick={() => onSelectCollectionItem(secretKey)}
                             actions={[
-                                isKeyShown ? <a onClick={onClickHideKey(secretKey)}>hide</a> : <a onClick={onClickShowKey(secretKey)}>show</a>,
+                                isKeyShown ? (
+                                    <a onClick={onClickHideKey(secretKey)}>
+                                        <Tooltip title='hide'>
+                                            <EyeInvisibleOutlined />
+                                        </Tooltip>
+                                    </a>
+                                ) : (
+                                    <a onClick={onClickShowKey(secretKey)}>
+                                        <Tooltip title='show'>
+                                            <EyeOutlined />
+                                        </Tooltip>
+                                    </a>
+                                ),
                                 <a onClick={onClickEditKey(secretKey)}>
-                                    <u>e</u>dit
-                                </a>,
-                                <a onClick={onClickCopyKey(secretKey)}>
-                                    <u>c</u>opy
+                                    <Tooltip title='edit'>
+                                        <EditOutlined />
+                                    </Tooltip>
                                 </a>,
                                 <a onClick={onClickDeleteKey(secretKey)}>
-                                    <u>d</u>elete
+                                    <Tooltip title='delete'>
+                                        <DeleteOutlined />
+                                    </Tooltip>
+                                </a>,
+                                <a onClick={onClickCopyKey(secretKey)}>
+                                    <Tooltip title='copy'>
+                                        <CopyOutlined />
+                                    </Tooltip>
                                 </a>
                             ]}
                         >

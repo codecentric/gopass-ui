@@ -4,6 +4,8 @@ import { useEffect } from 'react'
 import { Gopass } from './Gopass'
 import { sleep } from './util/sleep'
 
+const { TextArea } = Input
+
 export interface EditSecretProps {
     secretKey: string
     close: (secretKey: string) => void
@@ -22,13 +24,16 @@ export const EditSecret = ({ secretKey, close }: EditSecretProps) => {
         close(secretKey)
     }, [secretKey])
 
+    const numberOfSecretRows = secretValue?.split(/\n/).length || 0
+    const multiLineSecret = numberOfSecretRows > 2
+
     return (
         <Space direction='vertical'>
             {secretValue === undefined ? (
                 <Spin size='large' />
             ) : (
                 <>
-                    <Input size='small' value={secretValue} />
+                    {multiLineSecret ? <TextArea value={secretValue} rows={numberOfSecretRows} /> : <Input size='small' value={secretValue} />}
                     <Space direction='horizontal'>
                         <Button size='small' type='primary' onClick={closeEditMode}>
                             Save

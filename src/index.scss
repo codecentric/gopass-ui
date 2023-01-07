@@ -17,7 +17,7 @@
   margin: 0;
 }
 
-body {
+body, pre, p {
   margin: 0;
 }
 
@@ -47,4 +47,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.modal-content {
+  margin-top: 24px;
 }

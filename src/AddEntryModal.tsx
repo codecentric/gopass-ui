@@ -1,4 +1,4 @@
-import { Button, Form, FormInstance, Input, Modal } from 'antd'
+import { Button, Form, FormInstance, Input, InputRef, Modal } from 'antd'
 import * as React from 'react'
 import { Gopass } from './Gopass'
 
@@ -25,25 +25,29 @@ export const AddEntryModal = ({ shown, closeModal, refreshSecrets }: AddEntryMod
     }
 
     React.useEffect(() => {
-        if (shown) {
-            formRef.current?.setFieldsValue({ key: '', value: '' })
+        if (shown && formRef.current) {
+            formRef.current.resetFields()
         }
-    }, [shown])
+    }, [shown, formRef])
 
     return (
         <Modal
             title='Add New Entry'
             open={shown}
+            destroyOnClose
             footer={[
-                <Button key='submit' type='primary' htmlType='submit' onClick={addEntry} loading={adding}>
+                <Button key='cancel' htmlType='submit' onClick={closeModal}>
+                    Cancel
+                </Button>,
+                <Button key='add-entry' type='primary' htmlType='submit' onClick={addEntry} loading={adding}>
                     Add Entry
                 </Button>
             ]}
             onCancel={closeModal}
         >
-            <Form labelCol={{ span: 3 }} layout='horizontal' ref={formRef}>
+            <Form labelCol={{ span: 3 }} layout='horizontal' ref={formRef} className='modal-content'>
                 <Form.Item name='key' label='Key'>
-                    <Input />
+                    <Input autoFocus />
                 </Form.Item>
                 <Form.Item name='value' label='Value'>
                     <TextArea rows={8} />

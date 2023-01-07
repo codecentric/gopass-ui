@@ -1,4 +1,4 @@
-import { Button, Modal } from 'antd'
+import { Button, Modal, Space } from 'antd'
 import * as React from 'react'
 import { Gopass } from './Gopass'
 
@@ -25,14 +25,19 @@ export const DeleteEntryModal = ({ secretKey, closeModal, refreshSecrets }: AddE
             title='Delete Entry'
             open={!!secretKey}
             footer={[
-                <Button key='submit' type='primary' danger htmlType='submit' onClick={deleteEntry} loading={deleting}>
+                <Button key='cancel' onClick={closeModal}>
+                    Cancel
+                </Button>,
+                <Button key='delete-entry' type='primary' danger onClick={deleteEntry} loading={deleting}>
                     Delete Entry
                 </Button>
             ]}
             onCancel={closeModal}
         >
-            <p>Are you sure you want to delete this Entry?</p>
-            <pre>{secretKey}</pre>
+            <Space direction='vertical' size='large' className='modal-content'>
+                <p>Are you sure you want to delete this Entry?</p>
+                <pre>{secretKey}</pre>
+            </Space>
         </Modal>
     )
 }
