@@ -3,7 +3,7 @@ import { ipcRenderer } from 'electron'
 import { useCopySecretToClipboard } from './useCopySecretToClipboard'
 import { Gopass } from './Gopass'
 import KeyboardEventHandler from 'react-keyboard-event-handler'
-import { List, notification, Space, Tooltip } from 'antd'
+import { List, notification, Space } from 'antd'
 import { SecretKey } from './SecretKey'
 import { SecretValue } from './SecretValue'
 import classNames from 'classnames'
@@ -12,6 +12,7 @@ import { ListHeader } from './ListHeader'
 import { AddEntryModal } from './AddEntryModal'
 import { DeleteEntryModal } from './DeleteEntryModal'
 import { EditOutlined, CopyOutlined, DeleteOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
+import useDebouncedEffect from 'use-debounced-effect'
 
 export interface SecretsListProps {
     search: string
@@ -48,7 +49,7 @@ export function SecretsList({ search }: SecretsListProps) {
 
     const copySecretToClipboard = useCopySecretToClipboard()
 
-    const updateFilteredSecrets = (search?: string) => {
+    const updateFilteredSecrets = React.useCallback(() => {
         if (search) {
             const searchValues = search.split(' ').map(searchValue => searchValue.trim())
 
@@ -59,7 +60,7 @@ export function SecretsList({ search }: SecretsListProps) {
             setHighlightRegExp(undefined)
         }
         setSelectedItemIndex(0)
-    }
+    }, [search])
 
     const refreshSecrets = () => {
         Gopass.getAllSecretNames().then(setAllSecretNames)
@@ -71,9 +72,7 @@ export function SecretsList({ search }: SecretsListProps) {
         updateFilteredSecrets()
     }, [allSecretNames])
 
-    React.useEffect(() => {
-        updateFilteredSecrets(search)
-    }, [search])
+    useDebouncedEffect(updateFilteredSecrets, { timeout: 150, ignoreInitialCall: false }, [search])
 
     React.useEffect(() => {
         if (addEntryModalShown || secretKeyToDelete) {
@@ -182,38 +181,28 @@ export function SecretsList({ search }: SecretsListProps) {
                             actions={[
                                 isKeyShown ? (
                                     <a onClick={onClickHideKey(secretKey)}>
-                                        <Tooltip title='hide'>
-                                            <EyeInvisibleOutlined />
-                                        </Tooltip>
+                                        <EyeInvisibleOutlined title='hide' />
                                     </a>
                                 ) : (
                                     <a onClick={onClickShowKey(secretKey)}>
-                                        <Tooltip title='show'>
-                                            <EyeOutlined />
-                                        </Tooltip>
+                                        <EyeOutlined title='show' />
                                     </a>
                                 ),
                                 <a onClick={onClickEditKey(secretKey)}>
-                                    <Tooltip title='edit'>
-                                        <EditOutlined />
-                                    </Tooltip>
+                                    <EditOutlined title='edit' />
                                 </a>,
                                 <a onClick={onClickDeleteKey(secretKey)}>
-                                    <Tooltip title='delete'>
-                                        <DeleteOutlined />
-                                    </Tooltip>
+                                    <DeleteOutlined title='delete' />
                                 </a>,
                                 <a onClick={onClickCopyKey(secretKey)}>
-                                    <Tooltip title='copy'>
-                                        <CopyOutlined />
-                                    </Tooltip>
+                                    <CopyOutlined title='copy' />
                                 </a>
                             ]}
                         >
                             <Space direction='vertical' size='small'>
                                 <SecretKey secretPath={secretPath} highlightRegExp={highlightRegExp} />
-                                {isKeyShown ? <SecretValue secretKey={secretKey} /> : null}
-                                {isKeyInEditMode ? <EditSecret secretKey={secretKey} close={closeEditMode} /> : null}
+                                {isKeyShown && <SecretValue secretKey={secretKey} />}
+                                {isKeyInEditMode && <EditSecret secretKey={secretKey} close={closeEditMode} />}
                             </Space>
                         </List.Item>
                     )

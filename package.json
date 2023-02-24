@@ -43,6 +43,7 @@
     "prettier:write": "prettier --write '{src,electron}/**/*.{ts,tsx,js,jsx}'"
   },
   "devDependencies": {
+    "@types/lodash.debounce": "^4.0.7",
     "@types/react": "^18.0.26",
     "@types/react-dom": "^18.0.10",
     "@types/react-keyboard-event-handler": "^1.5.2",
@@ -63,6 +64,8 @@
     "vite-plugin-electron-renderer": "^0.11.3"
   },
   "dependencies": {
-    "classnames": "^2.3.2"
+    "classnames": "^2.3.2",
+    "lodash.debounce": "^4.0.8",
+    "use-debounced-effect": "^2.0.1"
   }
 }

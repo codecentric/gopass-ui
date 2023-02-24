@@ -3,10 +3,7 @@ import { Input, notification } from 'antd'
 import { SettingOutlined, SearchOutlined } from '@ant-design/icons'
 
 import { SecretsList } from './SecretsList'
-
 import { SettingsModal } from './SettingsModal'
-
-console.log('[App.tsx]', `Hello world from Electron ${process.versions.electron}!`)
 
 function App() {
     const [search, setSearch] = React.useState('')
