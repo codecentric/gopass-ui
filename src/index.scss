@@ -1,0 +1,54 @@
+.ant-list-item {
+  &.even {
+    background-color: rgba(211, 211, 211, 0.4);
+  }
+
+  &.selected {
+    background-color: rgba(211, 211, 211, 0.81);
+  }
+
+
+  &.list-entry {
+    align-items: start;
+  }
+}
+
+.secret-value {
+  margin: 0;
+}
+
+body, pre, p {
+  margin: 0;
+}
+
+.app {
+  margin: 0 12px 12px 12px;
+}
+
+.header {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+}
+
+.ant-list .ant-list-item .ant-list-item-action {
+  margin-inline-start: 16px;
+}
+
+.list-entry .ant-space {
+  width: 100%;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-content {
+  margin-top: 24px;
+}
