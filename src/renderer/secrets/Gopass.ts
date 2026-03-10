@@ -1,4 +1,4 @@
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, IpcRendererEvent } from 'electron'
 
 export interface HistoryEntry {
     hash: string
@@ -82,8 +82,7 @@ export default class Gopass {
                 `-i "${myRecipientId}"`
             ])
             if (result.includes('is already mounted')) {
-                // tslint:disable-next-line
-                throw 'duplicate-name'
+                throw 'duplicate-name' // eslint-disable-line no-throw-literal
             }
         } else {
             throw new Error('Own GPG recipient ID could not be determined')
@@ -117,10 +116,8 @@ export default class Gopass {
     }
 
     private static execute(command: string, args?: string[], pipeTextInto?: string): Promise<string> {
-        // tslint:disable-next-line
-
         const result = new Promise<string>((resolve, reject) => {
-            ipcRenderer.once(`gopass-answer-${Gopass.executionId}`, (_: Event, value: any) => {
+            ipcRenderer.once(`gopass-answer-${Gopass.executionId}`, (_: IpcRendererEvent, value: any) => {
                 if (value.status === 'ERROR') {
                     reject(value.payload)
                 } else {

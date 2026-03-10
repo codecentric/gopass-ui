@@ -1,0 +1,42 @@
+{
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "plugins": ["@typescript-eslint", "react", "react-hooks"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "prettier"
+    ],
+    "rules": {
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
+        "no-empty": "warn",
+        "no-shadow": "off",
+        "@typescript-eslint/no-shadow": "warn",
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-empty-interface": "off",
+        "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "react/prop-types": "off",
+        "react/react-in-jsx-scope": "off",
+        "react-hooks/immutability": "off",
+        "prefer-const": "warn",
+        "curly": "warn",
+        "radix": "warn",
+        "max-len": ["warn", { "code": 160 }]
+    },
+    "ignorePatterns": ["dist/", "build/", "node_modules/", "*.js"]
+}

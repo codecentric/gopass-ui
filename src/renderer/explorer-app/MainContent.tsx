@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { match, Route } from 'react-router-dom'
+import { Route, Routes, useParams, useLocation } from 'react-router-dom'
 
 import SettingsPage from './pages/SettingsPage'
 import HomePage from './pages/HomePage'
@@ -14,65 +14,62 @@ import SecretDetailsPage from './pages/details/SecretDetailsPage'
 import MountsPage from './pages/MountsPage'
 import AddMountPage from './pages/AddMountPage'
 
-const Routes = () => (
-    <>
+const SecretDetailsRoute = () => {
+    const { encodedSecretName } = useParams<{ encodedSecretName: string }>()
+    const location = useLocation()
+    const secretName = atob(encodedSecretName || '')
+    const isAdded = location.search === '?added'
+
+    return (
+        <>
+            <MainNavigation />
+            <SecretDetailsPage secretName={secretName} isAdded={isAdded} />
+        </>
+    )
+}
+
+const AppRoutes = () => (
+    <Routes>
         <Route
             path='/'
-            exact
-            render={() => (
+            element={
                 <>
                     <MainNavigation />
                     <HomePage />
                 </>
-            )}
+            }
         />
-        <Route
-            path='/secret/:encodedSecretName'
-            component={(props: { match: match<{ encodedSecretName: string }>; location: { search?: string } }) => {
-                const secretName = atob(props.match.params.encodedSecretName)
-                const isAdded = props.location.search ? props.location.search === '?added' : false
-
-                return (
-                    <>
-                        <MainNavigation />
-                        <SecretDetailsPage secretName={secretName} isAdded={isAdded} />
-                    </>
-                )
-            }}
-        />
+        <Route path='/secret/:encodedSecretName' element={<SecretDetailsRoute />} />
         <Route
             path='/settings'
-            exact
-            render={() => (
+            element={
                 <>
                     <GoBackNavigation />
                     <SettingsPage />
                 </>
-            )}
+            }
         />
-        <Route path='/mounts' exact render={() => <MountsPage />} />
+        <Route path='/mounts' element={<MountsPage />} />
         <Route
             path='/password-health'
-            exact
-            render={() => (
+            element={
                 <>
                     <GoBackNavigation />
                     <PasswordHealthOverview />
                 </>
-            )}
+            }
         />
-        <Route path='/add-mount' exact render={() => <AddMountPage />} />
+        <Route path='/add-mount' element={<AddMountPage />} />
         <Route
             path='/add-secret'
-            exact
-            render={() => (
+            element={
                 <>
                     <GoBackNavigation />
                     <AddSecretPage />
                 </>
-            )}
+            }
         />
-    </>
+    </Routes>
 )
 
 const MainContent = () => (
@@ -81,7 +78,7 @@ const MainContent = () => (
             <Notification />
             <m.Row>
                 <m.Col s={12}>
-                    <Routes />
+                    <AppRoutes />
                 </m.Col>
             </m.Row>
         </NotificationProvider>

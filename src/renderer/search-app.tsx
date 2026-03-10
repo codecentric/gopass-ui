@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { AppContainer } from 'react-hot-loader'
 
 import { SearchApplication } from './search-app/SearchApplication'
 
@@ -11,8 +10,6 @@ const mainElement = document.createElement('div')
 document.body.appendChild(mainElement)
 
 ReactDOM.render(
-    <AppContainer>
-        <SearchApplication />
-    </AppContainer>,
+    <SearchApplication />,
     mainElement
 )

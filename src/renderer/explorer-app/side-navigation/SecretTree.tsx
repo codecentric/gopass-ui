@@ -6,7 +6,7 @@ export interface SecretTreeViewerProps {
     tree: Tree
 }
 
-export default class SecretTreeViewer extends React.Component<SecretTreeViewerProps, {}> {
+export default class SecretTreeViewer extends React.Component<SecretTreeViewerProps> {
     public render() {
         return <TreeComponent tree={this.props.tree} onLeafClick={this.props.onSecretClick} />
     }

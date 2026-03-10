@@ -1,17 +1,13 @@
 import * as React from 'react'
-import { History } from 'history'
-import { withRouter } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
 import { RoundActionButton } from '../../components/RoundActionButton'
 import { useNotificationContext } from '../../common/notifications/NotificationProvider'
 import Gopass from '../../secrets/Gopass'
 import { useSecretsContext } from '../SecretsProvider'
 
-interface MainNavigationViewProps {
-    history: History
-}
-
-function MainNavigationComponent({ history }: MainNavigationViewProps) {
+function MainNavigation() {
+    const navigate = useNavigate()
     const notificationContext = useNotificationContext()
     const secretsContext = useSecretsContext()
 
@@ -27,14 +23,14 @@ function MainNavigationComponent({ history }: MainNavigationViewProps) {
 
     return (
         <div style={{ paddingTop: '0.75rem' }}>
-            <RoundActionButton icon='home' onClick={() => history.replace('/')} />
-            <RoundActionButton icon='add' onClick={() => history.replace('/add-secret')} />
+            <RoundActionButton icon='home' onClick={() => navigate('/', { replace: true })} />
+            <RoundActionButton icon='add' onClick={() => navigate('/add-secret', { replace: true })} />
             <RoundActionButton icon='refresh' onClick={refreshGopassStores} />
-            <RoundActionButton icon='settings' onClick={() => history.replace('/settings')} />
-            <RoundActionButton icon='storage' onClick={() => history.replace('/mounts')} />
-            <RoundActionButton icon='security' onClick={() => history.replace('/password-health')} />
+            <RoundActionButton icon='settings' onClick={() => navigate('/settings', { replace: true })} />
+            <RoundActionButton icon='storage' onClick={() => navigate('/mounts', { replace: true })} />
+            <RoundActionButton icon='security' onClick={() => navigate('/password-health', { replace: true })} />
         </div>
     )
 }
 
-export default withRouter(MainNavigationComponent)
+export default MainNavigation

@@ -95,8 +95,8 @@ function ErrorContent(props: { errorDetails: ErrorDetails; reset: () => void }) 
             {props.errorDetails && (
                 <>
                     <strong>
-                        {props.errorDetails === 'DECRYPTION' && <>It wasn't possible to decrypt your secrets.</>}
-                        {props.errorDetails === 'GOPASS_CONNECTION' && <>It wasn't possible to access the gopass CLI.</>}
+                        {props.errorDetails === 'DECRYPTION' && <>It wasn&apos;t possible to decrypt your secrets.</>}
+                        {props.errorDetails === 'GOPASS_CONNECTION' && <>It wasn&apos;t possible to access the gopass CLI.</>}
                     </strong>
                     <br />
                     <br />

@@ -1,9 +1,9 @@
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const path = require('path')
 
 const baseConfig = require('./webpack.renderer.explorer.config')
 
-module.exports = merge.smart(baseConfig, {
+module.exports = merge(baseConfig, {
     output: {
         path: path.resolve(__dirname, 'dist', 'search'),
     },

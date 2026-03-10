@@ -1,6 +1,5 @@
 import { ipcRenderer } from 'electron'
 import { SystemSettings, UserSettings } from '../../shared/settings'
-import set = Reflect.set
 
 export class Settings {
     public static getUserSettings(): UserSettings {

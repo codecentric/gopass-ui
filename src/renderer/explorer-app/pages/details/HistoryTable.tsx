@@ -1,5 +1,5 @@
 import * as React from 'react'
-import * as dateformat from 'dateformat'
+import dateformat from 'dateformat'
 
 import PaginatedTable from '../../../components/PaginatedTable'
 import { HistoryEntry } from '../../../secrets/Gopass'

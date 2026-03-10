@@ -33,7 +33,7 @@ export default class AsyncPasswordHealthCollector {
             await this.collectPasswordHealthOneAfterAnother(passwordSecretNames)
             this.status.inProgress = false
         } catch (e) {
-            this.status.error = e
+            this.status.error = e instanceof Error ? e : new Error(String(e))
             this.status.inProgress = false
         }
     }

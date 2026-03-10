@@ -1,11 +1,11 @@
 const path = require('path')
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const baseConfig = require('./webpack.base.config')
 
-module.exports = merge.smart(baseConfig, {
+module.exports = merge(baseConfig, {
     output: {
         path: path.resolve(__dirname, 'dist', 'explorer')
     },
@@ -18,45 +18,26 @@ module.exports = merge.smart(baseConfig, {
             {
                 test: /\.tsx?$/,
                 include: [path.resolve(__dirname, 'src', 'renderer')],
-                loader: 'awesome-typescript-loader'
+                loader: 'ts-loader'
             },
             {
                 test: /\.scss$/,
-                loaders: ['style-loader', 'css-loader', 'sass-loader']
+                use: ['style-loader', 'css-loader', 'sass-loader']
             },
             {
                 test: /\.css$/,
-                loaders: ['style-loader', 'css-loader']
+                use: ['style-loader', 'css-loader']
             },
             {
                 test: /\.(gif|png|jpe?g|svg)$/,
-                use: [
-                    'file-loader',
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            bypassOnDebug: true
-                        }
-                    }
-                ]
-            },
-            // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
-            {
-                enforce: 'pre',
-                test: /\.js$/,
-                loader: 'source-map-loader'
+                type: 'asset/resource'
             },
             {
-                test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: 'fonts/'
-                        }
-                    }
-                ]
+                test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name][ext]'
+                }
             }
         ]
     },

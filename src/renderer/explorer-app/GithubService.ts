@@ -4,23 +4,14 @@ export interface GithubTag {
 }
 
 export default class GithubService {
-    public static getTagsOfRepository(owner: string, repositoryName: string): Promise<GithubTag[]> {
-        return new Promise((resolve, reject) => {
-            const httpRequest = new XMLHttpRequest()
-            const url = `https://api.github.com/repos/${owner}/${repositoryName}/git/refs/tags`
+    public static async getTagsOfRepository(owner: string, repositoryName: string): Promise<GithubTag[]> {
+        const url = `https://api.github.com/repos/${owner}/${repositoryName}/git/refs/tags`
+        const response = await fetch(url)
 
-            httpRequest.open('GET', url)
-            httpRequest.onload = e => {
-                if (httpRequest.status >= 200 && httpRequest.status < 300) {
-                    resolve(JSON.parse(httpRequest.response) as GithubTag[])
-                } else {
-                    reject({
-                        status: httpRequest.status,
-                        statusText: httpRequest.statusText
-                    })
-                }
-            }
-            httpRequest.send()
-        })
+        if (!response.ok) {
+            throw { status: response.status, statusText: response.statusText }
+        }
+
+        return (await response.json()) as GithubTag[]
     }
 }

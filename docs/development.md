@@ -1,5 +1,10 @@
 ## Development
 
+### Prerequisites
+
+- **Node.js 20** (LTS) – use [nvm](https://github.com/nvm-sh/nvm) to install the correct version
+- **gopass** – the CLI password manager this UI wraps
+
 ### Clone and install dependencies
 
 First, clone the repository and navigate inside:
@@ -11,7 +16,7 @@ git clone https://github.com/codecentric/gopass-ui.git && cd gopass-ui/
 Then, install the dependencies:
 
 ```bash
-nvm use # make sure that nvm is installed on your machine and it installs the requested Node version
+nvm use # installs/selects the Node version from .nvmrc (20)
 npm install
 ```
 
@@ -21,8 +26,6 @@ The app is divided into one main process and two renderer processes. One rendere
 All processes have to be started **simultaneously** in different console tabs:
 
 ```bash
-# don't forget nvm use && npm install from the previous section ;-)
-
 # run this in a pane for powering the main process (the "backend")
 npm run start-main-dev
  # run this in a pane for the renderer of the main/explorer window
@@ -35,19 +38,29 @@ This will start the application with hot-reloading so you can instantly start de
 
 ### Testing
 
-We use Jest for tests. Currently the project contains (too less) unit and integration tests. Unit tests should have no dependency to the local machine except the Node environment we're setting up. Integration tests can also involve system binaries like Gopass, GPG and so on – you got the point ;-)
+We use Jest for tests. Currently the project contains unit and integration tests. Unit tests should have no dependency to the local machine except the Node environment we're setting up. Integration tests can also involve system binaries like Gopass, GPG and so on.
 
 Run them with `npm test` and `npm run test:integration`.
 
-
 ### Linting
 
-This project contains `prettier` and `tslint`. **TLDR:** Prettier assists during development. Tslint is ran in a Husky pre-commit hook together with unit tests and in Github actions (see `.github/workflows/`).
+This project uses **ESLint** (with TypeScript and React plugins) and **Prettier** for code quality and formatting.
 
-**Prettier** is more aggressive because it is designed opinionated. It will find and correct more . The only options we decide on are to be found in `.prettierrc`. We use Prettier to enforce and apply code style during development process. Right after saving an edited file it will correct code style mistakes! In VSCode this comes with the Prettier extension already. In JetBrains IntelliJ IDEA/Webstorm [this can be easily configured](https://prettier.io/docs/en/webstorm.html). On the CLI, feel free to use `npm run prettier:check` and `npm run prettier:write`.
+**ESLint** checks code quality rules. Configuration is in `.eslintrc.json`. Run it with:
 
-**Tslint** is used to check the code style baseline before commiting staged code and while running CI. Feel free to use the scripts `npm run lint` for linting and `npm run lint:fix` for fixing simple issues automatically to make code comply to the baseline style.
+```bash
+npm run lint        # check for issues
+npm run lint:fix    # auto-fix where possible
+```
 
+**Prettier** enforces code formatting. Configuration is in `.prettierrc`. Run it with:
+
+```bash
+npm run prettier:check   # check formatting
+npm run prettier:write   # auto-format
+```
+
+A **Husky** pre-commit hook runs `npm run lint && npm test` automatically before each commit.
 
 ### Production packaging
 

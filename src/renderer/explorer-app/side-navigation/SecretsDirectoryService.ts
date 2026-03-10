@@ -19,11 +19,20 @@ export default class SecretsDirectoryService {
 
             let tempDir = directory
             segments.forEach((segment: string, index: number) => {
-                if (!tempDir[segment]) {
-                    tempDir[segment] = index + 1 === segments.length ? secretPath : {}
-                }
+                const isLeaf = index + 1 === segments.length
 
-                tempDir = tempDir[segment]
+                if (isLeaf) {
+                    // Only set leaf value if not already a directory
+                    if (!tempDir[segment] || typeof tempDir[segment] === 'string') {
+                        tempDir[segment] = secretPath
+                    }
+                } else {
+                    // Intermediate segment must be an object (directory)
+                    if (!tempDir[segment] || typeof tempDir[segment] === 'string') {
+                        tempDir[segment] = {}
+                    }
+                    tempDir = tempDir[segment]
+                }
             })
         }
 
@@ -66,7 +75,8 @@ export default class SecretsDirectoryService {
         toggledPaths: string[],
         toggled: boolean = false,
         toggleAll: boolean = false,
-        parentPath = ''
+        parentPath = '',
+        depth: number = 0
     ): Tree[] | undefined {
         if (!(directory instanceof Object)) {
             return undefined
@@ -81,13 +91,16 @@ export default class SecretsDirectoryService {
             const path = parentPath.length > 0 ? parentPath + '/' + name : name
             const toggledFromPreviousTree = toggledPaths.includes(path)
             const toggledPathsLeft = toggledFromPreviousTree ? toggledPaths.filter(p => p !== path) : toggledPaths
-            const children = SecretsDirectoryService.getChildren(directory[name], toggledPathsLeft, false, toggleAll, path)
+            const children = SecretsDirectoryService.getChildren(directory[name], toggledPathsLeft, false, toggleAll, path, depth + 1)
+
+            // Always expand top-level store folders so the tree isn't blank on first load
+            const isTopLevel = depth === 0
 
             return {
                 name,
                 path,
                 children,
-                toggled: toggleAll || toggled || toggledFromPreviousTree
+                toggled: toggleAll || toggled || toggledFromPreviousTree || isTopLevel
             }
         })
     }

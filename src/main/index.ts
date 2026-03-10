@@ -1,8 +1,8 @@
-import { app, BrowserWindow, Event, globalShortcut, ipcMain, IpcMainEvent, Tray, session, shell, Accelerator } from 'electron'
+import { app, BrowserWindow, Event, globalShortcut, ipcMain, IpcMainEvent, Tray, session } from 'electron'
 import { URL } from 'url'
 import * as path from 'path'
-import * as fixPath from 'fix-path'
-import * as electronSettings from 'electron-settings'
+import fixPath from 'fix-path'
+import electronSettings from 'electron-settings'
 
 import { SystemSettings, UserSettings } from '../shared/settings'
 import GopassExecutor from './GopassExecutor'
@@ -19,13 +19,12 @@ let mainWindow: BrowserWindow | null
 let searchWindow: BrowserWindow | null
 let tray: Tray
 
-const setGlobalSearchWindowShortcut = (shortcut: Accelerator, previousShortcut?: Accelerator) => {
+const setGlobalSearchWindowShortcut = (shortcut: string, previousShortcut?: string) => {
     // unregister previously used shortcut if Electron recognises it as valid
     if (previousShortcut) {
         try {
             globalShortcut.unregister(previousShortcut)
-        } catch (e) {
-            // previous shortcut was not considered as valid
+        } catch (_) {
         }
     }
 
@@ -33,7 +32,7 @@ const setGlobalSearchWindowShortcut = (shortcut: Accelerator, previousShortcut?:
     // in case an error is thrown, Electron does not recognise it as valid and the method returns
     try {
         globalShortcut.unregister(shortcut)
-    } catch (e) {
+    } catch (_) {
         return
     }
 
@@ -104,11 +103,11 @@ const listenToIpcEvents = () => {
             configureStartOnLogin(update.startOnLogin)
         }
 
-        electronSettings.set('user_settings', all as any)
+        electronSettings.setSync('user_settings', all as any)
     })
 
     ipcMain.on('updateSystemSettings', (_: Event, update: Partial<SystemSettings>) => {
-        electronSettings.set('system_settings', { ...getSystemSettings(), ...update } as any)
+        electronSettings.setSync('system_settings', { ...getSystemSettings(), ...update } as any)
     })
 }
 
@@ -190,41 +189,38 @@ app.on('web-contents-created', (event, contents) => {
 
 /**
  * Prevents unwanted modules from 'remote' from being used.
- * Reference: https://electronjs.org/docs/tutorial/security#16-filter-the-remote-module
+ * Note: In modern @electron/remote, filtering is handled via the module's own configuration.
+ * These handlers use 'as any' because the remote-* events come from @electron/remote, not core Electron.
  */
-const allowedRemoteModules = new Set(['app'])
-app.on('remote-get-builtin', (event, webContents, moduleName) => {
+const allowedRemoteModules = new Set(['app']);
+(app as any).on('remote-get-builtin', (event: any, webContents: any, moduleName: string) => {
     if (!allowedRemoteModules.has(moduleName)) {
         event.preventDefault()
-        console.warn(`Blocked module "${moduleName}"`)
     }
 })
 
 const allowedModules = new Set()
-const proxiedModules = new Map()
-app.on('remote-require', (event, webContents, moduleName) => {
+const proxiedModules = new Map();
+(app as any).on('remote-require', (event: any, webContents: any, moduleName: string) => {
     if (proxiedModules.has(moduleName)) {
-        const proxiedModule = proxiedModules.get(moduleName)
-        event.returnValue = proxiedModule
-        console.warn(`Proxied remote-require of module "${moduleName}" to "${proxiedModule}"`)
+        event.returnValue = proxiedModules.get(moduleName)
     }
     if (!allowedModules.has(moduleName)) {
         event.preventDefault()
-        console.warn(`Blocked remote-require of module "${moduleName}"`)
     }
 })
 
-const allowedGlobals = new Set()
-app.on('remote-get-global', (event, webContents, globalName) => {
+const allowedGlobals = new Set();
+(app as any).on('remote-get-global', (event: any, webContents: any, globalName: string) => {
     if (!allowedGlobals.has(globalName)) {
         event.preventDefault()
     }
-})
+});
 
-app.on('remote-get-current-window', event => {
+(app as any).on('remote-get-current-window', (event: any) => {
     event.preventDefault()
-})
+});
 
-app.on('remote-get-current-web-contents', event => {
+(app as any).on('remote-get-current-web-contents', (event: any) => {
     event.preventDefault()
 })

@@ -1,6 +1,7 @@
 import { BrowserWindow, Menu, app, nativeTheme } from 'electron'
 import * as url from 'url'
 import * as path from 'path'
+import * as remoteMain from '@electron/remote/main'
 
 export const createMainWindow = (): BrowserWindow => {
     nativeTheme.themeSource = 'light'
@@ -11,12 +12,12 @@ export const createMainWindow = (): BrowserWindow => {
         title: 'Gopass UI',
         icon: path.join(__dirname, 'assets', 'icon.png'),
         webPreferences: {
-            enableRemoteModule: true,
             nodeIntegration: true,
-            contextIsolation: false,
-            worldSafeExecuteJavaScript: false
+            contextIsolation: false
         }
     })
+
+    remoteMain.enable(mainWindow.webContents)
 
     if (process.env.NODE_ENV !== 'production') {
         mainWindow.loadURL('http://localhost:2003')
@@ -46,12 +47,12 @@ export const createSearchWindow = (show: boolean): BrowserWindow => {
         title: 'Gopass UI Search Window',
         resizable: false,
         webPreferences: {
-            enableRemoteModule: true,
             nodeIntegration: true,
-            contextIsolation: false,
-            worldSafeExecuteJavaScript: false
+            contextIsolation: false
         }
     })
+
+    remoteMain.enable(searchWindow.webContents)
 
     searchWindow.setMenu(null)
 

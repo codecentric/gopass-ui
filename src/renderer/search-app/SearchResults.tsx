@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ipcRenderer } from 'electron'
 import * as m from 'react-materialize'
-import * as KeyboardEventHandler from 'react-keyboard-event-handler'
+import KeyboardEventHandler from 'react-keyboard-event-handler'
 
 import Gopass from '../secrets/Gopass'
 import { useCopySecretToClipboard } from '../secrets/useCopySecretToClipboard'
@@ -66,7 +66,7 @@ export default function SearchResults(props: SearchResultsProps) {
                 }
                 break
 
-            case 'enter':
+            case 'enter': {
                 const secretKey = filteredSecretNames[selectedItemIndex]
                 if (secretKey) {
                     copySecretToClipboard(secretKey)
@@ -74,6 +74,7 @@ export default function SearchResults(props: SearchResultsProps) {
 
                 event.preventDefault()
                 break
+            }
 
             case 'esc':
                 ipcRenderer.send('hideSearchWindow')

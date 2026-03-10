@@ -4,12 +4,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14.16'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm i
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint
       - run: npm test
 
   build:
@@ -20,16 +21,14 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '14.16'
-          registry-url: 'https://registry.npmjs.org'
-      - name: Build/release Electron app
-        uses: samuelmeuli/action-electron-builder@v1
-        with:
-          # GitHub token, automatically provided to the action (no need to define this secret in the repo settings)
-          github_token: ${{ secrets.github_token }}
-
-          # this action will not release
-          release: false
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - name: Build Electron app
+        run: npx electron-builder --publish never
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as m from 'react-materialize'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { useNavigate } from 'react-router-dom'
 
 import Gopass, { HistoryEntry } from '../../../secrets/Gopass'
 import { passwordSecretRegex } from '../../../secrets/deriveIconFromSecretName'
@@ -10,16 +10,16 @@ import { HistoryTable } from './HistoryTable'
 import PasswordRatingComponent from '../../password-health/PasswordRatingComponent'
 import { useSecretsContext } from '../../SecretsProvider'
 
-interface SecretDetailsPageProps extends RouteComponentProps {
+interface SecretDetailsPageProps {
     secretName: string
     isAdded?: boolean
 }
 
-// todo: make this configurable in the application settings
 const DISPLAY_SECRET_VALUE_BY_DEFAULT = false
 
-/* tslint:disable */
-function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPageProps) {
+function SecretDetailsPage({ secretName, isAdded }: SecretDetailsPageProps) {
+    const navigate = useNavigate()
+    const secretsContext = useSecretsContext()
     const [secretValue, setSecretValue] = React.useState('')
     const [historyEntries, setHistoryEntries] = React.useState<HistoryEntry[]>([])
     const [loading, setLoading] = React.useState(true)
@@ -47,7 +47,7 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
 
     const querySecretDeletion = () => setQueryDeletion(true)
     const denySecretDeletion = () => setQueryDeletion(false)
-    const confirmSecretDeletion = () => Gopass.deleteSecret(secretName).then(() => history.replace('/'))
+    const confirmSecretDeletion = () => Gopass.deleteSecret(secretName).then(() => navigate('/', { replace: true }))
     const deletionModeButtons = queryDeletion ? (
         <>
             <a className='link' onClick={denySecretDeletion}>
@@ -57,7 +57,7 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
                 className='link'
                 onClick={async () => {
                     await confirmSecretDeletion()
-                    await useSecretsContext().reloadSecretNames()
+                    await secretsContext.reloadSecretNames()
                 }}
             >
                 Sure!
@@ -154,4 +154,4 @@ function SecretDetailsPage({ secretName, isAdded, history }: SecretDetailsPagePr
     )
 }
 
-export default withRouter(SecretDetailsPage)
+export default SecretDetailsPage

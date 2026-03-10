@@ -16,38 +16,29 @@ export interface TreeComponentProps {
     onLeafClick: (leafId: string) => void
 }
 
-interface TreeComponentState {
-    selectedNode?: any
-}
-export default class TreeComponent extends React.Component<TreeComponentProps, TreeComponentState> {
-    public state: TreeComponentState = {}
+export default function TreeComponent({ tree, onLeafClick }: TreeComponentProps) {
+    const [selectedNode, setSelectedNode] = React.useState<any>(undefined)
 
-    public render() {
-        return <t.Treebeard data={this.props.tree} decorators={{ ...t.decorators, Header }} onToggle={this.onToggle} style={globalStyle} />
-    }
-
-    private onToggle = (node: any, toggled: boolean) => {
-        // if no children (thus being a leaf and thereby an entry), trigger the handler
+    const onToggle = (node: any, toggled: boolean) => {
         if (!node.children || node.children.length === 0) {
-            this.props.onLeafClick(node.path)
+            onLeafClick(node.path)
         }
 
-        // previously selected node is no more active
-        if (this.state.selectedNode) {
-            this.state.selectedNode.active = false
+        if (selectedNode) {
+            selectedNode.active = false
         }
 
-        // newly selected node shall be active
         node.active = true
 
-        // ...and toggled if having children
         if (node.children) {
             node.toggled = toggled
         }
-        this.setState({ selectedNode: node })
+        setSelectedNode(node)
 
         if (node.children && node.children.length === 1) {
-            this.onToggle(node.children[0], true)
+            onToggle(node.children[0], true)
         }
     }
+
+    return <t.Treebeard data={tree} decorators={{ ...t.decorators, Header }} onToggle={onToggle} style={globalStyle} />
 }
